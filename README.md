@@ -19,7 +19,7 @@ New chapters in **Fluent Python 2e** are marked with 🆕.
 This table of contents is subject to change at any time until the book is in print.
 
 Part / Chapter #|Title|Directory|Notebook|1<sup>st</sup> ed. Chapter&nbsp;#
----:|---|---|---|---|---
+---:|---|---|---|---
 **I – Prologue**|
 1|The Python Data Model|[01-data-model](01-data-model)|[data-model.ipynb](01-data-model/data-model.ipynb)|1
 **II – Data Structures**|
