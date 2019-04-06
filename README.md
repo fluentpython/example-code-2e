@@ -2,7 +2,7 @@
 
 Example code for the book **Fluent Python, 2<sup>nd</sup> edition** by Luciano Ramalho (O'Reilly, 2020).
 
-> **BEWARE**: This is a work in progress, like the book itself.
+> **BEWARE**: This is a work in progress!
 >
 > * Code here may change and disappear without warning.
 >
@@ -16,7 +16,7 @@ All chapters are undergoing review and updates, including significant rewrites i
 
 New chapters in **Fluent Python 2e** are marked with 🆕.
 
-This table of contents is subject to change at any time until the book is in print.
+🚨 This table of contents is subject to change at any time until the book goes to the printer. 
 
 Part / Chapter #|Title|Directory|Notebook|1<sup>st</sup> ed. Chapter&nbsp;#
 ---:|---|---|---|---
