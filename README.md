@@ -10,7 +10,12 @@ Example code for the book **Fluent Python, 2<sup>nd</sup> edition** by Luciano R
 >
 > * No promises. No guarantees. Use at own risk.
 
-## Chapter Map
+## Table of Contents
+
+This table of contents is subject to change at any time until the book is in print.
+
+New chapters in **Fluent Python 2e** are marked with 🆕.
+
 
 Part|Chapter|Chapter Title|Directory|1<sup>st</sup> ed. Directory
 ---|---:|---|---|---
@@ -32,11 +37,10 @@ IV – Object-Oriented Idioms|10|Object References, Mutability, and Recycling|[1
 &nbsp;|16|Operator Overloading: Doing It Right|[16-op-overloading](16-op-overloading)|13-op-overloading
 V – Control Flow|17|Iterables, Iterators, and Generators|[17-it-generator](17-it-generator)|14-it-generator
 &nbsp;|18|Context Managers and else Blocks|[18-context-mngr](18-context-mngr)|15-context-mngr
-&nbsp;|19|Coroutines|[19-coroutine](19-coroutine)|16-coroutine
+&nbsp;|19|Native Coroutines|[19-coroutine](19-coroutine)|16-coroutine
 &nbsp;|20|Concurrency with Futures|[20-futures](20-futures)|17-futures
 &nbsp;|21|Concurrency with asyncio|[21-asyncio](21-asyncio)|18-asyncio
 VI – Metaprogramming|22|Dynamic Attributes and Properties|[22-dyn-attr-prop](22-dyn-attr-prop)|19-dyn-attr-prop
 &nbsp;|23|Attribute Descriptors|[23-descriptor](23-descriptor)|20-descriptor
 &nbsp;|24|Class Metapgrogramming|[24-class-metaprog](24-class-metaprog)|21-class-metaprog
 
-> New chapters are marked with 🆕
