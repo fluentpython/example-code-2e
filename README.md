@@ -2,7 +2,7 @@
 
 Example code for the book **Fluent Python, 2<sup>nd</sup> edition** by Luciano Ramalho (O'Reilly, 2020).
 
->   **BEWARE**: This is a work in progress, like the book itself.
+> **BEWARE**: This is a work in progress, like the book itself.
 >
 > * Code here may change and disappear without warning.
 >
