@@ -12,9 +12,11 @@ Example code for the book **Fluent Python, 2<sup>nd</sup> edition** by Luciano R
 
 ## Table of Contents
 
-This table of contents is subject to change at any time until the book is in print.
+All chapters are undergoing review and updates, including significant rewrites in the chapters about concurrency in **Part V**.
 
 New chapters in **Fluent Python 2e** are marked with 🆕.
+
+This table of contents is subject to change at any time until the book is in print.
 
 
 Part|Chapter|Chapter Title|Directory|1<sup>st</sup> ed. Directory
