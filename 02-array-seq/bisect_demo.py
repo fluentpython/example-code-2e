@@ -1,3 +1,41 @@
+"""
+bisect_demo.py
+
+Demonstration of ``bisect.bisect``::
+
+    >>> import bisect
+    >>> demo(bisect.bisect)
+    31 @ 14      |  |  |  |  |  |  |  |  |  |  |  |  |  |31
+    30 @ 14      |  |  |  |  |  |  |  |  |  |  |  |  |  |30
+    29 @ 13      |  |  |  |  |  |  |  |  |  |  |  |  |29
+    23 @ 11      |  |  |  |  |  |  |  |  |  |  |23
+    22 @  9      |  |  |  |  |  |  |  |  |22
+    10 @  5      |  |  |  |  |10
+     8 @  5      |  |  |  |  |8 
+     5 @  3      |  |  |5 
+     2 @  1      |2 
+     1 @  1      |1 
+     0 @  0    0 
+
+
+Demonstration of ``bisect.bisect_left``::
+
+    >>> demo(bisect.bisect_left)
+    31 @ 14      |  |  |  |  |  |  |  |  |  |  |  |  |  |31
+    30 @ 13      |  |  |  |  |  |  |  |  |  |  |  |  |30
+    29 @ 12      |  |  |  |  |  |  |  |  |  |  |  |29
+    23 @  9      |  |  |  |  |  |  |  |  |23
+    22 @  9      |  |  |  |  |  |  |  |  |22
+    10 @  5      |  |  |  |  |10
+     8 @  4      |  |  |  |8 
+     5 @  2      |  |5 
+     2 @  1      |2 
+     1 @  0    1 
+     0 @  0    0 
+
+
+"""
+
 # BEGIN BISECT_DEMO
 import bisect
 import sys
