@@ -78,8 +78,8 @@ Tests of hashing:
 
     >>> v1 = Vector2d(3, 4)
     >>> v2 = Vector2d(3.1, 4.2)
-    >>> hash(v1), hash(v2)
-    (7, 384307168202284039)
+    >>> hash(v1) != hash(v2)
+    True
     >>> len(set([v1, v2]))
     2
 
@@ -129,7 +129,7 @@ class Vector2d:
         return tuple(self) == tuple(other)
 
     def __hash__(self):
-        return hash(self.x) ^ hash(self.y)
+        return hash((self.x, self.y))
 
     def __abs__(self):
         return math.hypot(self.x, self.y)
