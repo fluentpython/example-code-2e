@@ -28,7 +28,7 @@ Handling a string with Greek and Latin accented characters:
 
 """
 
-# BEGIN SHAVE_MARKS
+# tag::SHAVE_MARKS[]
 import unicodedata
 import string
 
@@ -39,9 +39,9 @@ def shave_marks(txt):
     shaved = ''.join(c for c in norm_txt
                      if not unicodedata.combining(c))  # <2>
     return unicodedata.normalize('NFC', shaved)  # <3>
-# END SHAVE_MARKS
+# end::SHAVE_MARKS[]
 
-# BEGIN SHAVE_MARKS_LATIN
+# tag::SHAVE_MARKS_LATIN[]
 def shave_marks_latin(txt):
     """Remove all diacritic marks from Latin base characters"""
     norm_txt = unicodedata.normalize('NFD', txt)  # <1>
@@ -56,9 +56,9 @@ def shave_marks_latin(txt):
             latin_base = c in string.ascii_letters
     shaved = ''.join(keepers)
     return unicodedata.normalize('NFC', shaved)   # <5>
-# END SHAVE_MARKS_LATIN
+# end::SHAVE_MARKS_LATIN[]
 
-# BEGIN ASCIIZE
+# tag::ASCIIZE[]
 single_map = str.maketrans("""‚ƒ„†ˆ‹‘’“”•–—˜›""",  # <1>
                            """'f"*^<''""---~>""")
 
@@ -84,4 +84,4 @@ def asciize(txt):
     no_marks = shave_marks_latin(dewinize(txt))     # <5>
     no_marks = no_marks.replace('ß', 'ss')          # <6>
     return unicodedata.normalize('NFKC', no_marks)  # <7>
-# END ASCIIZE
+# end::ASCIIZE[]

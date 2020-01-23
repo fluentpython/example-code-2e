@@ -1,4 +1,4 @@
-# BEGIN NUMERICS_DEMO
+# tag::NUMERICS_DEMO[]
 import unicodedata
 import re
 
@@ -15,4 +15,4 @@ for char in sample:
           format(unicodedata.numeric(char), '5.2f'),  # <6>
           unicodedata.name(char),                     # <7>
           sep='\t')
-# END NUMERICS_DEMO
+# end::NUMERICS_DEMO[]

@@ -1,4 +1,4 @@
-# BEGIN RE_DEMO
+# tag::RE_DEMO[]
 import re
 
 re_numbers_str = re.compile(r'\d+')     # <1>
@@ -18,4 +18,4 @@ print('  bytes:', re_numbers_bytes.findall(text_bytes))  # <7>
 print('Words')
 print('  str  :', re_words_str.findall(text_str))        # <8>
 print('  bytes:', re_words_bytes.findall(text_bytes))    # <9>
-# END RE_DEMO
+# end::RE_DEMO[]
