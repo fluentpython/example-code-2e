@@ -1,0 +1,11 @@
+ locale.getpreferredencoding() -> 'cp1252'
+                 type(my_file) -> <class '_io.TextIOWrapper'>
+              my_file.encoding -> 'cp1252'
+           sys.stdout.isatty() -> False
+           sys.stdout.encoding -> 'cp1252'
+            sys.stdin.isatty() -> True
+            sys.stdin.encoding -> 'utf-8'
+           sys.stderr.isatty() -> True
+           sys.stderr.encoding -> 'utf-8'
+      sys.getdefaultencoding() -> 'utf-8'
+   sys.getfilesystemencoding() -> 'utf-8'
