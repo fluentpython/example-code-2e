@@ -5,7 +5,7 @@ WARNING: the Iterator Pattern is much simpler in idiomatic Python;
 see: sentence_gen*.py.
 """
 
-# BEGIN SENTENCE_ITER
+# tag::SENTENCE_ITER[]
 import re
 import reprlib
 
@@ -41,7 +41,7 @@ class SentenceIterator:
 
     def __iter__(self):  # <9>
         return self
-# END SENTENCE_ITER
+# end::SENTENCE_ITER[]
 
 def main():
     import sys

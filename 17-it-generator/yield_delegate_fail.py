@@ -14,7 +14,7 @@ Daniel Patterson, Junsong Li, Anand Chitipothu, and Shriram Krishnamurthi.
 DOI=10.1145/2544173.2509536 http://doi.acm.org/10.1145/2544173.2509536
 """
 
-# BEGIN YIELD_DELEGATE_FAIL
+# tag::YIELD_DELEGATE_FAIL[]
 def f():
     def do_yield(n):
         yield n
@@ -22,7 +22,7 @@ def f():
     while True:
         x += 1
         do_yield(x)
-# END YIELD_DELEGATE_FAIL
+# end::YIELD_DELEGATE_FAIL[]
 
 if __name__ == '__main__':
     print('Invoking f() results in an infinite loop')

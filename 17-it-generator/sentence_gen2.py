@@ -2,10 +2,11 @@
 Sentence: iterate over words using a generator function
 """
 
+# tag::SENTENCE_GEN2[]
 import re
 import reprlib
 
-RE_WORD = re.compile(r'\w+')
+RE_WORD = re.compile('r\w+')
 
 
 class Sentence:
@@ -19,3 +20,5 @@ class Sentence:
     def __iter__(self):
         for match in RE_WORD.finditer(self.text):  # <2>
             yield match.group()  # <3>
+
+# end::SENTENCE_GEN2[]

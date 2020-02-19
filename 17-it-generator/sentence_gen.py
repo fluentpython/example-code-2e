@@ -2,6 +2,7 @@
 Sentence: iterate over words using a generator function
 """
 
+# tag::SENTENCE_GEN[]
 import re
 import reprlib
 
@@ -23,3 +24,5 @@ class Sentence:
         return  # <3>
 
 # done! <4>
+
+# end::SENTENCE_GEN[]

@@ -200,11 +200,12 @@ def main():  # <4>
              ' for bulk insert to CouchDB via POST to db/_bulk_docs')
     parser.add_argument(
         '-m', '--mongo', action='store_true',
-        help='output individual records as separate JSON dictionaries,'
-             ' one per line for bulk insert to MongoDB via mongoimport utility')
+        help='output individual records as separate JSON dictionaries, one'
+             ' per line for bulk insert to MongoDB via mongoimport utility')
     parser.add_argument(
         '-t', '--type', type=int, metavar='ISIS_JSON_TYPE', default=1,
-        help='ISIS-JSON type, sets field structure: 1=string, 2=alist, 3=dict (default=1)')
+        help='ISIS-JSON type, sets field structure: 1=string, 2=alist,'
+             ' 3=dict (default=1)')
     parser.add_argument(
         '-q', '--qty', type=int, default=DEFAULT_QTY,
         help='maximum quantity of records to read (default=ALL)')
@@ -220,7 +221,8 @@ def main():  # <4>
         help='generate an "_id" with a random UUID for each record')
     parser.add_argument(
         '-p', '--prefix', type=str, metavar='PREFIX', default='',
-        help='concatenate prefix to every numeric field tag (ex. 99 becomes "v99")')
+        help='concatenate prefix to every numeric field tag'
+             ' (ex. 99 becomes "v99")')
     parser.add_argument(
         '-n', '--mfn', action='store_true',
         help='generate an "_id" from the MFN of each record'

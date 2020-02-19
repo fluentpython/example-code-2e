@@ -19,7 +19,7 @@ Arithmetic progression generator function::
 """
 
 
-# BEGIN ARITPROG_GENFUNC
+# tag::ARITPROG_GENFUNC[]
 def aritprog_gen(begin, step, end=None):
     result = type(begin + step)(begin)
     forever = end is None
@@ -28,4 +28,4 @@ def aritprog_gen(begin, step, end=None):
         yield result
         index += 1
         result = begin + step * index
-# END ARITPROG_GENFUNC
+# end::ARITPROG_GENFUNC[]

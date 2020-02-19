@@ -8,7 +8,7 @@ Fibonacci generator implemented "by hand" without generator objects
 """
 
 
-# BEGIN FIBO_BY_HAND
+# tag::FIBO_BY_HAND[]
 class Fibonacci:
 
     def __iter__(self):
@@ -28,7 +28,7 @@ class FibonacciGenerator:
 
     def __iter__(self):
         return self
-# END FIBO_BY_HAND
+# end::FIBO_BY_HAND[]
 
 # for comparison, this is the usual implementation of a Fibonacci
 # generator in Python:

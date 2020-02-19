@@ -17,7 +17,8 @@ class ArithmeticProgression:
         self.end = end  # None -> "infinite" series
 
     def __iter__(self):
-        result = type(self.begin + self.step)(self.begin)
+        result_type = type(self.begin + self.step)
+        result = result_type(self.begin)
         forever = self.end is None
         while forever or result < self.end:
             yield result

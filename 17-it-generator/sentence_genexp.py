@@ -2,7 +2,7 @@
 Sentence: iterate over words using a generator expression
 """
 
-# BEGIN SENTENCE_GENEXP
+# tag::SENTENCE_GENEXP[]
 import re
 import reprlib
 
@@ -19,7 +19,7 @@ class Sentence:
 
     def __iter__(self):
         return (match.group() for match in RE_WORD.finditer(self.text))
-# END SENTENCE_GENEXP
+# end::SENTENCE_GENEXP[]
 
 
 def main():
