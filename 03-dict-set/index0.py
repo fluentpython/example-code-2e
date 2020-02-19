@@ -2,7 +2,7 @@
 # http://www.aleax.it/Python/accu04_Relearn_Python_alex.pdf
 # (slide 41) Ex: lines-by-word file index
 
-# BEGIN INDEX0
+# tag::INDEX0[]
 """Build an index mapping word -> list of occurrences"""
 
 import sys
@@ -25,4 +25,4 @@ with open(sys.argv[1], encoding='utf-8') as fp:
 # print in alphabetical order
 for word in sorted(index, key=str.upper):  # <4>
     print(word, index[word])
-# END INDEX0
+# end::INDEX0[]

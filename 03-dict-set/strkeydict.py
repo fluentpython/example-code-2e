@@ -53,7 +53,7 @@ Tests for update using a `dict` or a sequence of pairs::
     TypeError: 'int' object is not iterable
 
 """
-# BEGIN STRKEYDICT
+# tag::STRKEYDICT[]
 
 import collections
 
@@ -71,4 +71,4 @@ class StrKeyDict(collections.UserDict):  # <1>
     def __setitem__(self, key, item):
         self.data[str(key)] = item   # <4>
 
-# END STRKEYDICT
+# end::STRKEYDICT[]

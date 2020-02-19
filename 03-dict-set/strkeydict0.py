@@ -1,6 +1,6 @@
 """StrKeyDict0 converts non-string keys to `str` on lookup
 
-# BEGIN STRKEYDICT0_TESTS
+# tag::STRKEYDICT0_TESTS[]
 
 Tests for item retrieval using `d[key]` notation::
 
@@ -31,11 +31,11 @@ Tests for the `in` operator::
     >>> 1 in d
     False
 
-# END STRKEYDICT0_TESTS
+# end::STRKEYDICT0_TESTS[]
 """
 
 
-# BEGIN STRKEYDICT0
+# tag::STRKEYDICT0[]
 class StrKeyDict0(dict):  # <1>
 
     def __missing__(self, key):
@@ -52,4 +52,4 @@ class StrKeyDict0(dict):  # <1>
     def __contains__(self, key):
         return key in self.keys() or str(key) in self.keys()  # <6>
 
-# END STRKEYDICT0
+# end::STRKEYDICT0[]
