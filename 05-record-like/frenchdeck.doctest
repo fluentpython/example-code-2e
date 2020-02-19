@@ -1,0 +1,64 @@
+>>> from frenchdeck import FrenchDeck, Card
+>>> beer_card = Card('7', 'diamonds')
+>>> beer_card
+Card(rank='7', suit='diamonds')
+>>> deck = FrenchDeck()
+>>> len(deck)
+52
+>>> deck[:3]
+[Card(rank='2', suit='spades'), Card(rank='3', suit='spades'), Card(rank='4', suit='spades')]
+>>> deck[12::13]
+[Card(rank='A', suit='spades'), Card(rank='A', suit='diamonds'), Card(rank='A', suit='clubs'), Card(rank='A', suit='hearts')]
+>>> Card('Q', 'hearts') in deck
+True
+>>> Card('Z', 'clubs') in deck
+False
+>>> for card in deck:  # doctest: +ELLIPSIS
+...   print(card)
+Card(rank='2', suit='spades')
+Card(rank='3', suit='spades')
+Card(rank='4', suit='spades')
+...
+>>> for card in reversed(deck):  # doctest: +ELLIPSIS
+...   print(card)
+Card(rank='A', suit='hearts')
+Card(rank='K', suit='hearts')
+Card(rank='Q', suit='hearts')
+...
+>>> for n, card in enumerate(deck, 1):  # doctest: +ELLIPSIS
+...   print(n, card)
+1 Card(rank='2', suit='spades')
+2 Card(rank='3', suit='spades')
+3 Card(rank='4', suit='spades')
+...
+
+Sort with *spades high* overall ranking
+
+# tag::SPADES_HIGH[]
+>>> Card.suit_values = dict(spades=3, hearts=2, diamonds=1, clubs=0)  # <1>
+>>> def spades_high(card):                                            # <2>
+...     rank_value = FrenchDeck.ranks.index(card.rank)                
+...     suit_value = card.suit_values[card.suit]
+...     return rank_value * len(card.suit_values) + suit_value
+...
+>>> Card.overall_rank = spades_high                                   # <3>
+>>> lowest_card = Card('2', 'clubs')
+>>> highest_card = Card('A', 'spades')
+>>> lowest_card.overall_rank()                                        # <4>
+0
+>>> highest_card.overall_rank()
+51
+
+# end::SPADES_HIGH[]
+
+
+>>> for card in sorted(deck, key=Card.overall_rank):  # doctest: +ELLIPSIS
+...      print(card)
+Card(rank='2', suit='clubs')
+Card(rank='2', suit='diamonds')
+Card(rank='2', suit='hearts')
+...
+Card(rank='A', suit='diamonds')
+Card(rank='A', suit='hearts')
+Card(rank='A', suit='spades')
+

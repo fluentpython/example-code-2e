@@ -1,0 +1,22 @@
+>>> from cards import Card
+>>> helen = Card('Q', 'hearts')
+>>> helen
+Card(rank='Q', suit='hearts')
+
+>>> cards = [Card(r, s) for s in Card.suits for r in Card.ranks]
+>>> cards[:3]
+[Card(rank='2', suit='spades'), Card(rank='3', suit='spades'), Card(rank='4', suit='spades')]
+>>> sorted(cards)[:3]
+[Card(rank='2', suit='clubs'), Card(rank='2', suit='diamonds'), Card(rank='2', suit='hearts')]
+
+>>> from cards_enum import Card, Suit, Rank
+>>> helen = Card('Q', 'hearts')
+>>> helen
+Card(rank='Q', suit='hearts')
+
+>>> cards = [Card(r, s) for s in Suit for r in Rank]
+>>> cards[:3]
+[Card(rank='2', suit='spades'), Card(rank='3', suit='spades'), Card(rank='4', suit='spades')]
+>>> sorted(cards)[:3]
+[Card(rank='2', suit='clubs'), Card(rank='2', suit='diamonds'), Card(rank='2', suit='hearts')]
+>>> for card in cards[12::13]: print(card)

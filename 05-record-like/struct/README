@@ -1,0 +1,17 @@
+To compile `metro_write.c` on MacOS 10.14 with XCode:
+
+$ clang metro_write.c -o metro
+
+Output:
+
+$ xxd metro_areas.bin 
+00000000: e207 0000 546f 6b79 6f00 0000 0000 0000  ....Tokyo.......
+00000010: 0000 0000 0000 0000 4a50 01e7 1158 274c  ........JP...X'L
+00000020: df07 0000 5368 616e 6768 6169 0000 0000  ....Shanghai....
+00000030: 0100 0000 0e00 0000 434e 0000 f8a0 134c  ........CN.....L
+00000040: df07 0000 4a61 6b61 7274 6100 0000 0000  ....Jakarta.....
+00000050: 0000 0000 0000 0000 4944 0000 bcc5 f14b  ........ID.....K
+$ python3 metro_read.py 
+2018	Tokyo, JP	43,868,228
+2015	Shanghai, CN	38,700,000
+2015	Jakarta, ID	31,689,592
