@@ -4,7 +4,7 @@ A "mirroring" ``stdout`` context manager.
 While active, the context manager reverses text output to
 ``stdout``::
 
-# BEGIN MIRROR_GEN_DEMO_1
+# tag::MIRROR_GEN_DEMO_1[]
 
     >>> from mirror_gen import looking_glass
     >>> with looking_glass() as what:  # <1>
@@ -16,12 +16,12 @@ While active, the context manager reverses text output to
     >>> what
     'JABBERWOCKY'
 
-# END MIRROR_GEN_DEMO_1
+# end::MIRROR_GEN_DEMO_1[]
 
 
 This exposes the context manager operation::
 
-# BEGIN MIRROR_GEN_DEMO_2
+# tag::MIRROR_GEN_DEMO_2[]
 
     >>> from mirror_gen import looking_glass
     >>> manager = looking_glass()  # <1>
@@ -38,7 +38,7 @@ This exposes the context manager operation::
     >>> monster
     'JABBERWOCKY'
 
-# END MIRROR_GEN_DEMO_2
+# end::MIRROR_GEN_DEMO_2[]
 
 The context manager can handle and "swallow" exceptions.
 The following test does not pass under doctest (a
@@ -46,7 +46,7 @@ ZeroDivisionError is reported by doctest) but passes
 if executed by hand in the Python 3 console (the exception
 is handled by the context manager):
 
-# BEGIN MIRROR_GEN_DEMO_3
+# tag::MIRROR_GEN_DEMO_3[]
 
     >>> from mirror_gen import looking_glass
     >>> with looking_glass():
@@ -57,7 +57,7 @@ is handled by the context manager):
     ytpmuD ytpmuH
     Please DO NOT divide by zero!
 
-# END MIRROR_GEN_DEMO_3
+# end::MIRROR_GEN_DEMO_3[]
 
     >>> with looking_glass():
     ...      print('Humpty Dumpty')
@@ -73,7 +73,7 @@ is handled by the context manager):
 """
 
 
-# BEGIN MIRROR_GEN_EXC
+# tag::MIRROR_GEN_EXC[]
 
 import contextlib
 
@@ -98,4 +98,4 @@ def looking_glass():
             print(msg)  # <4>
 
 
-# END MIRROR_GEN_EXC
+# end::MIRROR_GEN_EXC[]

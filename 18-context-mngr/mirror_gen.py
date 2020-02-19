@@ -4,7 +4,7 @@ A "mirroring" ``stdout`` context manager.
 While active, the context manager reverses text output to
 ``stdout``::
 
-# BEGIN MIRROR_GEN_DEMO_1
+# tag::MIRROR_GEN_DEMO_1[]
 
     >>> from mirror_gen import looking_glass
     >>> with looking_glass() as what:  # <1>
@@ -16,12 +16,12 @@ While active, the context manager reverses text output to
     >>> what
     'JABBERWOCKY'
 
-# END MIRROR_GEN_DEMO_1
+# end::MIRROR_GEN_DEMO_1[]
 
 
 This exposes the context manager operation::
 
-# BEGIN MIRROR_GEN_DEMO_2
+# tag::MIRROR_GEN_DEMO_2[]
 
     >>> from mirror_gen import looking_glass
     >>> manager = looking_glass()  # <1>
@@ -38,12 +38,12 @@ This exposes the context manager operation::
     >>> monster
     'JABBERWOCKY'
 
-# END MIRROR_GEN_DEMO_2
+# end::MIRROR_GEN_DEMO_2[]
 
 """
 
 
-# BEGIN MIRROR_GEN_EX
+# tag::MIRROR_GEN_EX[]
 
 import contextlib
 
@@ -61,4 +61,4 @@ def looking_glass():
     sys.stdout.write = original_write  # <6>
 
 
-# END MIRROR_GEN_EX
+# end::MIRROR_GEN_EX[]

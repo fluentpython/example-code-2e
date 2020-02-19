@@ -4,7 +4,7 @@ A "mirroring" ``stdout`` context.
 While active, the context manager reverses text output to
 ``stdout``::
 
-# BEGIN MIRROR_DEMO_1
+# tag::MIRROR_DEMO_1[]
 
     >>> from mirror import LookingGlass
     >>> with LookingGlass() as what:  # <1>
@@ -18,12 +18,12 @@ While active, the context manager reverses text output to
     >>> print('Back to normal.')  # <5>
     Back to normal.
 
-# END MIRROR_DEMO_1
+# end::MIRROR_DEMO_1[]
 
 
 This exposes the context manager operation::
 
-# BEGIN MIRROR_DEMO_2
+# tag::MIRROR_DEMO_2[]
 
     >>> from mirror import LookingGlass
     >>> manager = LookingGlass()  # <1>
@@ -40,11 +40,11 @@ This exposes the context manager operation::
     >>> monster
     'JABBERWOCKY'
 
-# END MIRROR_DEMO_2
+# end::MIRROR_DEMO_2[]
 
 The context manager can handle and "swallow" exceptions.
 
-# BEGIN MIRROR_DEMO_3
+# tag::MIRROR_DEMO_3[]
 
     >>> from mirror import LookingGlass
     >>> with LookingGlass():
@@ -63,12 +63,12 @@ The context manager can handle and "swallow" exceptions.
       ...
     NameError: name 'no_such_name' is not defined
 
-# END MIRROR_DEMO_3
+# end::MIRROR_DEMO_3[]
 
 """
 
 
-# BEGIN MIRROR_EX
+# tag::MIRROR_EX[]
 class LookingGlass:
 
     def __enter__(self):  # <1>
@@ -89,4 +89,4 @@ class LookingGlass:
         # <11>
 
 
-# END MIRROR_EX
+# end::MIRROR_EX[]
