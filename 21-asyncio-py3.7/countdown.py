@@ -17,14 +17,12 @@ async def countdown(label, delay):
         print(f'{dt:7.4f}s \t{tabs}{label} = {n}')
         n -= 1
 
-loop = asyncio.get_event_loop()
-tasks = [
-    loop.create_task(countdown('A', .7)),
-    loop.create_task(countdown('B', 2)),
-    loop.create_task(countdown('C', .3)),
-    loop.create_task(countdown('D', 1)),
+coros = [
+    countdown('A', .7),
+    countdown('B', 2),
+    countdown('C', .3),
+    countdown('D', 1),
 ]
 t0 = time.perf_counter()
-loop.run_until_complete(asyncio.wait(tasks))
-loop.close()
+asyncio.run(asyncio.wait(coros))
 print('━' * 50)
