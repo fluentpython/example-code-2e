@@ -48,19 +48,15 @@ def test_4_levels_1_leaf():
     assert expected == result
 
 
-def test_2_levels_4_leaves():
+def test_2_levels_2_leaves():
     class Branch: pass
     class Leaf1(Branch): pass
     class Leaf2(Branch): pass
-    class Leaf3(Branch): pass
-    class Leaf4(Branch): pass
     result = list(render_lines(tree(Branch)))
     expected = [
         'Branch',
         '├── Leaf1',
-        '├── Leaf2',
-        '├── Leaf3',
-        '└── Leaf4',
+        '└── Leaf2',
     ]
     assert expected == result
 

@@ -8,18 +8,14 @@ def test_1_level():
     assert expected == result 
 
 
-def test_2_levels_4_leaves():
+def test_2_levels_2_leaves():
     class Branch: pass
     class Leaf1(Branch): pass
     class Leaf2(Branch): pass
-    class Leaf3(Branch): pass
-    class Leaf4(Branch): pass
     expected = [
         ('Branch', 0),
             ('Leaf1', 1),
             ('Leaf2', 1),
-            ('Leaf3', 1),
-            ('Leaf4', 1),
     ]
     result = list(tree(Branch))
     assert expected == result 
@@ -57,11 +53,11 @@ def test_4_levels_1_leaf():
 def test_4_levels_3_leaves():
     class A: pass
     class B1(A): pass
-    class C1(B1): pass
-    class D1(C1): pass
     class B2(A): pass
-    class D2(C1): pass
+    class C1(B1): pass
     class C2(B2): pass
+    class D1(C1): pass
+    class D2(C1): pass
     expected = [
         ('A', 0),
             ('B1', 1),
