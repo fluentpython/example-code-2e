@@ -90,10 +90,8 @@ async def downloader_coro(cc_list, base_url, verbose, concur_req):  # <1>
 
 
 def download_many(cc_list, base_url, verbose, concur_req):
-    loop = asyncio.get_event_loop()
     coro = downloader_coro(cc_list, base_url, verbose, concur_req)
-    counts = loop.run_until_complete(coro)  # <14>
-    loop.close()  # <15>
+    counts = asyncio.run(coro)  # <14>
 
     return counts
 
