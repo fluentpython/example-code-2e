@@ -5,6 +5,7 @@
 *.sublime-workspace
 .env*
 .DS_Store
+.mypy_cache/
 concurrency/flags/img/*.gif
 concurrency/charfinder/charfinder_index.pickle
 18-asyncio/charfinder/charfinder_index.pickle
