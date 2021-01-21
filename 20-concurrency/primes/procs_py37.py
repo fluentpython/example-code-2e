@@ -14,14 +14,14 @@ def check(n: int) -> Result:  # <5>
     res = is_prime(n)
     return Result(res, perf_counter() - t0)
 
-def job(n: int, results) -> None:  # <6>
+def job(n: int, results: SimpleQueue) -> None:  # <6>
     results.put((n, check(n)))  # <7>
 # end::PRIMES_PROC_TOP[]
 
 # tag::PRIMES_PROC_MAIN[]
 def main() -> None:
     t0 = perf_counter()
-    results = SimpleQueue()  # <1>
+    results = SimpleQueue()  # type: ignore
     workers: List[Process] = []  # <2>
 
     for n in NUMBERS:
