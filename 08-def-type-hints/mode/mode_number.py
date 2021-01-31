@@ -13,7 +13,7 @@ def mode(data: Iterable[NumberT]) -> NumberT:
 
 
 def demo() -> None:
-    from typing import List, Set, TYPE_CHECKING
+    from typing import TYPE_CHECKING
     pop = [Fraction(1, 2), Fraction(1, 3), Fraction(1, 4), Fraction(1, 2)]
     m = mode(pop)
     if TYPE_CHECKING:

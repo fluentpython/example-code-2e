@@ -7,7 +7,6 @@
 from multiprocessing import Process, Event
 from multiprocessing import synchronize
 import itertools
-import time
 
 from primes import is_prime
 

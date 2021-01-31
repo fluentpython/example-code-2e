@@ -21,7 +21,7 @@ NAMES = {
 
 def rgb2hex(color=Tuple[int, int, int]) -> str:
     if any(c not in range(256) for c in color):
-        raise ValueError('Color components must be in range(256)') 
+        raise ValueError('Color components must be in range(256)')
     values = (f'{n % 256:02x}' for n in color)
     return '#' + ''.join(values)
 

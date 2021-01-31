@@ -80,7 +80,7 @@ Tests of hashing:
     >>> v2 = Vector2d(3.1, 4.2)
     >>> hash(v1), hash(v2)
     (7, 384307168202284039)
-    >>> len(set([v1, v2]))
+    >>> len({v1, v2})
     2
 
 # end::VECTOR2D_V3_DEMO[]

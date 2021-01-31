@@ -10,7 +10,7 @@
 """
 
 
-class Averager():
+class Averager:
 
     def __init__(self):
         self.series = []

@@ -18,7 +18,7 @@ async def is_prime(n):
         return False
 
     sleep = asyncio.sleep  # <1>
-    root = int(math.floor(math.sqrt(n)))
+    root = math.floor(math.sqrt(n))
     for i in range(3, root + 1, 2):
         if n % i == 0:
             return False

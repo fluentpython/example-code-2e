@@ -11,11 +11,11 @@ Demonstration of ``bisect.bisect``::
     23 @ 11      |  |  |  |  |  |  |  |  |  |  |23
     22 @  9      |  |  |  |  |  |  |  |  |22
     10 @  5      |  |  |  |  |10
-     8 @  5      |  |  |  |  |8 
-     5 @  3      |  |  |5 
-     2 @  1      |2 
-     1 @  1      |1 
-     0 @  0    0 
+     8 @  5      |  |  |  |  |8
+     5 @  3      |  |  |5
+     2 @  1      |2
+     1 @  1      |1
+     0 @  0    0
 
 
 Demonstration of ``bisect.bisect_left``::
@@ -27,11 +27,11 @@ Demonstration of ``bisect.bisect_left``::
     23 @  9      |  |  |  |  |  |  |  |  |23
     22 @  9      |  |  |  |  |  |  |  |  |22
     10 @  5      |  |  |  |  |10
-     8 @  4      |  |  |  |8 
-     5 @  2      |  |5 
-     2 @  1      |2 
-     1 @  0    1 
-     0 @  0    0 
+     8 @  4      |  |  |  |8
+     5 @  2      |  |5
+     2 @  1      |2
+     1 @  0    1
+     0 @  0    0
 
 
 """
@@ -59,7 +59,7 @@ if __name__ == '__main__':
         bisect_fn = bisect.bisect
 
     print('DEMO:', bisect_fn.__name__)  # <5>
-    print('haystack ->', ' '.join('%2d' % n for n in HAYSTACK))
+    print('haystack ->', ' '.join(f'{n:2}' for n in HAYSTACK))
     demo(bisect_fn)
 
 # END BISECT_DEMO

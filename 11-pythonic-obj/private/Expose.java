@@ -18,7 +18,7 @@ public class Expose {
             System.out.println("message.secret = " + wasHidden);
         }
         catch (IllegalAccessException e) { 
-            // this will not happen after setAcessible(true)
+            // this will not happen after setAccessible(true)
             System.err.println(e);
         }   
     }

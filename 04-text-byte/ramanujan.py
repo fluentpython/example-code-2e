@@ -11,7 +11,7 @@ text_str = ("Ramanujan saw \u0be7\u0bed\u0be8\u0bef"  # <3>
 
 text_bytes = text_str.encode('utf_8')  # <5>
 
-print('Text', repr(text_str), sep='\n  ')
+print(f'Text\n  {text_str!r}')
 print('Numbers')
 print('  str  :', re_numbers_str.findall(text_str))      # <6>
 print('  bytes:', re_numbers_bytes.findall(text_bytes))  # <7>

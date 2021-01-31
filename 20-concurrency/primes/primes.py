@@ -1,5 +1,4 @@
 import math
-import itertools
 
 
 PRIME_FIXTURE = [
@@ -36,7 +35,7 @@ def is_prime(n) -> bool:
     if n % 2 == 0:
         return False
 
-    root = int(math.floor(math.sqrt(n)))
+    root = math.floor(math.sqrt(n))
     for i in range(3, root + 1, 2):
         if n % i == 0:
             return False

@@ -1,4 +1,3 @@
-
 """
 >>> import copy
 >>> bus1 = Bus(['Alice', 'Bill', 'Claire', 'David'])

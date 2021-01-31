@@ -17,7 +17,7 @@ def to_xml(book: BookDict) -> str:  # <1>
     for key, value in book.items():
         if isinstance(value, list):  # <3>
             elements.extend(AUTHOR_EL.format(n)
-                for n in value)   
+                for n in value)
         else:
             tag = key.upper()
             elements.append(f'<{tag}>{value}</{tag}>')

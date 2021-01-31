@@ -1,6 +1,3 @@
-import json
-from typing import cast
-
 from books import BookDict, to_xml
 
 XML_SAMPLE = """

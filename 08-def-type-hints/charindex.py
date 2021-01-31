@@ -17,7 +17,7 @@ import re
 import unicodedata
 from typing import Dict, Set, Iterator
 
-RE_WORD = re.compile('\w+')
+RE_WORD = re.compile(r'\w+')
 STOP_CODE = sys.maxunicode + 1
 
 def tokenize(text: str) -> Iterator[str]:  # <1>

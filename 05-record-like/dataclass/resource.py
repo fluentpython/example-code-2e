@@ -14,7 +14,7 @@ A complete resource record:
     >>> description = 'Improving the design of existing code'
     >>> book = Resource('978-0-13-475759-9', 'Refactoring, 2nd Edition',
     ...     ['Martin Fowler', 'Kent Beck'], date(2018, 11, 19),
-    ...     ResourceType.BOOK, description, 'EN', 
+    ...     ResourceType.BOOK, description, 'EN',
     ...     ['computer programming', 'OOP'])
     >>> book  # doctest: +NORMALIZE_WHITESPACE
     Resource(identifier='978-0-13-475759-9', title='Refactoring, 2nd Edition',

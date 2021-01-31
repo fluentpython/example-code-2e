@@ -7,7 +7,7 @@
     >>> ann = Customer('Ann Smith', 1100)
     >>> cart = [LineItem('banana', 4, .5),
     ...         LineItem('apple', 10, 1.5),
-    ...         LineItem('watermellon', 5, 5.0)]
+    ...         LineItem('watermelon', 5, 5.0)]
     >>> banana_cart = [LineItem('banana', 30, .5),
     ...                LineItem('apple', 10, 1.5)]
     >>> big_cart = [LineItem(str(item_code), 1, 1.0)

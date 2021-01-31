@@ -30,7 +30,7 @@ To fix, ``leo2`` must be created with an explicit ``handle``::
 
 # tag::HACKERCLUB[]
 from dataclasses import dataclass
-from club import ClubMember         
+from club import ClubMember
 
 @dataclass
 class HackerClubMember(ClubMember):                         # <1>

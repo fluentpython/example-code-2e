@@ -17,7 +17,7 @@ _sentinel = object()
 
 
 class TransformDict(MutableMapping):
-    '''Dictionary that calls a transformation function when looking
+    """Dictionary that calls a transformation function when looking
     up keys, but preserves the original keys.
 
     >>> d = TransformDict(str.lower)
@@ -26,18 +26,18 @@ class TransformDict(MutableMapping):
     True
     >>> set(d.keys())
     {'Foo'}
-    '''
+    """
 
     __slots__ = ('_transform', '_original', '_data')
 
     def __init__(self, transform, init_dict=None, **kwargs):
-        '''Create a new TransformDict with the given *transform* function.
+        """Create a new TransformDict with the given *transform* function.
         *init_dict* and *kwargs* are optional initializers, as in the
         dict constructor.
-        '''
+        """
         if not callable(transform):
-            msg = 'expected a callable, got %r'
-            raise TypeError(msg % transform.__class__)
+            raise TypeError(
+                f'expected a callable, got {transform.__class__!r}')
         self._transform = transform
         # transformed => original
         self._original = {}
@@ -48,7 +48,7 @@ class TransformDict(MutableMapping):
             self.update(kwargs)
 
     def getitem(self, key):
-        'D.getitem(key) -> (stored key, value)'
+        """D.getitem(key) -> (stored key, value)"""
         transformed = self._transform(key)
         original = self._original[transformed]
         value = self._data[transformed]
@@ -56,7 +56,7 @@ class TransformDict(MutableMapping):
 
     @property
     def transform_func(self):
-        "This TransformDict's transformation function"
+        """This TransformDict's transformation function"""
         return self._transform
 
     # Minimum set of methods required for MutableMapping
@@ -83,7 +83,7 @@ class TransformDict(MutableMapping):
     # Methods overridden to mitigate the performance overhead.
 
     def clear(self):
-        'D.clear() -> None.  Remove all items from D.'
+        """D.clear() -> None.  Remove all items from D."""
         self._data.clear()
         self._original.clear()
 
@@ -91,14 +91,14 @@ class TransformDict(MutableMapping):
         return self._transform(key) in self._data
 
     def get(self, key, default=None):
-        'D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None.'
+        """D.get(k[,d]) -> D[k] if k in D, else d.  d defaults to None."""
         return self._data.get(self._transform(key), default)
 
     def pop(self, key, default=_sentinel):
-        '''D.pop(k[,d]) -> v, remove key and return corresponding value.
+        """D.pop(k[,d]) -> v, remove key and return corresponding value.
            If key is not found, d is returned if given, otherwise
            KeyError is raised.
-        '''
+        """
         transformed = self._transform(key)
         if default is _sentinel:
             del self._original[transformed]
@@ -108,16 +108,16 @@ class TransformDict(MutableMapping):
             return self._data.pop(transformed, default)
 
     def popitem(self):
-        '''D.popitem() -> (k, v), remove and return some (key, value) pair
+        """D.popitem() -> (k, v), remove and return some (key, value) pair
            as a 2-tuple; but raise KeyError if D is empty.
-        '''
+        """
         transformed, value = self._data.popitem()
         return self._original.pop(transformed), value
 
     # Other methods
 
     def copy(self):
-        'D.copy() -> a shallow copy of D'
+        """D.copy() -> a shallow copy of D"""
         other = self.__class__(self._transform)
         other._original = self._original.copy()
         other._data = self._data.copy()
@@ -137,5 +137,4 @@ class TransformDict(MutableMapping):
         except TypeError:
             # Some keys are unhashable, fall back on .items()
             equiv = list(self.items())
-        return '%s(%r, %s)' % (self.__class__.__name__,
-                               self._transform, repr(equiv))
+        return f'{self.__class__.__name__}({self._transform!r}, {equiv!r})'

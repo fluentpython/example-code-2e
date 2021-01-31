@@ -24,7 +24,7 @@ def max(__iterable: Iterable[_CT], *, key: None = ...) -> _CT:
 def max(__iterable: Iterable[_T], *, key: Callable[[_T], _CT]) -> _T:
     ...
 @overload
-def max(__iterable: Iterable[_CT], *, key: None = ..., 
+def max(__iterable: Iterable[_CT], *, key: None = ...,
         default: _DT) -> Union[_CT, _DT]:
     ...
 @overload

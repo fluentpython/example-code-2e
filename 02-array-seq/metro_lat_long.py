@@ -4,7 +4,7 @@ metro_lat_long.py
 Demonstration of nested tuple unpacking::
 
     >>> main()
-                    |   lat.    |   long.  
+                    |   lat.    |   long.
     Mexico City     |   19.4333 |  -99.1333
     New York-Newark |   40.8086 |  -74.0204
     Sao Paulo       |  -23.5478 |  -46.6358
@@ -20,11 +20,10 @@ metro_areas = [
 ]
 
 def main():
-    print('{:15} | {:^9} | {:^9}'.format('', 'lat.', 'long.'))
-    fmt = '{:15} | {:9.4f} | {:9.4f}'
+    print(f'{"":15} | {"lat.":^9} | {"long.":^9}')
     for name, cc, pop, (latitude, longitude) in metro_areas:  # <2>
         if longitude <= 0:  # <3>
-            print(fmt.format(name, latitude, longitude))
+            print(f'{name:15} | {latitude:9.4f} | {longitude:9.4f}')
 
 if __name__ == '__main__':
     main()

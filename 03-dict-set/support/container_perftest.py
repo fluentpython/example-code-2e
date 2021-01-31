@@ -41,15 +41,15 @@ def test(container_type, verbose):
                              size=size, verbose=verbose)
         test = TEST.format(verbose=verbose)
         tt = timeit.repeat(stmt=test, setup=setup, repeat=5, number=1)
-        print('|{:{}d}|{:f}'.format(size, MAX_EXPONENT + 1, min(tt)))
+        print(f'|{size:{MAX_EXPONENT + 1}d}|{min(tt):f}')
 
-if __name__=='__main__':
+if __name__ == '__main__':
     if '-v' in sys.argv:
         sys.argv.remove('-v')
         verbose = True
     else:
         verbose = False
     if len(sys.argv) != 2:
-        print('Usage: %s <container_type>' % sys.argv[0])
+        print(f'Usage: {sys.argv[0]} <container_type>')
     else:
         test(sys.argv[1], verbose)

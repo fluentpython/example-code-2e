@@ -57,7 +57,7 @@ def load_hash() -> Tuple[bytes, bytes]:
         sys.exit(2)
 
     salt, stored_hash = salted_hash.split(b':')
-    return (b64decode(salt), b64decode(stored_hash))
+    return b64decode(salt), b64decode(stored_hash)
 
 
 def practice() -> None:
@@ -83,8 +83,7 @@ def practice() -> None:
         print(f'  {answer}\thits={correct}\tmisses={turn-correct}')
 
     if turn:
-        pct = correct / turn * 100
-        print(f'\n{turn} turns. {pct:0.1f}% correct.')
+        print(f'\n{turn} turns. {correct / turn:.1%} correct.')
 
 
 def main(argv: Sequence[str]) -> None:

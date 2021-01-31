@@ -1,5 +1,5 @@
 from time import perf_counter
-from typing import Tuple, List, NamedTuple
+from typing import List, NamedTuple
 from threading import Thread
 from queue import SimpleQueue
 
