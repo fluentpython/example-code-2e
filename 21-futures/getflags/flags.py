@@ -17,8 +17,8 @@ Sample runs (first with new domain, so no caching ever)::
 """
 
 # tag::FLAGS_PY[]
-import os
 import time
+from pathlib import Path
 from typing import Callable
 
 import requests  # <1>
@@ -27,12 +27,10 @@ POP20_CC = ('CN IN US ID BR PK NG BD RU JP '
             'MX PH VN ET EG DE IR TR CD FR').split()  # <2>
 
 BASE_URL = 'http://fluentpython.com/data/flags'       # <3>
-DEST_DIR = 'downloaded/'                              # <4>
+DEST_DIR = Path('downloaded')                         # <4>
 
 def save_flag(img: bytes, filename: str) -> None:     # <5>
-    path = os.path.join(DEST_DIR, filename)
-    with open(path, 'wb') as fp:
-        fp.write(img)
+    (DEST_DIR / filename).write_bytes(img)
 
 def get_flag(cc: str) -> bytes:  # <6>
     cc = cc.lower()
@@ -45,7 +43,6 @@ def download_many(cc_list: list[str]) -> int:  # <7>
         image = get_flag(cc)
         print(cc, end=' ', flush=True)         # <9>
         save_flag(image, cc.lower() + '.gif')
-
     return len(cc_list)
 
 def main(downloader: Callable[[list[str]], int]) -> None:  # <10>

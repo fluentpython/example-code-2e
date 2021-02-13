@@ -6,10 +6,10 @@ but using `concurrent.futures.ProcessPoolExecutor`.
 """
 
 # tag::PRIMES_POOL[]
+import sys
+from concurrent import futures  # <1>
 from time import perf_counter
 from typing import NamedTuple
-from concurrent import futures  # <1>
-import sys
 
 from primes import is_prime, NUMBERS
 
@@ -43,7 +43,7 @@ def main() -> None:
             print(f'{n:16}  {label} {elapsed:9.6f}s')
 
     time = perf_counter() - t0
-    print('Total time:', f'{time:0.2f}s')
+    print(f'Total time: {time:.2f}s')
 
 if __name__ == '__main__':
     main()

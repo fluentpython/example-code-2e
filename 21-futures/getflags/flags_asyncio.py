@@ -18,7 +18,7 @@ from aiohttp import ClientSession  # <1>
 
 from flags import BASE_URL, save_flag, main  # <2>
 
-async def get_flag(session: ClientSession ,cc: str) -> bytes:  # <3>
+async def get_flag(session: ClientSession, cc: str) -> bytes:  # <3>
     cc = cc.lower()
     url = f'{BASE_URL}/{cc}/{cc}.gif'
     async with session.get(url) as resp:  # <4>
@@ -36,7 +36,6 @@ async def supervisor(cc_list):
         to_do = [download_one(session, cc)
                  for cc in sorted(cc_list)]  # <8>
         res = await asyncio.gather(*to_do)   # <9>
-
     return len(res)
 
 def download_many(cc_list):

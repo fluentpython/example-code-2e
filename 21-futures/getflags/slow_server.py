@@ -8,14 +8,14 @@ GET responses, and optionally returns errors to a fraction of
 the requests if given the --error_rate command-line argument.
 """
 
-import time
+import contextlib
 import os
 import socket
-import contextlib
+import time
 from functools import partial
-from random import random
 from http import server, HTTPStatus
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+from random import random
 
 
 class SlowHTTPRequestHandler(SimpleHTTPRequestHandler):
@@ -52,7 +52,6 @@ class SlowHTTPRequestHandler(SimpleHTTPRequestHandler):
 # https://github.com/python/cpython/blob/master/Lib/http/server.py
 
 if __name__ == '__main__':
-
     import argparse
 
     parser = argparse.ArgumentParser()
@@ -61,11 +60,11 @@ if __name__ == '__main__':
                              '[default: all interfaces]')
     parser.add_argument('--directory', '-d', default=os.getcwd(),
                         help='Specify alternative directory '
-                        '[default:current directory]')
+                             '[default:current directory]')
     parser.add_argument('--error-rate', '-e', metavar='PROBABILITY',
                         default=0.0, type=float,
                         help='Error rate; e.g. use .25 for 25%% probability '
-                        '[default:0.0]')
+                             '[default:0.0]')
     parser.add_argument('port', action='store',
                         default=8000, type=int,
                         nargs='?',
