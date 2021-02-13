@@ -28,7 +28,7 @@ def main() -> None:
         print(f'{n:16}  {label} {elapsed:9.6f}s')
 
     elapsed = perf_counter() - t0  # <4>
-    print('Total time:', f'{elapsed:0.2f}s')
+    print(f'Total time: {elapsed:.2f}s')
 
 if __name__ == '__main__':
     main()

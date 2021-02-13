@@ -25,7 +25,7 @@ async def slow() -> int:
 
 async def supervisor() -> int:
     spinner = asyncio.create_task(spin('thinking!'))  # <1>
-    print('spinner object:', spinner)  # <2>
+    print(f'spinner object: {spinner}')  # <2>
     result = await slow()  # <3>
     spinner.cancel()  # <5>
     return result
@@ -33,7 +33,7 @@ async def supervisor() -> int:
 
 def main() -> None:
     result = asyncio.run(supervisor())
-    print('Answer:', result)
+    print(f'Answer: {result}')
 
 if __name__ == '__main__':
     main()

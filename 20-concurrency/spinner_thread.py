@@ -5,9 +5,9 @@
 # https://mail.python.org/pipermail/python-list/2009-February/675659.html
 
 # tag::SPINNER_THREAD_TOP[]
-from threading import Thread, Event
 import itertools
 import time
+from threading import Thread, Event
 
 def spin(msg: str, done: Event) -> None:  # <1>
     for char in itertools.cycle(r'\|/-'):  # <2>
@@ -26,9 +26,8 @@ def slow() -> int:
 # tag::SPINNER_THREAD_REST[]
 def supervisor() -> int:  # <1>
     done = Event()  # <2>
-    spinner = Thread(target=spin,
-                     args=('thinking!', done))  # <3>
-    print('spinner object:', spinner)  # <4>
+    spinner = Thread(target=spin, args=('thinking!', done))  # <3>
+    print(f'spinner object: {spinner}')  # <4>
     spinner.start()  # <5>
     result = slow()  # <6>
     done.set()  # <7>
@@ -37,7 +36,7 @@ def supervisor() -> int:  # <1>
 
 def main() -> None:
     result = supervisor()  # <9>
-    print('Answer:', result)
+    print(f'Answer: {result}')
 
 if __name__ == '__main__':
     main()

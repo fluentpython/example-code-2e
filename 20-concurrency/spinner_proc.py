@@ -5,10 +5,10 @@
 # https://mail.python.org/pipermail/python-list/2009-February/675659.html
 
 # tag::SPINNER_PROC_IMPORTS[]
-from multiprocessing import Process, Event  # <1>
-from multiprocessing import synchronize     # <2>
 import itertools
 import time
+from multiprocessing import Process, Event  # <1>
+from multiprocessing import synchronize     # <2>
 
 def spin(msg: str, done: synchronize.Event) -> None:  # <3>
 # end::SPINNER_PROC_IMPORTS[]
@@ -29,7 +29,7 @@ def supervisor() -> int:
     done = Event()
     spinner = Process(target=spin,               # <4>
                       args=('thinking!', done))
-    print('spinner object:', spinner)            # <5>
+    print(f'spinner object: {spinner}')          # <5>
     spinner.start()
     result = slow()
     done.set()
@@ -39,7 +39,7 @@ def supervisor() -> int:
 
 def main() -> None:
     result = supervisor()
-    print('Answer:', result)
+    print(f'Answer: {result}')
 
 
 if __name__ == '__main__':
