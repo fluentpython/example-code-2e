@@ -38,15 +38,16 @@ Part / Chapter #|Title|Directory|Notebook|1<sup>st</sup> ed. Chapter&nbsp;#
 12|Sequence Hacking, Hashing, and Slicing|[12-seq-hacking](12-seq-hacking)||10
 13|Interfaces: From Protocols to ABCs|[13-iface-abc](13-iface-abc)||11
 14|Inheritance: For Good or For Worse|[14-inheritance](14-inheritance)||12
-🆕 15|Type Hints Distilled|[15-type-hints](15-type-hints)||–
+🆕 15|More About Type Hints|[15-type-hints](15-type-hints)||–
 16|Operator Overloading: Doing It Right|[16-op-overloading](16-op-overloading)||13
 **V – Control Flow**|
 17|Iterables, Iterators, and Generators|[17-it-generator](17-it-generator)||14
 18|Context Managers and else Blocks|[18-context-mngr](18-context-mngr)||15
 19|Coroutines|[19-coroutine](19-coroutine)||16
-20|Concurrency with Futures|[20-futures](20-futures)||17
-21|Concurrency with asyncio|[21-asyncio](21-asyncio)||18
+🆕 20|Concurrency Models in Python|[20-concurrency](20-concurrency)||-
+21|Concurrency with Futures|[21-futures](21-futures)||17
+22|Concurrency with asyncio|[22-asyncio](22-asyncio)||18
 **VI – Metaprogramming**|
-22|Dynamic Attributes and Properties|[22-dyn-attr-prop](22-dyn-attr-prop)||19
-23|Attribute Descriptors|[23-descriptor](23-descriptor)||20
-24|Class Metaprogramming|[24-class-metaprog](24-class-metaprog)||21
+23|Dynamic Attributes and Properties|[22-dyn-attr-prop](22-dyn-attr-prop)||19
+24|Attribute Descriptors|[23-descriptor](23-descriptor)||20
+25|Class Metaprogramming|[24-class-metaprog](24-class-metaprog)||21
