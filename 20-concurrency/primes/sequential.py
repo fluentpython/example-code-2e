@@ -1,18 +1,26 @@
+#!/usr/bin/env python3
+
+"""
+sequential.py: baseline for comparing sequential, multiprocessing,
+and threading code for CPU-intensive work.
+"""
+
 from time import perf_counter
 from typing import NamedTuple
 
 from primes import is_prime, NUMBERS
 
 class Result(NamedTuple):  # <1>
-    flag: bool
+    prime: bool
     elapsed: float
 
 def check(n: int) -> Result:  # <2>
     t0 = perf_counter()
-    flag = is_prime(n)
-    return Result(flag, perf_counter() - t0)
+    prime = is_prime(n)
+    return Result(prime, perf_counter() - t0)
 
 def main() -> None:
+    print(f'Checking {len(NUMBERS)} numbers sequentially:')
     t0 = perf_counter()
     for n in NUMBERS:  # <3>
         prime, elapsed = check(n)

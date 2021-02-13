@@ -1,28 +1,35 @@
+#!/usr/bin/env python3
+
+"""
+procs.py: shows that multiprocessing on a multicore machine
+can be faster than sequential code for CPU-intensive work.
+"""
+
 # tag::PRIMES_PROC_TOP[]
 from time import perf_counter
-from typing import Tuple, NamedTuple
+from typing import NamedTuple
 from multiprocessing import Process, SimpleQueue, cpu_count  # <1>
 from multiprocessing import queues  # <2>
 import sys
 
 from primes import is_prime, NUMBERS
 
-class Result(NamedTuple):  # <3>
-    flag: bool
+class PrimeResult(NamedTuple):  # <3>
+    n: int
+    prime: bool
     elapsed: float
 
 JobQueue = queues.SimpleQueue[int]  # <4>
-ResultQueue = queues.SimpleQueue[Tuple[int, Result]]  # <5>
+ResultQueue = queues.SimpleQueue[PrimeResult]  # <5>
 
-def check(n: int) -> Result:  # <6>
+def check(n: int) -> PrimeResult:  # <6>
     t0 = perf_counter()
     res = is_prime(n)
-    return Result(res, perf_counter() - t0)
+    return PrimeResult(n, res, perf_counter() - t0)
 
 def worker(jobs: JobQueue, results: ResultQueue) -> None:  # <7>
     while n := jobs.get():  # <8>
-        result = check(n)  # <9>
-        results.put((n, result))  # <10>
+        results.put(check(n))  # <9>
 # end::PRIMES_PROC_TOP[]
 
 # tag::PRIMES_PROC_MAIN[]
@@ -32,11 +39,11 @@ def main() -> None:
     else:
         workers = int(sys.argv[1])
 
-    t0 = perf_counter()
+    print(f'Checking {len(NUMBERS)} numbers with {workers} processes:')
+
     jobs: JobQueue = SimpleQueue() # <2>
     results: ResultQueue = SimpleQueue()
-
-    print(f'Checking {len(NUMBERS)} numbers with {workers} processes:')
+    t0 = perf_counter()
 
     for n in NUMBERS:  # <3>
         jobs.put(n)
@@ -47,7 +54,7 @@ def main() -> None:
         jobs.put(0)  # <6>
 
     while True:
-        n, (prime, elapsed) = results.get()  # <7>
+        n, prime, elapsed = results.get()  # <7>
         label = 'P' if prime else ' '
         print(f'{n:16}  {label} {elapsed:9.6f}s')  # <8>
         if jobs.empty():  # <9>

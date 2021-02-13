@@ -1,5 +1,12 @@
+#!/usr/bin/env python3
+
+"""
+threads.py: shows that Python threads are slower than
+sequential code for CPU-intensive work.
+"""
+
 from time import perf_counter
-from typing import Tuple, NamedTuple
+from typing import NamedTuple
 from threading import Thread
 from queue import SimpleQueue
 import sys
@@ -7,22 +14,22 @@ import os
 
 from primes import is_prime, NUMBERS
 
-class Result(NamedTuple):
-    flag: bool
+class PrimeResult(NamedTuple):  # <3>
+    n: int
+    prime: bool
     elapsed: float
 
 JobQueue = SimpleQueue[int]
-ResultQueue = SimpleQueue[Tuple[int, Result]]
+ResultQueue = SimpleQueue[PrimeResult]
 
-def check(n: int) -> Result:
+def check(n: int) -> PrimeResult:
     t0 = perf_counter()
     res = is_prime(n)
-    return Result(res, perf_counter() - t0)
+    return PrimeResult(n, res, perf_counter() - t0)
 
 def worker(jobs: JobQueue, results: ResultQueue) -> None:
     while n := jobs.get():
-        result = check(n)
-        results.put((n, result))
+        results.put(check(n))
 
 def main() -> None:
     if len(sys.argv) < 2:  # <1>
@@ -30,11 +37,11 @@ def main() -> None:
     else:
         workers = int(sys.argv[1])
 
-    t0 = perf_counter()
+    print(f'Checking {len(NUMBERS)} numbers with {workers} threads:')
+
     jobs: JobQueue = SimpleQueue() # <2>
     results: ResultQueue = SimpleQueue()
-
-    print(f'Checking {len(NUMBERS)} numbers with {workers} threads:')
+    t0 = perf_counter()
 
     for n in NUMBERS:  # <3>
         jobs.put(n)
@@ -45,7 +52,7 @@ def main() -> None:
         jobs.put(0)  # <6>
 
     while True:
-        n, (prime, elapsed) = results.get()  # <7>
+        n, prime, elapsed = results.get()  # <7>
         label = 'P' if prime else ' '
         print(f'{n:16}  {label} {elapsed:9.6f}s')
         if jobs.empty():  # <8>

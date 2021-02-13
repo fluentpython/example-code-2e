@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import math
 
 
@@ -27,7 +29,7 @@ PRIME_FIXTURE = [
 NUMBERS = [n for n, _ in PRIME_FIXTURE]
 
 # tag::IS_PRIME[]
-def is_prime(n) -> bool:
+def is_prime(n: int) -> bool:
     if n < 2:
         return False
     if n == 2:
@@ -35,7 +37,7 @@ def is_prime(n) -> bool:
     if n % 2 == 0:
         return False
 
-    root = math.floor(math.sqrt(n))
+    root = math.isqrt(n)
     for i in range(3, root + 1, 2):
         if n % i == 0:
             return False

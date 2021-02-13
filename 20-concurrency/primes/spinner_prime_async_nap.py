@@ -1,4 +1,4 @@
-# spinner_async_experiment.py
+# spinner_prime_async_nap.py
 
 # credits: Example by Luciano Ramalho inspired by
 # Michele Simionato's multiprocessing example in the python-list:
@@ -8,7 +8,7 @@ import asyncio
 import itertools
 import math
 
-# tag::SPINNER_ASYNC_NAP[]
+# tag::PRIME_NAP[]
 async def is_prime(n):
     if n < 2:
         return False
@@ -17,15 +17,14 @@ async def is_prime(n):
     if n % 2 == 0:
         return False
 
-    sleep = asyncio.sleep  # <1>
-    root = math.floor(math.sqrt(n))
+    root = math.isqrt(n)
     for i in range(3, root + 1, 2):
         if n % i == 0:
             return False
         if i % 100_000 == 1:  # <2>
-            await sleep(0)
+            await asyncio.sleep(0)
     return True
-# end::SPINNER_ASYNC_NAP[]
+# end::PRIME_NAP[]
 
 
 async def spin(msg: str) -> None:
