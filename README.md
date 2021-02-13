@@ -44,7 +44,7 @@ Part / Chapter #|Title|Directory|Notebook|1<sup>st</sup> ed. Chapter&nbsp;#
 17|Iterables, Iterators, and Generators|[17-it-generator](17-it-generator)||14
 18|Context Managers and else Blocks|[18-context-mngr](18-context-mngr)||15
 19|Coroutines|[19-coroutine](19-coroutine)||16
-🆕 20|Concurrency with Futures|[20-futures](20-futures)||-
+🆕 20|Concurrency Models in Python|[20-concurrency](20-concurrency)||-
 21|Concurrency with Futures|[21-futures](21-futures)||17
 22|Concurrency with asyncio|[22-asyncio](22-asyncio)||18
 **VI – Metaprogramming**|
