@@ -6,27 +6,7 @@
 
 import asyncio
 import itertools
-import math
-
-# tag::SPINNER_ASYNC_NAP[]
-async def is_prime(n):
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-
-    sleep = asyncio.sleep  # <1>
-    root = math.floor(math.sqrt(n))
-    for i in range(3, root + 1, 2):
-        if n % i == 0:
-            return False
-        if i % 100_000 == 1:  # <2>
-            await sleep(0)
-    return True
-# end::SPINNER_ASYNC_NAP[]
-
+import time
 
 async def spin(msg: str) -> None:
     for char in itertools.cycle(r'\|/-'):
@@ -36,11 +16,11 @@ async def spin(msg: str) -> None:
             await asyncio.sleep(.1)
         except asyncio.CancelledError:
             break
-    blanks = ' ' * len(status)
-    print(f'\r{blanks}\r', end='')
+    print('THIS WILL NEVER BE OUTPUT')
 
+# tag::SPINNER_ASYNC_EXPERIMENT[]
 async def slow() -> int:
-    await is_prime(5_000_111_000_222_021)  # <4>
+    time.sleep(3)  # <4>
     return 42
 
 async def supervisor() -> int:
@@ -49,6 +29,7 @@ async def supervisor() -> int:
     result = await slow()  # <3>
     spinner.cancel()  # <5>
     return result
+# end::SPINNER_ASYNC_EXPERIMENT[]
 
 def main() -> None:
     result = asyncio.run(supervisor())

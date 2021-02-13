@@ -7,8 +7,7 @@
 # tag::SPINNER_THREAD_TOP[]
 from threading import Thread, Event
 import itertools
-
-from primes import is_prime
+import time
 
 def spin(msg: str, done: Event) -> None:  # <1>
     for char in itertools.cycle(r'\|/-'):  # <2>
@@ -20,7 +19,7 @@ def spin(msg: str, done: Event) -> None:  # <1>
     print(f'\r{blanks}\r', end='')  # <6>
 
 def slow() -> int:
-    is_prime(5_000_111_000_222_021)  # <7>
+    time.sleep(3)  # <7>
     return 42
 # end::SPINNER_THREAD_TOP[]
 
