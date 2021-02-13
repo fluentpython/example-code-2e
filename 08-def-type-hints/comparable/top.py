@@ -8,7 +8,7 @@ Example:
 >>> l = 'mango pear apple kiwi banana'.split()
 >>> top(l, 3)
 ['pear', 'mango', 'kiwi']
->>> 
+>>>
 >>> l2 = [(len(s), s) for s in l]
 >>> l2
 [(5, 'mango'), (4, 'pear'), (5, 'apple'), (4, 'kiwi'), (6, 'banana')]

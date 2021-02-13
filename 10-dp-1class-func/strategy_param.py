@@ -6,7 +6,7 @@
     >>> ann = Customer('Ann Smith', 1100)
     >>> cart = [LineItem('banana', 4, .5),
     ...         LineItem('apple', 10, 1.5),
-    ...         LineItem('watermellon', 5, 5.0)]
+    ...         LineItem('watermelon', 5, 5.0)]
     >>> Order(joe, cart, fidelity_promo(10))
     <Order total: 42.00 due: 42.00>
     >>> Order(ann, cart, fidelity_promo(10))
@@ -73,8 +73,7 @@ class Order:  # the Context
         return self.total() - discount
 
     def __repr__(self):
-        fmt = '<Order total: {:.2f} due: {:.2f}>'
-        return fmt.format(self.total(), self.due())
+        return f'<Order total: {self.total():.2f} due: {self.due():.2f}>'
 
 
 # tag::STRATEGY_PARAM[]
@@ -85,7 +84,7 @@ Promotion = Callable[[Order], float]  # <2>
 def fidelity_promo(percent: float) -> Promotion:
     """discount for customers with 1000 or more fidelity points"""
     return lambda order: (
-        order.total() * percent / 100.0 if order.customer.fidelity >= 1000 else 0
+        order.total() * percent / 100 if order.customer.fidelity >= 1000 else 0
     )
 
 
@@ -96,7 +95,7 @@ def bulk_item_promo(percent: float) -> Promotion:
         discount = 0
         for item in order.cart:
             if item.quantity >= 20:
-                discount += item.total() * percent / 100.0
+                discount += item.total() * percent / 100
         return discount
 
     return discounter
@@ -111,13 +110,13 @@ class LargeOrderPromo:
     def __call__(self, order: Order) -> float:
         distinct_items = {item.product for item in order.cart}
         if len(distinct_items) >= 10:
-            return order.total() * self.percent / 100.0
+            return order.total() * self.percent / 100
         return 0
 
 
 def general_discount(percent: float, order: Order) -> float:
     """unrestricted discount; usage: ``partial(general_discount, 5)``"""
-    return order.total() * percent / 100.0
+    return order.total() * percent / 100
 
 
 # end::STRATEGY[]

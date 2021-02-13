@@ -13,7 +13,7 @@ def mode(data: Iterable[T]) -> T:
 
 def demo() -> None:
     from typing import List, Set, TYPE_CHECKING
-    pop:List[Set] = [set(), set()]
+    pop: List[Set] = [set(), set()]
     m = mode(pop)
     if TYPE_CHECKING:
         reveal_type(pop)

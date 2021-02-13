@@ -6,7 +6,6 @@
 
 from threading import Thread, Event
 import itertools
-import time
 
 from primes import is_prime
 

@@ -6,4 +6,4 @@ class Coordinate(typing.NamedTuple):
     long: float
 
 trash = Coordinate('foo', None)  # <1>
-print(trash)                           
+print(trash)

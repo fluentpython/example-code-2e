@@ -21,7 +21,7 @@ def cart_plain() -> List[LineItem]:
     return [
         LineItem('banana', 4, 0.5),
         LineItem('apple', 10, 1.5),
-        LineItem('watermellon', 5, 5.0),
+        LineItem('watermelon', 5, 5.0),
     ]
 
 

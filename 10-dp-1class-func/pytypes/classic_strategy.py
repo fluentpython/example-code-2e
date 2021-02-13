@@ -8,7 +8,7 @@
     >>> ann = Customer('Ann Smith', 1100)
     >>> cart = [LineItem('banana', 4, .5),  # <2>
     ...         LineItem('apple', 10, 1.5),
-    ...         LineItem('watermellon', 5, 5.0)]
+    ...         LineItem('watermelon', 5, 5.0)]
     >>> Order(joe, cart, FidelityPromo())  # <3>
     <Order total: 42.00 due: 42.00>
     >>> Order(ann, cart, FidelityPromo())  # <4>
@@ -29,7 +29,6 @@
 # tag::CLASSIC_STRATEGY[]
 
 from abc import ABC, abstractmethod
-from collections import namedtuple
 import typing
 
 from pytypes import typelogged
@@ -71,8 +70,7 @@ class Order:  # the Context
         return self.total() - discount
 
     def __repr__(self):
-        fmt = '<Order total: {:.2f} due: {:.2f}>'
-        return fmt.format(self.total(), self.due())
+        return f'<Order total: {self.total():.2f} due: {self.due():.2f}>'
 
 
 @typelogged

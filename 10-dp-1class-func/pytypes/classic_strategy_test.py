@@ -20,7 +20,7 @@ def customer_fidelity_1100() -> Customer:
 def cart_plain() -> List[LineItem]:
     return [LineItem('banana', 4, .5),
             LineItem('apple', 10, 1.5),
-            LineItem('watermellon', 5, 5.0)]
+            LineItem('watermelon', 5, 5.0)]
 
 
 def test_fidelity_promo_no_discount(customer_fidelity_0, cart_plain) -> None:

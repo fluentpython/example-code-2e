@@ -6,7 +6,7 @@
     >>> ann = Customer('Ann Smith', 1100)
     >>> cart = [LineItem('banana', 4, .5),
     ...         LineItem('apple', 10, 1.5),
-    ...         LineItem('watermellon', 5, 5.0)]
+    ...         LineItem('watermelon', 5, 5.0)]
     >>> Order(joe, cart, FidelityPromo(10))
     <Order total: 42.00 due: 42.00>
     >>> Order(ann, cart, FidelityPromo(10))
@@ -60,11 +60,10 @@ class Order:  # the Context
         return self.total() - discount
 
     def __repr__(self):
-        fmt = '<Order total: {:.2f} due: {:.2f}>'
-        return fmt.format(self.total(), self.due())
+        return f'<Order total: {self.total():.2f} due: {self.due():.2f}>'
 
 
-class Promotion():
+class Promotion:
     """compute discount for order"""
 
     def __init__(self, percent):
@@ -79,7 +78,7 @@ class FidelityPromo(Promotion):
 
     def __call__(self, order):
         if order.customer.fidelity >= 1000:
-            return order.total() * self.percent/100.0
+            return order.total() * self.percent / 100
         return 0
 
 
@@ -90,7 +89,7 @@ class BulkItemPromo(Promotion):
         discount = 0
         for item in order.cart:
             if item.quantity >= 20:
-                discount += item.total() * self.percent/100.0
+                discount += item.total() * self.percent / 100
         return discount
 
 
@@ -100,5 +99,5 @@ class LargeOrderPromo(Promotion):
     def __call__(self, order):
         distinct_items = {item.product for item in order.cart}
         if len(distinct_items) >= 10:
-            return order.total() * self.percent / 100.0
+            return order.total() * self.percent / 100
         return 0

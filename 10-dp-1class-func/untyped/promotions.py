@@ -1,4 +1,3 @@
-
 def fidelity_promo(order):
     """5% discount for customers with 1000 or more fidelity points"""
     return order.total() * .05 if order.customer.fidelity >= 1000 else 0

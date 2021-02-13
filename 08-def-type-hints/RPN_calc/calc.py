@@ -2,7 +2,7 @@
 
 import sys
 from array import array
-from typing import Mapping, MutableSequence, Callable, Iterable, Sequence, Union, Any
+from typing import Mapping, MutableSequence, Callable, Iterable, Union, Any
 
 
 OPERATORS: Mapping[str, Callable[[float, float], float]] = {

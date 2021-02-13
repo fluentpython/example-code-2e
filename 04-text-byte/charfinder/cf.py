@@ -8,7 +8,7 @@ FIRST, LAST = ord(' '), sys.maxunicode              # <1>
 def find(*query_words, first=FIRST, last=LAST):     # <2>
     query = {w.upper() for w in query_words}        # <3>
     count = 0
-    for code in range(first, last + 1):    
+    for code in range(first, last + 1):
         char = chr(code)                            # <4>
         name = unicodedata.name(char, None)         # <5>
         if name and query.issubset(name.split()):   # <6>

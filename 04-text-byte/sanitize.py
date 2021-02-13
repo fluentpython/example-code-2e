@@ -1,4 +1,3 @@
-
 """
 Radical folding and text sanitizing.
 

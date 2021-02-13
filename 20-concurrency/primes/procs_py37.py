@@ -34,9 +34,9 @@ def main() -> None:
         label = 'P' if prime else ' '
         print(f'{n:16}  {label} {elapsed:9.6f}s')
 
-
     time = perf_counter() - t0
     print('Total time:', f'{time:0.2f}s')
+
 
 if __name__ == '__main__':
     main()

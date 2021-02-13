@@ -7,5 +7,5 @@ for field in fields:
     # list private fields only
     if Modifier.isPrivate(field.getModifiers()):
         field.setAccessible(True) # break the lock
-        print 'field:', field
-        print '\t', field.getName(), '=', field.get(message)
+        print('field:', field)
+        print('\t', field.getName(), '=', field.get(message))

@@ -30,7 +30,7 @@ def demo() -> None:
     l33t = [(p[0], p[1]) for p in 'a4 e3 i1 o0'.split()]
     text = 'mad skilled noob powned leet'
     print(zip_replace(text, l33t))
- 
+
 
 if __name__ == '__main__':
     demo()
