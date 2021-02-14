@@ -36,7 +36,7 @@ Demonstration of ``bisect.bisect_left``::
 
 """
 
-# BEGIN BISECT_DEMO
+# tag::BISECT_DEMO[]
 import bisect
 import sys
 
@@ -62,4 +62,4 @@ if __name__ == '__main__':
     print('haystack ->', ' '.join(f'{n:2}' for n in HAYSTACK))
     demo(bisect_fn)
 
-# END BISECT_DEMO
+# end::BISECT_DEMO[]

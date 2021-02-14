@@ -30,13 +30,13 @@ To fix, ``leo2`` must be created with an explicit ``handle``::
 
 # tag::HACKERCLUB[]
 from dataclasses import dataclass
-from typing import ClassVar, Set
+from typing import ClassVar
 from club import ClubMember
 
 @dataclass
 class HackerClubMember(ClubMember):
 
-    all_handles: ClassVar[Set[str]] = set()
+    all_handles: ClassVar[set[str]] = set()
 
     handle: str = ''
 

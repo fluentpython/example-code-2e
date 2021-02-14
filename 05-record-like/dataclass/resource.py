@@ -27,7 +27,7 @@ A complete resource record:
 
 # tag::DATACLASS[]
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import Optional
 from enum import Enum, auto
 from datetime import date
 
@@ -43,12 +43,12 @@ class Resource:
     """Media resource description."""
     identifier: str                                    # <2>
     title: str = '<untitled>'                          # <3>
-    creators: List[str] = field(default_factory=list)
+    creators: list[str] = field(default_factory=list)
     date: Optional[date] = None                        # <4>
     type: ResourceType = ResourceType.BOOK             # <5>
     description: str = ''
     language: str = ''
-    subjects: List[str] = field(default_factory=list)
+    subjects: list[str] = field(default_factory=list)
 # end::DATACLASS[]
 
 
@@ -58,12 +58,12 @@ from typing import TypedDict
 class ResourceDict(TypedDict):
     identifier: str
     title: str
-    creators: List[str]
+    creators: list[str]
     date: Optional[date]
     type: ResourceType
     description: str
     language: str
-    subjects: List[str]
+    subjects: list[str]
 
 
 if __name__ == '__main__':

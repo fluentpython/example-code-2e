@@ -70,7 +70,8 @@ class Order:  # the Context
         return self.total() - discount
 
     def __repr__(self):
-        return f'<Order total: {self.total():.2f} due: {self.due():.2f}>'
+        fmt = '<Order total: {:.2f} due: {:.2f}>'
+        return fmt.format(self.total(), self.due())
 
 
 @typelogged

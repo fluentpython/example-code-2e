@@ -1,3 +1,6 @@
+#!/usr/bin/env jython
+# NOTE: Jython is still Python 2.7 in late2020
+
 """
 In the Jython registry file there is this line:
 
@@ -13,4 +16,4 @@ message = Confidential('top secret text')
 for name in dir(message):
     attr = getattr(message, name)
     if not callable(attr):  # non-methods only
-        print(name + '\t=', attr)
+        print name + '\t=', attr

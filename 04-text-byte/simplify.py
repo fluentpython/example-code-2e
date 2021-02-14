@@ -1,5 +1,6 @@
+
 """
-Radical folding and text sanitizing.
+Radical folding and diacritic mark removal.
 
 Handling a string with `cp1252` symbols:
 
@@ -45,30 +46,33 @@ def shave_marks_latin(txt):
     """Remove all diacritic marks from Latin base characters"""
     norm_txt = unicodedata.normalize('NFD', txt)  # <1>
     latin_base = False
-    keepers = []
+    preserve = []
     for c in norm_txt:
         if unicodedata.combining(c) and latin_base:   # <2>
             continue  # ignore diacritic on Latin base char
-        keepers.append(c)                             # <3>
+        preserve.append(c)                            # <3>
         # if it isn't combining char, it's a new base char
         if not unicodedata.combining(c):              # <4>
             latin_base = c in string.ascii_letters
-    shaved = ''.join(keepers)
+    shaved = ''.join(preserve)
     return unicodedata.normalize('NFC', shaved)   # <5>
 # end::SHAVE_MARKS_LATIN[]
 
 # tag::ASCIIZE[]
-single_map = str.maketrans("""‚ƒ„†ˆ‹‘’“”•–—˜›""",  # <1>
-                           """'f"*^<''""---~>""")
+single_map = str.maketrans("""‚ƒ„ˆ‹‘’“”•–—˜›""",  # <1>
+                           """'f"^<''""---~>""")
 
 multi_map = str.maketrans({  # <2>
-    '€': '<euro>',
+    '€': 'EUR',
     '…': '...',
+    'Æ': 'AE',
+    'æ': 'ae',
     'Œ': 'OE',
-    '™': '(TM)',
     'œ': 'oe',
+    '™': '(TM)',
     '‰': '<per mille>',
-    '‡': '**',
+    '†': '**',
+    '‡': '***',
 })
 
 multi_map.update(single_map)  # <3>

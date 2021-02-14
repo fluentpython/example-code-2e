@@ -56,7 +56,7 @@ class TransformDict(MutableMapping):
 
     @property
     def transform_func(self):
-        """This TransformDict's transformation function"""
+        """This is TransformDict's transformation function"""
         return self._transform
 
     # Minimum set of methods required for MutableMapping

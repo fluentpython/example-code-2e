@@ -29,7 +29,7 @@ Scalar multiplication::
 """
 
 
-from math import hypot
+import math
 
 class Vector:
 
@@ -41,7 +41,7 @@ class Vector:
         return f'Vector({self.x!r}, {self.y!r})'
 
     def __abs__(self):
-        return hypot(self.x, self.y)
+        return math.hypot(self.x, self.y)
 
     def __bool__(self):
         return bool(abs(self))

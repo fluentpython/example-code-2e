@@ -19,7 +19,7 @@
 
 # tag::CLIP_ANNOT[]
 
-def clip(text: str, max_len: 'int > 0'=80) -> str:  # <1>
+def clip(text: str, max_len: 'int > 0' = 80) -> str:  # <1>
     """Return text clipped at the last space before or after max_len
     """
     end = None

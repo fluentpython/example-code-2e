@@ -26,6 +26,5 @@ from comparable import Comparable
 CT = TypeVar('CT', bound=Comparable)
 
 def top(series: Iterable[CT], length: int) -> List[CT]:
-    ordered = sorted(series, reverse=True)
-    return ordered[:length]
+    return sorted(series, reverse=True)[:length]
 # end::TOP[]

@@ -83,8 +83,6 @@ Tests of hashing:
     >>> len({v1, v2})
     2
 
-# end::VECTOR2D_V3_DEMO[]
-
 """
 
 from array import array
