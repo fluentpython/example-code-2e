@@ -4,8 +4,8 @@
 # multiprocessing example in the python-list:
 # https://mail.python.org/pipermail/python-list/2009-February/675659.html
 
-from threading import Thread, Event
 import itertools
+from threading import Thread, Event
 
 from primes import is_prime
 
@@ -25,7 +25,7 @@ def supervisor(n: int) -> int:  # <1>
     done = Event()  # <2>
     spinner = Thread(target=spin,
                      args=('thinking!', done))  # <3>
-    print('spinner object:', spinner)  # <4>
+    print(f'spinner object: {spinner}')  # <4>
     spinner.start()  # <5>
     result = check(n)  # <6>
     done.set()  # <7>

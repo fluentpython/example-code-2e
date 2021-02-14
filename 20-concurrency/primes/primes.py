@@ -2,7 +2,6 @@
 
 import math
 
-
 PRIME_FIXTURE = [
     (2, True),
     (142702110479723, True),

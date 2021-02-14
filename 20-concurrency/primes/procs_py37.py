@@ -1,6 +1,6 @@
 # tag::PRIMES_PROC_TOP[]
 from time import perf_counter
-from typing import Tuple, List, NamedTuple
+from typing import List, NamedTuple
 from multiprocessing import Process, SimpleQueue  # <1>
 
 from primes import is_prime, NUMBERS
@@ -34,8 +34,8 @@ def main() -> None:
         label = 'P' if prime else ' '
         print(f'{n:16}  {label} {elapsed:9.6f}s')
 
-    time = perf_counter() - t0
-    print('Total time:', f'{time:0.2f}s')
+    elapsed = perf_counter() - t0
+    print(f'Total time: {elapsed:.2f}s')
 
 
 if __name__ == '__main__':

@@ -6,11 +6,11 @@ can be faster than sequential code for CPU-intensive work.
 """
 
 # tag::PRIMES_PROC_TOP[]
+import sys
 from time import perf_counter
 from typing import NamedTuple
 from multiprocessing import Process, SimpleQueue, cpu_count  # <1>
 from multiprocessing import queues  # <2>
-import sys
 
 from primes import is_prime, NUMBERS
 
@@ -60,8 +60,8 @@ def main() -> None:
         if jobs.empty():  # <9>
             break
 
-    time = perf_counter() - t0
-    print('Total time:', f'{time:0.2f}s')
+    elapsed = perf_counter() - t0
+    print(f'Total time: {elapsed:.2f}s')
 
 if __name__ == '__main__':
     main()

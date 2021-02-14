@@ -5,12 +5,12 @@ threads.py: shows that Python threads are slower than
 sequential code for CPU-intensive work.
 """
 
+import os
+import sys
+from queue import SimpleQueue
 from time import perf_counter
 from typing import NamedTuple
 from threading import Thread
-from queue import SimpleQueue
-import sys
-import os
 
 from primes import is_prime, NUMBERS
 
@@ -58,8 +58,8 @@ def main() -> None:
         if jobs.empty():  # <8>
             break
 
-    time = perf_counter() - t0
-    print('Total time:', f'{time:0.2f}s')
+    elapsed = perf_counter() - t0
+    print(f'Total time: {elapsed:.2f}s')
 
 if __name__ == '__main__':
     main()

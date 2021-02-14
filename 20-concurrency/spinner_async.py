@@ -27,11 +27,11 @@ async def slow() -> int:
 # tag::SPINNER_ASYNC_START[]
 def main() -> None:  # <1>
     result = asyncio.run(supervisor())  # <2>
-    print('Answer:', result)
+    print(f'Answer: {result}')
 
 async def supervisor() -> int:  # <3>
     spinner = asyncio.create_task(spin('thinking!'))  # <4>
-    print('spinner object:', spinner)  # <5>
+    print(f'spinner object: {spinner}')  # <5>
     result = await slow()  # <6>
     spinner.cancel()  # <7>
     return result
