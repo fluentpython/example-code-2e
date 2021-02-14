@@ -69,9 +69,9 @@ def expand_cc_args(every_cc: bool,
                    cc_args: list[str],
                    limit: int) -> list[str]:
     codes: set[str] = set()
-    A_Z = set(string.ascii_uppercase)
+    A_Z = string.ascii_uppercase
     if every_cc:
-        codes.update(f'{a}{b}' for a in A_Z for b in A_Z)
+        codes.update(a+b for a in A_Z for b in A_Z)
     elif all_cc:
         text = COUNTRY_CODES_FILE.read_text()
         codes.update(text.split())

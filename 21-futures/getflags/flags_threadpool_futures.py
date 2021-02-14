@@ -20,7 +20,7 @@ def download_many(cc_list: list[str]) -> int:
             to_do.append(future)  # <5>
             print(f'Scheduled for {cc}: {future}')  # <6>
 
-        for count, future in enumerate(futures.as_completed(to_do)):  # <7>
+        for count, future in enumerate(futures.as_completed(to_do), 1):  # <7>
             res: str = future.result()  # <8>
             print(f'{future} result: {res!r}')  # <9>
 

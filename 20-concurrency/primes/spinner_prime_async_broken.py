@@ -24,7 +24,7 @@ async def check(n: int) -> int:
 
 async def supervisor(n: int) -> int:
     spinner = asyncio.create_task(spin('thinking!'))  # <1>
-    print(f'spinner object: {spinner}')  # <2>
+    print('spinner object:', spinner)  # <2>
     result = await check(n)  # <3>
     spinner.cancel()  # <5>
     return result
