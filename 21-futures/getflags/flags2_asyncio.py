@@ -28,7 +28,8 @@ class FetchError(Exception):  # <1>
 
 
 async def get_flag(session, base_url, cc):  # <2>
-    url = '{}/{cc}/{cc}.gif'.format(base_url, cc=cc.lower())
+    cc = cc.lower()
+    url = f'{base_url}/{cc}/{cc}.gif'
     async with session.get(url) as resp:
         if resp.status == 200:
             return await resp.read()
@@ -87,8 +88,7 @@ async def downloader_coro(cc_list: list[str],
                 except IndexError:
                     error_msg = exc.__cause__.__class__.__name__  # <11>
                 if verbose and error_msg:
-                    msg = '*** Error for {}: {}'
-                    print(msg.format(country_code, error_msg))
+                    print(f'*** Error for {country_code}: {error_msg}')
                 status = HTTPStatus.error
             else:
                 status = res.status

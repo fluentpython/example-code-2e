@@ -50,8 +50,8 @@ def download_many(cc_list: list[str],
             try:
                 res = future.result()  # <14>
             except requests.exceptions.HTTPError as exc:  # <15>
-                error_msg = 'HTTP {res.status_code} - {res.reason}'
-                error_msg = error_msg.format(res=exc.response)
+                error_fmt = 'HTTP {res.status_code} - {res.reason}'
+                error_msg = error_fmt.format(res=exc.response)
             except requests.exceptions.ConnectionError:
                 error_msg = 'Connection error'
             else:
@@ -63,7 +63,7 @@ def download_many(cc_list: list[str],
             counter[status] += 1
             if verbose and error_msg:
                 cc = to_do_map[future]  # <16>
-                print('*** Error for {}: {}'.format(cc, error_msg))
+                print(f'*** Error for {cc}: {error_msg}')
 
     return counter
 

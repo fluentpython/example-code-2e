@@ -6,7 +6,7 @@ ThreadPoolExecutor example with ``as_completed``.
 """
 from concurrent import futures
 
-from flags import save_flag, main
+from flags import main
 from flags_threadpool import download_one
 
 
@@ -18,19 +18,14 @@ def download_many(cc_list: list[str]) -> int:
         for cc in sorted(cc_list):  # <3>
             future = executor.submit(download_one, cc)  # <4>
             to_do.append(future)  # <5>
-            msg = 'Scheduled for {}: {}'
-            print(msg.format(cc, future))  # <6>
+            print(f'Scheduled for {cc}: {future}')  # <6>
 
-        count = 0
-        for future in futures.as_completed(to_do):  # <7>
+        for count, future in enumerate(futures.as_completed(to_do)):  # <7>
             res: str = future.result()  # <8>
-            msg = '{} result: {!r}'
-            print(msg.format(future, res)) # <9>
-            count += 1
+            print(f'{future} result: {res!r}')  # <9>
 
     return count
 # end::FLAGS_THREADPOOL_AS_COMPLETED[]
 
 if __name__ == '__main__':
     main(download_many)
-

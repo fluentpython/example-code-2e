@@ -24,7 +24,6 @@ import tqdm  # type: ignore
 
 from flags2_common import main, save_flag, HTTPStatus, Result
 
-
 DEFAULT_CONCUR_REQ = 1
 MAX_CONCUR_REQ = 1
 
