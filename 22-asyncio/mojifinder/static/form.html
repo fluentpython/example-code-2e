@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Mojifinder</title>
+    <style>
+        body {font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;}
+        table {font-family: "Lucida Console", "Monaco", monospace;
+               text-align: left; min-width: 300px}
+        td.code {min-width: 40px; text-align: right;}
+        td.char {min-width: 50px; text-align: center;}
+        caption {background: lightgray; }
+    </style>
+    <script>
+        "use strict";
+
+        function appendCell(row, text, class_) {
+            let cell = document.createElement('td');
+            cell.appendChild(document.createTextNode(text));
+            if (class_ !== undefined) {
+                cell.setAttribute('class', class_);
+            }
+            row.appendChild(cell);
+        }
+
+        function fillTable(results) {
+            const table = document.querySelector('table');
+            while (table.lastElementChild.tagName === 'TR') {
+                table.removeChild(table.lastElementChild);
+            }
+            let count = 0;
+            results.forEach((item) => {
+                let row = document.createElement('tr');
+                let code = item.char.codePointAt(0);
+                let uCode = 'U+' + code.toString(16).toUpperCase().padStart(4, '0');
+                appendCell(row, uCode, 'code');
+                appendCell(row, item.char, 'char');
+                appendCell(row, item.name);
+                table.appendChild(row);
+                count++;
+            });
+            let plural = "s";
+            if (count===1) plural = "";
+            let msg = `${count} character${plural} found`;
+            document.querySelector('caption').textContent = msg;
+        }
+
+        async function fetchResults(query) {
+            let url = location.href.replace(location.search, '');
+            const response = await fetch(`${url}search?q=${query}`);
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        }
+
+        function updateTable(event) {
+            const input = document.getElementById('query');
+            fetchResults(input.value)
+                .then(fillTable)
+                .catch(error => console.log(error));
+        }
+
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const input = document.getElementById('query');
+            input.addEventListener('change', updateTable);
+        });
+
+
+    </script>
+
+</head>
+<body>
+    <div>
+        <input id="query" type="search" name="q" value="">
+        <button onClick="updateTable()">Search</button>
+        </div>
+    <table>
+        <caption></caption>
+    </table>
+</body>
+</html>
