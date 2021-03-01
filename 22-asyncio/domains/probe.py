@@ -11,9 +11,9 @@ async def main(tld: str) -> None:
     tld = tld.strip('.')
     names = (kw for kw in kwlist if len(kw) <= 4)
     domains = (f'{name}.{tld}'.lower() for name in names)
-    async for name, found in multi_probe(domains):
+    async for domain, found in multi_probe(domains):
         mark = '.' if found else '?\t\t'
-        print(f'{mark} {name}')
+        print(f'{mark} {domain}')
 
 
 if __name__ == '__main__':

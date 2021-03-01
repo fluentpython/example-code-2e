@@ -5,21 +5,21 @@ from typing import NamedTuple
 
 
 class Result(NamedTuple):
-    name: str
+    domain: str
     found: bool
 
 
-async def probe(loop: asyncio.AbstractEventLoop, name: str) -> Result:
+async def probe(loop: asyncio.AbstractEventLoop, domain: str) -> Result:
     try:
-        await loop.getaddrinfo(name, None)
+        await loop.getaddrinfo(domain, None)
     except socket.gaierror:
-        return Result(name, False)
-    return Result(name, True)
+        return Result(domain, False)
+    return Result(domain, True)
 
 
-async def multi_probe(names: Iterable[str]) -> AsyncIterator[Result]:
+async def multi_probe(domains: Iterable[str]) -> AsyncIterator[Result]:
     loop = asyncio.get_running_loop()
-    coros = [probe(loop, name) for name in names]
+    coros = [probe(loop, domain) for domain in domains]
     for coro in asyncio.as_completed(coros):
         result = await coro
         yield result
