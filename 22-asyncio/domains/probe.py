@@ -9,8 +9,8 @@ from netaddr import multi_probe
 
 async def main(tld: str) -> None:
     tld = tld.strip('.')
-    names = (w.lower() for w in kwlist if len(w) <= 4)
-    domains = (f'{name}.{tld}' for name in names)
+    names = (kw for kw in kwlist if len(kw) <= 4)
+    domains = (f'{name}.{tld}'.lower() for name in names)
     async for name, found in multi_probe(domains):
         mark = '.' if found else '?\t\t'
         print(f'{mark} {name}')
