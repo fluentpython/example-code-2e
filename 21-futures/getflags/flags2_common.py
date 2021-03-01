@@ -45,8 +45,10 @@ def initial_report(cc_list: list[str],
     print(f'{server_label} site: {SERVERS[server_label]}')
     plural = 's' if len(cc_list) != 1 else ''
     print(f'Searching for {len(cc_list)} flag{plural}: {cc_msg}')
-    plural = 's' if actual_req != 1 else ''
-    print(f'{actual_req} concurrent connection{plural} will be used.')
+    if actual_req == 1:
+        print('1 connection will be used.')
+    else:
+        print(f'{actual_req} concurrent connections will be used.')
 
 
 def final_report(cc_list: list[str],
@@ -60,7 +62,7 @@ def final_report(cc_list: list[str],
         print(f'{counter[HTTPStatus.not_found]} not found.')
     if counter[HTTPStatus.error]:
         plural = 's' if counter[HTTPStatus.error] != 1 else ''
-        print(f'{counter[HTTPStatus.error]} error{plural}')
+        print(f'{counter[HTTPStatus.error]} error{plural}.')
     print(f'Elapsed time: {elapsed:.2f}s')
 
 

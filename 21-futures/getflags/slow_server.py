@@ -83,7 +83,8 @@ if __name__ == '__main__':
                     socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
             return super().server_bind()
 
-    server.test(
+    # test is a top-level function in http.server omitted from __all__
+    server.test(  # type: ignore
         HandlerClass=handler_class,
         ServerClass=DualStackServer,
         port=args.port,

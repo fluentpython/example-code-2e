@@ -19,8 +19,8 @@ from flags import save_flag, get_flag, main  # <1>
 
 def download_one(cc: str):  # <2>
     image = get_flag(cc)
+    save_flag(image, f'{cc}.gif')
     print(cc, end=' ', flush=True)
-    save_flag(image, cc.lower() + '.gif')
     return cc
 
 def download_many(cc_list: list[str]) -> int:
