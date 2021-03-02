@@ -33,16 +33,15 @@ def save_flag(img: bytes, filename: str) -> None:     # <5>
     (DEST_DIR / filename).write_bytes(img)
 
 def get_flag(cc: str) -> bytes:  # <6>
-    cc = cc.lower()
-    url = f'{BASE_URL}/{cc}/{cc}.gif'
+    url = f'{BASE_URL}/{cc}/{cc}.gif'.lower()
     resp = requests.get(url)
     return resp.content
 
 def download_many(cc_list: list[str]) -> int:  # <7>
     for cc in sorted(cc_list):                 # <8>
         image = get_flag(cc)
+        save_flag(image, f'{cc}.gif')
         print(cc, end=' ', flush=True)         # <9>
-        save_flag(image, cc.lower() + '.gif')
     return len(cc_list)
 
 def main(downloader: Callable[[list[str]], int]) -> None:  # <10>

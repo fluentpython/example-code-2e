@@ -29,8 +29,7 @@ MAX_CONCUR_REQ = 1
 
 # tag::FLAGS2_BASIC_HTTP_FUNCTIONS[]
 def get_flag(base_url: str, cc: str) -> bytes:
-    cc = cc.lower()
-    url = f'{base_url}/{cc}/{cc}.gif'
+    url = f'{base_url}/{cc}/{cc}.gif'.lower()
     resp = requests.get(url)
     if resp.status_code != 200:  # <1>
         resp.raise_for_status()
@@ -47,7 +46,7 @@ def download_one(cc: str, base_url: str, verbose: bool = False):
         else:  # <4>
             raise
     else:
-        save_flag(image, cc.lower() + '.gif')
+        save_flag(image, f'{cc}.gif')
         status = HTTPStatus.ok
         msg = 'OK'
 
