@@ -27,26 +27,26 @@ Part / Chapter #|Title|Directory|Notebook|1<sup>st</sup> ed. Chapter&nbsp;#
 3|Dictionaries and Sets|[03-dict-set](03-dict-set)||3
 4|Text versus Bytes|[04-text-byte](04-text-byte)||4
 🆕 5|Record-like Data Structures|[05-record-like](05-record-like)||–
+6|Object References, Mutability, and Recycling|[06-obj-ref](06-obj-ref)||8
 **III – Functions as Objects**|
-6|First-Class Funcions|[06-1class-func](06-1class-func)||5
-7|Design Patterns with First-Class Functions|[07-dp-1class-func](07-dp-1class-func)||6
-8|Function Decorators and Closures|[08-closure-deco](08-closure-deco)||7
-🆕 9|Type Hints in Function Definitions|[09-def-type-hints](09-def-type-hints)||–
+7|First-Class Funcions|[07-1class-func](07-1class-func)||5
+🆕 8|Type Hints in Function Definitions|[08-def-type-hints](08-def-type-hints)||–
+9|Function Decorators and Closures|[09-closure-deco](09-closure-deco)||7
+10|Design Patterns with First-Class Functions|[10-dp-1class-func](10-dp-1class-func)||6
 **IV – Object-Oriented Idioms**|
-10|Object References, Mutability, and Recycling|[10-obj-ref](10-obj-ref)||8
 11|A Pythonic Object|[11-pythonic-obj](11-pythonic-obj)||9
 12|Sequence Hacking, Hashing, and Slicing|[12-seq-hacking](12-seq-hacking)||10
-13|Interfaces: From Protocols to ABCs|[13-iface-abc](13-iface-abc)||11
+13|Interfaces: Interfaces, Protocols, and ABCs|[13-protocl-abc](13-protocol-abc)||11
 14|Inheritance: For Good or For Worse|[14-inheritance](14-inheritance)||12
 🆕 15|More About Type Hints|[15-type-hints](15-type-hints)||–
 16|Operator Overloading: Doing It Right|[16-op-overloading](16-op-overloading)||13
 **V – Control Flow**|
 17|Iterables, Iterators, and Generators|[17-it-generator](17-it-generator)||14
 18|Context Managers and else Blocks|[18-context-mngr](18-context-mngr)||15
-19|Coroutines|[19-coroutine](19-coroutine)||16
+19|Classic Coroutines|[19-coroutine](19-coroutine)||16
 🆕 20|Concurrency Models in Python|[20-concurrency](20-concurrency)||-
 21|Concurrency with Futures|[21-futures](21-futures)||17
-22|Concurrency with asyncio|[22-asyncio](22-asyncio)||18
+22|Asynchronous Programming|[22-async](22-async)||18
 **VI – Metaprogramming**|
 23|Dynamic Attributes and Properties|[22-dyn-attr-prop](22-dyn-attr-prop)||19
 24|Attribute Descriptors|[23-descriptor](23-descriptor)||20
