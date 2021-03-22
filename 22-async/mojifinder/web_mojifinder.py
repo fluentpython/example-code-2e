@@ -18,19 +18,19 @@ class CharName(BaseModel):  # <2>
 
 def init(app):  # <3>
     app.state.index = InvertedIndex()
-    static = pathlib.Path(__file__).parent.absolute() / 'static'
+    static = pathlib.Path(__file__).parent.absolute() / 'static'  # <4>
     with open(static / 'form.html') as fp:
         app.state.form = fp.read()
 
-init(app)  # <4>
+init(app)  # <5>
 
-@app.get('/search', response_model=list[CharName])  # <5>
-async def search(q: str):  # <6>
+@app.get('/search', response_model=list[CharName])  # <6>
+async def search(q: str):  # <7>
     chars = app.state.index.search(q)
-    return ({'char': c, 'name': name(c)} for c in chars)  # <7>
+    return ({'char': c, 'name': name(c)} for c in chars)  # <8>
 
-@app.get('/',  # <8>
-         response_class=HTMLResponse,
-         include_in_schema=False)
-def form():
+@app.get('/', response_class=HTMLResponse, include_in_schema=False)
+def form():  # <9>
     return app.state.form
+
+# no main funcion  # <10>

@@ -1,5 +1,5 @@
 from curio import TaskGroup
-from curio.socket import getaddrinfo, gaierror
+import curio.socket as socket
 from collections.abc import Iterable, AsyncIterator
 from typing import NamedTuple
 
@@ -9,10 +9,10 @@ class Result(NamedTuple):
     found: bool
 
 
-async def probe(domain: str) -> Result:
+ async def probe(domain: str) -> Result:
     try:
-        await getaddrinfo(domain, None)
-    except gaierror:
+        await socket.getaddrinfo(domain, None)
+    except socket.gaierror:
         return Result(domain, False)
     return Result(domain, True)
 

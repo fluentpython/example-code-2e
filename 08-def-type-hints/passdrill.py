@@ -54,7 +54,9 @@ def load_hash() -> Tuple[bytes, bytes]:
             salted_hash = fp.read()
     except FileNotFoundError:
         print('ERROR: passphrase hash file not found.', HELP)
-        sys.exit(2)
+        # "standard" exit status codes:
+        # https://stackoverflow.com/questions/1101957/are-there-any-standard-exit-status-codes-in-linux/40484670#40484670
+        sys.exit(74)  # input/output error
 
     salt, stored_hash = salted_hash.split(b':')
     return b64decode(salt), b64decode(stored_hash)
@@ -93,7 +95,7 @@ def main(argv: Sequence[str]) -> None:
         save_hash()
     else:
         print('ERROR: invalid argument.', HELP)
-        sys.exit(1)
+        sys.exit(2)  # command line usage error
 
 
 if __name__ == '__main__':

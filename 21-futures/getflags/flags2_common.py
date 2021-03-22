@@ -121,23 +121,25 @@ def process_args(default_concur_req):
     if args.max_req < 1:
         print('*** Usage error: --max_req CONCURRENT must be >= 1')
         parser.print_usage()
-        sys.exit(1)
+        # "standard" exit status codes:
+        # https://stackoverflow.com/questions/1101957/are-there-any-standard-exit-status-codes-in-linux/40484670#40484670
+        sys.exit(2)  # command line usage error
     if args.limit < 1:
         print('*** Usage error: --limit N must be >= 1')
         parser.print_usage()
-        sys.exit(1)
+        sys.exit(2)  # command line usage error
     args.server = args.server.upper()
     if args.server not in SERVERS:
         print(f'*** Usage error: --server LABEL '
               f'must be one of {server_options}')
         parser.print_usage()
-        sys.exit(1)
+        sys.exit(2)  # command line usage error
     try:
         cc_list = expand_cc_args(args.every, args.all, args.cc, args.limit)
     except ValueError as exc:
         print(exc.args[0])
         parser.print_usage()
-        sys.exit(1)
+        sys.exit(2)  # command line usage error
 
     if not cc_list:
         cc_list = sorted(POP20_CC)

@@ -116,6 +116,7 @@ def error_single_arg_not_iterable() -> None:
     except TypeError as exc:
         print(exc)
 
+###################################### run demo and error functions
 
 def main():
     for name, val in globals().items():

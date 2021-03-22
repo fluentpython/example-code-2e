@@ -51,7 +51,7 @@ def main():
         word_number = int(sys.argv[2])
     except (IndexError, ValueError):
         print('Usage: %s <file-name> <word-number>' % sys.argv[0])
-        sys.exit(1)
+        sys.exit(2)  # command line usage error
     with open(filename, 'rt', encoding='utf-8') as text_file:
         s = Sentence(text_file.read())
     for n, word in enumerate(s, 1):
