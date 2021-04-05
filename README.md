@@ -19,7 +19,7 @@ New chapters in **Fluent Python 2<sup>nd</sup> edition** are marked with 🆕.
 🚨 This table of contents is subject to change at any time until the book goes to the printer. 
 
 Part / Chapter #|Title|Directory|1<sup>st</sup> edition Chapter&nbsp;#
----:|---|---|---|:---:
+---:|---|---|:---:
 **I – Prologue**|
 1|The Python Data Model|[01-data-model](01-data-model)|1
 **II – Data Structures**|
