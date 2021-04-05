@@ -38,7 +38,7 @@ Part / Chapter #|Title|Directory|Notebook|1<sup>st</sup> ed. Chapter&nbsp;#
 12|Sequence Hacking, Hashing, and Slicing|[12-seq-hacking](12-seq-hacking)||10
 13|Interfaces, Protocols, and ABCs|[13-protocl-abc](13-protocol-abc)||11
 14|Inheritance: For Good or For Worse|[14-inheritance](14-inheritance)||12
-15|More About Type Hints|15-type-hints||🆕
+15|More About Type Hints|15-more-typing||🆕
 16|Operator Overloading: Doing It Right|[16-op-overloading](16-op-overloading)||13
 **V – Control Flow**|
 17|Iterables, Iterators, and Generators|[17-it-generator](17-it-generator)||14
