@@ -1,3 +1,6 @@
+# This is an implementation of an idea by João S. O. Bueno (@gwidion)
+# shared privately with me, with permission to use in Fluent Python 2e.
+
 """
 Testing ``AutoFillDict``::
 
