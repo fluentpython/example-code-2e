@@ -25,7 +25,6 @@ Testing ``KeyIsValueDict``::
 
 
 class KeyIsValueDict(dict):
-
     def __missing__(self, key):
         if key.startswith('__') and key.endswith('__'):
             raise KeyError(key)

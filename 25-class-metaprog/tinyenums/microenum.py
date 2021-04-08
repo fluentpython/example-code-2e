@@ -54,12 +54,10 @@ class MicroEnumMeta(type):
     def __prepare__(name, bases, **kwargs):
         return AutoFillDict()
 
-    def __getitem__(cls, key):
+
+class MicroEnum(metaclass=MicroEnumMeta):
+    def __class_getitem__(cls, key):
         for k, v in cls.__dict__.items():
             if v == key:
                 return k
         raise KeyError(key)
-
-
-class MicroEnum(metaclass=MicroEnumMeta):
-    pass
