@@ -77,7 +77,7 @@ def test_fetch_record(create_movies_sql):
         con.execute(create_movies_sql)
         pk = insert_record('movies', fields)
         row = fetch_record('movies', pk)
-    assert row == (1, 'Frozen', 1_290_000_000.0)
+    assert tuple(row) == (1, 'Frozen', 1_290_000_000.0)
 
 
 def test_fetch_record_no_such_pk(create_movies_sql):
@@ -98,7 +98,7 @@ def test_update_record(create_movies_sql):
         row = fetch_record('movies', pk)
     assert sql == 'UPDATE movies SET (title, revenue) = (?, ?) WHERE pk = ?'
     assert values == ('Frozen', 1_299_999_999, 1)
-    assert row == (1, 'Frozen', 1_299_999_999.0)
+    assert tuple(row) == (1, 'Frozen', 1_299_999_999.0)
 
 
 def test_delete_record(create_movies_sql):
