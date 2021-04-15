@@ -21,7 +21,7 @@ class NoConnection(Exception):
 
 
 class SchemaMismatch(ValueError):
-    """The table's schema doesn't match the class."""
+    """The table schema doesn't match the class."""
 
     def __init__(self, table_name):
         self.table_name = table_name
