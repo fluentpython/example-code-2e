@@ -133,8 +133,8 @@ def fetch_record(table_name, pk):
 
 
 def update_record(table_name, pk, fields):
-    con = get_connection()
     check_identifier(table_name)
+    con = get_connection()
     names = ', '.join(fields.keys())
     placeholders = ', '.join(['?'] * len(fields))
     values = tuple(fields.values()) + (pk,)
