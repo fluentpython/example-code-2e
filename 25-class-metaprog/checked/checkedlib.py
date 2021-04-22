@@ -104,18 +104,18 @@ class Checked:
             setattr(subclass, name, Field(name, constructor))  # <5>
 
     def __init__(self, **kwargs: Any) -> None:
-        for name in self._fields():            # <6>
-            value = kwargs.pop(name, MISSING)  # <7>
-            setattr(self, name, value)         # <8>
-        if kwargs:                             # <9>
-            self.__flag_unknown_attrs(*kwargs)
+        for name in self._fields():             # <6>
+            value = kwargs.pop(name, MISSING)   # <7>
+            setattr(self, name, value)          # <8>
+        if kwargs:                              # <9>
+            self.__flag_unknown_attrs(*kwargs)  # <10>
 
-    def __setattr__(self, name: str, value: Any) -> None:  # <10>
-        if name in self._fields():            # <11>
+    def __setattr__(self, name: str, value: Any) -> None:  # <11>
+        if name in self._fields():              # <12>
             cls = self.__class__
             descriptor = getattr(cls, name)
-            descriptor.__set__(self, value)   # <12>
-        else:                                 # <13>
+            descriptor.__set__(self, value)     # <13>
+        else:                                   # <14>
             self.__flag_unknown_attrs(name)
 
     # end::CHECKED_TOP[]
