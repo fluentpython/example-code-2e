@@ -1,4 +1,4 @@
-import pathlib
+from pathlib import Path
 from unicodedata import name
 
 from fastapi import FastAPI
@@ -18,9 +18,8 @@ class CharName(BaseModel):  # <2>
 
 def init(app):  # <3>
     app.state.index = InvertedIndex()
-    static = pathlib.Path(__file__).parent.absolute() / 'static'  # <4>
-    with open(static / 'form.html') as fp:
-        app.state.form = fp.read()
+    static = Path(__file__).parent.absolute() / 'static'  # <4>
+    app.state.form = (static / 'form.html').read_text()
 
 init(app)  # <5>
 

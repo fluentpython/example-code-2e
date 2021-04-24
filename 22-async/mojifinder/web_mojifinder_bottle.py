@@ -11,7 +11,7 @@ index = {}
 
 @route('/')
 def form():
-    return static_file('form.html', root = 'static/')
+    return static_file('form.html', root='static/')
 
 
 @route('/search')
@@ -28,10 +28,8 @@ def search():
 def main(port):
     global index
     index = InvertedIndex()
-    host = 'localhost'
     run(host='localhost', port=port, debug=True)
 
 
 if __name__ == '__main__':
     main(8000)
-

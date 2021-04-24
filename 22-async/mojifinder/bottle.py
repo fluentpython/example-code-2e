@@ -16,7 +16,7 @@ License: MIT (see LICENSE for details)
 from __future__ import with_statement
 
 __author__ = 'Marcel Hellkamp'
-__version__ = '0.12.18'
+__version__ = '0.12.19'
 __license__ = 'MIT'
 
 # The gevent server adapter needs to patch some modules before they are imported
@@ -440,7 +440,7 @@ class Router(object):
         nocheck = set(methods)
         for method in set(self.static) - nocheck:
             if path in self.static[method]:
-                allowed.add(verb)
+                allowed.add(method)
         for method in set(self.dyna_regexes) - allowed - nocheck:
             for combined, rules in self.dyna_regexes[method]:
                 match = combined(path)
@@ -2585,7 +2585,7 @@ def parse_range_header(header, maxlen=0):
 
 def _parse_qsl(qs):
     r = []
-    for pair in qs.replace(';','&').split('&'):
+    for pair in qs.split('&'):
         if not pair: continue
         nv = pair.split('=', 1)
         if len(nv) != 2: nv.append('')
