@@ -38,4 +38,4 @@ Support files:
 - `bottle.py`: local copy of the single-file _[Bottle](https://bottlepy.org/)_ Web framework.
 - `requirements.txt`: list of dependencies for `web_mojifinder.py`.
 - `static/form.html`: HTML form used by the `web_*` examples.
-- `README.md`: this file!
+- `README.md`: this file 🤓
