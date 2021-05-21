@@ -49,11 +49,11 @@ See longer sample run at the end of this module.
 
 """
 
-import random
-import collections
-import queue
 import argparse
-import time
+import collections
+import random
+import queue
+
 
 DEFAULT_NUMBER_OF_TAXIS = 3
 DEFAULT_END_TIME = 180
@@ -126,8 +126,8 @@ def compute_duration(previous_action):
     elif previous_action == 'going home':
         interval = 1
     else:
-        raise ValueError('Unknown previous_action: %s' % previous_action)
-    return int(random.expovariate(1/interval)) + 1
+        raise ValueError(f'Unknown previous_action: {previous_action}')
+    return int(random.expovariate(1 / interval)) + 1
 
 
 def main(end_time=DEFAULT_END_TIME, num_taxis=DEFAULT_NUMBER_OF_TAXIS,
@@ -136,7 +136,7 @@ def main(end_time=DEFAULT_END_TIME, num_taxis=DEFAULT_NUMBER_OF_TAXIS,
     if seed is not None:
         random.seed(seed)  # get reproducible results
 
-    taxis = {i: taxi_process(i, (i+1)*2, i*DEPARTURE_INTERVAL)
+    taxis = {i: taxi_process(i, (i + 1) * 2, i * DEPARTURE_INTERVAL)
              for i in range(num_taxis)}
     sim = Simulator(taxis)
     sim.run(end_time)

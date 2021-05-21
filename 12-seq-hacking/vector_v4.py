@@ -166,7 +166,7 @@ class Vector:
     def __repr__(self):
         components = reprlib.repr(self._components)
         components = components[components.find('['):-1]
-        return 'Vector({})'.format(components)
+        return f'Vector({components})'
 
     def __str__(self):
         return str(tuple(self))
@@ -184,7 +184,7 @@ class Vector:
         return functools.reduce(operator.xor, hashes, 0)
 
     def __abs__(self):
-        return math.sqrt(sum(x * x for x in self))
+        return math.hypot(*self)
 
     def __bool__(self):
         return bool(abs(self))
@@ -207,8 +207,8 @@ class Vector:
             pos = cls.shortcut_names.find(name)
             if 0 <= pos < len(self._components):
                 return self._components[pos]
-        msg = '{.__name__!r} object has no attribute {!r}'
-        raise AttributeError(msg.format(cls, name))
+        msg = f'{cls.__name__!r} object has no attribute {name!r}'
+        raise AttributeError(msg)
 
     @classmethod
     def frombytes(cls, octets):

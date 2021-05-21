@@ -89,4 +89,3 @@ def best_promo(order):
 
 # end::STRATEGY_BEST3[]
 
-

@@ -56,8 +56,7 @@ def test_large_order_promo_no_discount(customer_fidelity_0, cart_plain) -> None:
 
 
 def test_large_order_promo_with_discount(customer_fidelity_0) -> None:
-    cart = [LineItem(str(item_code), 1, 1.0)
-                     for item_code in range(10)]
+    cart = [LineItem(str(item_code), 1, 1.0) for item_code in range(10)]
     order = Order(customer_fidelity_0, cart, LargeOrderPromo())
     assert order.total() == 10.0
     assert order.due() == 9.3

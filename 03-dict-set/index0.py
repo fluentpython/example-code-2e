@@ -5,8 +5,8 @@
 # tag::INDEX0[]
 """Build an index mapping word -> list of occurrences"""
 
-import sys
 import re
+import sys
 
 WORD_RE = re.compile(r'\w+')
 
@@ -22,7 +22,7 @@ with open(sys.argv[1], encoding='utf-8') as fp:
             occurrences.append(location)       # <2>
             index[word] = occurrences          # <3>
 
-# print in alphabetical order
+# display in alphabetical order
 for word in sorted(index, key=str.upper):  # <4>
     print(word, index[word])
 # end::INDEX0[]

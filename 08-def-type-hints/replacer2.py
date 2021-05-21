@@ -20,7 +20,7 @@ class FromTo(NamedTuple):
     to: str
 
 
-def zip_replace(text: str, changes: Iterable[FromTo], count:int = -1) -> str:
+def zip_replace(text: str, changes: Iterable[FromTo], count: int = -1) -> str:
     for from_, to in changes:
         text = text.replace(from_, to, count)
     return text

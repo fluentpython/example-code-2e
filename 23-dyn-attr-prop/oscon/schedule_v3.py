@@ -20,8 +20,8 @@ schedule_v3.py: property to get list of event speakers
 # end::SCHEDULE3_DEMO[]
 """
 
-import json
 import inspect
+import json
 
 JSON_PATH = 'data/osconfeed.json'
 

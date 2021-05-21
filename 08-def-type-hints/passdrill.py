@@ -3,12 +3,11 @@
 """passdrill: typing drills for practicing passphrases
 """
 
-import sys
 import os
+import sys
+from base64 import b64encode, b64decode
 from getpass import getpass
 from hashlib import scrypt
-from base64 import b64encode, b64decode
-
 from typing import Sequence, Tuple
 
 HASH_FILENAME = 'passdrill.hash'
@@ -20,7 +19,7 @@ def prompt() -> str:
     confirmed = ''
     while confirmed != 'y':
         passphrase = input('Type passphrase to hash (it will be echoed): ')
-        if passphrase == '' or passphrase == 'q':
+        if passphrase in ('', 'q'):
             print('ERROR: the passphrase cannot be empty or "q".')
             continue
         print(f'Passphrase to be hashed -> {passphrase}')
@@ -45,7 +44,7 @@ def save_hash() -> None:
     salted_hash = build_hash(prompt())
     with open(HASH_FILENAME, 'wb') as fp:
         fp.write(salted_hash)
-    print(f'Passphrase hash saved to', HASH_FILENAME)
+    print(f'Passphrase hash saved to {HASH_FILENAME}')
 
 
 def load_hash() -> Tuple[bytes, bytes]:

@@ -53,4 +53,4 @@ def test_double_nparray() -> None:
 def test_double_none() -> None:
     given = None
     with pytest.raises(TypeError):
-        result = double(given)
+        double(given)

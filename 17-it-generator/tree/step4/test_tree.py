@@ -5,7 +5,7 @@ def test_1_level():
     class One: pass
     expected = [('One', 0)]
     result = list(tree(One))
-    assert expected == result 
+    assert expected == result
 
 
 def test_2_levels_2_leaves():
@@ -18,7 +18,7 @@ def test_2_levels_2_leaves():
             ('Leaf2', 1),
     ]
     result = list(tree(Branch))
-    assert expected == result 
+    assert expected == result
 
 
 def test_3_levels_1_leaf():
@@ -31,7 +31,7 @@ def test_3_levels_1_leaf():
                 ('Z', 2),
     ]
     result = list(tree(X))
-    assert expected == result 
+    assert expected == result
 
 
 def test_4_levels_1_leaf():
@@ -47,7 +47,7 @@ def test_4_levels_1_leaf():
     ]
 
     result = list(tree(Level0))
-    assert expected == result 
+    assert expected == result
 
 
 def test_4_levels_3_leaves():
@@ -69,4 +69,5 @@ def test_4_levels_3_leaves():
     ]
 
     result = list(tree(A))
-    assert expected == result 
+    assert expected == result
+

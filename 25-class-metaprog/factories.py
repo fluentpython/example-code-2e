@@ -27,35 +27,48 @@ The factory also accepts a list or tuple of identifiers:
 
 """
 
-# tag::RECORD_FACTORY[]
-def record_factory(cls_name, field_names):
-    try:
-        field_names = field_names.replace(',', ' ').split()  # <1>
-    except AttributeError:  # no .replace or .split
-        pass  # assume it's already a sequence of strings
-    field_names = tuple(field_names)  # <2>
-    if not all(s.isidentifier() for s in field_names):
-        raise ValueError('field_names must all be valid identifiers')
 
-    def __init__(self, *args, **kwargs):  # <3>
+# tag::RECORD_FACTORY[]
+from typing import Union, Any
+from collections.abc import Iterable, Iterator
+
+FieldNames = Union[str, Iterable[str]]  # <1>
+
+def record_factory(cls_name: str, field_names: FieldNames) -> type[tuple]:  # <2>
+
+    slots = parse_identifiers(field_names)  # <3>
+
+    def __init__(self, *args, **kwargs) -> None:  # <4>
         attrs = dict(zip(self.__slots__, args))
         attrs.update(kwargs)
         for name, value in attrs.items():
             setattr(self, name, value)
 
-    def __iter__(self):  # <4>
+    def __iter__(self) -> Iterator[Any]:  # <5>
         for name in self.__slots__:
             yield getattr(self, name)
 
-    def __repr__(self):  # <5>
-        values = ', '.join('{}={!r}'.format(*i) for i
-                           in zip(self.__slots__, self))
-        return '{}({})'.format(self.__class__.__name__, values)
+    def __repr__(self):  # <6>
+        values = ', '.join(
+            '{}={!r}'.format(*i) for i in zip(self.__slots__, self)
+        )
+        cls_name = self.__class__.__name__
+        return f'{cls_name}({values})'
 
-    cls_attrs = dict(__slots__ = field_names,  # <6>
-                     __init__  = __init__,
-                     __iter__  = __iter__,
-                     __repr__  = __repr__)
+    cls_attrs = dict(  # <7>
+        __slots__=slots,
+        __init__=__init__,
+        __iter__=__iter__,
+        __repr__=__repr__,
+    )
 
-    return type(cls_name, (object,), cls_attrs)  # <7>
+    return type(cls_name, (object,), cls_attrs)  # <8>
+
+
+def parse_identifiers(names: FieldNames) -> tuple[str, ...]:
+    if isinstance(names, str):
+        names = names.replace(',', ' ').split()  # <9>
+    if not all(s.isidentifier() for s in names):
+        raise ValueError('names must all be valid identifiers')
+    return tuple(names)
 # end::RECORD_FACTORY[]

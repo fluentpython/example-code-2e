@@ -53,34 +53,29 @@ Tests for __iadd__:
 """
 
 # tag::ADDABLE_BINGO[]
-import itertools  # <1>
-
 from tombola import Tombola
 from bingo import BingoCage
 
 
-class AddableBingoCage(BingoCage):  # <2>
+class AddableBingoCage(BingoCage):  # <1>
 
     def __add__(self, other):
-        if isinstance(other, Tombola):  # <3>
-            return AddableBingoCage(self.inspect() + other.inspect()) 
+        if isinstance(other, Tombola):  # <2>
+            return AddableBingoCage(self.inspect() + other.inspect())
         else:
             return NotImplemented
 
     def __iadd__(self, other):
         if isinstance(other, Tombola):
-            other_iterable = other.inspect()  # <4>
+            other_iterable = other.inspect()  # <3>
         else:
             try:
-                other_iterable = iter(other)  # <5>
-            except TypeError:  # <6>
+                other_iterable = iter(other)  # <4>
+            except TypeError:  # <5>
                 self_cls = type(self).__name__
                 msg = "right operand in += must be {!r} or an iterable"
                 raise TypeError(msg.format(self_cls))
-        self.load(other_iterable)  # <7>
-        return self  # <8>
-
-
-
+        self.load(other_iterable)  # <6>
+        return self  # <7>
 
 # end::ADDABLE_BINGO[]

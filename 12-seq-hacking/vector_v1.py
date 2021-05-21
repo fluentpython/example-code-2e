@@ -100,7 +100,7 @@ class Vector:
     def __repr__(self):
         components = reprlib.repr(self._components)  # <3>
         components = components[components.find('['):-1]  # <4>
-        return 'Vector({})'.format(components)
+        return f'Vector({components})'
 
     def __str__(self):
         return str(tuple(self))
@@ -113,7 +113,7 @@ class Vector:
         return tuple(self) == tuple(other)
 
     def __abs__(self):
-        return math.sqrt(sum(x * x for x in self))  # <6>
+        return math.hypot(*self)  # <6>
 
     def __bool__(self):
         return bool(abs(self))

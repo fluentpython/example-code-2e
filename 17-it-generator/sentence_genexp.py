@@ -15,7 +15,7 @@ class Sentence:
         self.text = text
 
     def __repr__(self):
-        return 'Sentence(%s)' % reprlib.repr(self.text)
+        return f'Sentence({reprlib.repr(self.text)})'
 
     def __iter__(self):
         return (match.group() for match in RE_WORD.finditer(self.text))
@@ -29,7 +29,7 @@ def main():
         filename = sys.argv[1]
         word_number = int(sys.argv[2])
     except (IndexError, ValueError):
-        print('Usage: %s <file-name> <word-number>' % sys.argv[0])
+        print(f'Usage: {sys.argv[0]} <file-name> <word-number>')
         sys.exit(2)  # command line usage error
     with open(filename, 'rt', encoding='utf-8') as text_file:
         s = Sentence(text_file.read())
@@ -38,7 +38,7 @@ def main():
             print(word)
             break
     else:
-        warnings.warn('last word is #%d, "%s"' % (n, word))
+        warnings.warn(f'last word is #{n}, {word!r}')
 
 if __name__ == '__main__':
     main()

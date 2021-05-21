@@ -1,4 +1,4 @@
-from typing import Protocol, runtime_checkable, Any, Iterable
+from typing import Protocol, runtime_checkable
 from randompick import RandomPicker
 
 @runtime_checkable  # <1>

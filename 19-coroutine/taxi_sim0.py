@@ -27,11 +27,10 @@ See explanation and longer sample run at the end of this module.
 
 """
 
-import sys
-import random
+import argparse
 import collections
 import queue
-import argparse
+import random
 
 DEFAULT_NUMBER_OF_TAXIS = 3
 DEFAULT_END_TIME = 80
@@ -44,7 +43,7 @@ Event = collections.namedtuple('Event', 'time proc action')
 
 def compute_delay(interval):
     """Compute action delay using exponential distribution"""
-    return int(random.expovariate(1/interval)) + 1
+    return int(random.expovariate(1 / interval)) + 1
 
 # BEGIN TAXI_PROCESS
 def taxi_process(ident, trips, start_time=0):  # <1>
@@ -67,7 +66,6 @@ class Simulator:
     def __init__(self, procs_map):
         self.events = queue.PriorityQueue()
         self.procs = dict(procs_map)
-
 
     def run(self, end_time):  # <1>
         """Schedule and display events until time is up"""
@@ -108,7 +106,7 @@ def main(end_time=DEFAULT_END_TIME, num_taxis=DEFAULT_NUMBER_OF_TAXIS,
     if seed is not None:
         random.seed(seed)  # get reproducible results
 
-    taxis = {i: taxi_process(i, (i+1)*2, i*DEPARTURE_INTERVAL)
+    taxis = {i: taxi_process(i, (i + 1) * 2, i * DEPARTURE_INTERVAL)
              for i in range(num_taxis)}
     sim = Simulator(taxis)
     sim.run(end_time)

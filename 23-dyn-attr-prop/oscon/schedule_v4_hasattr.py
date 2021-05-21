@@ -18,8 +18,8 @@ schedule_v4.py: homegrown cached property for speakers
 # end::SCHEDULE4_DEMO[]
 """
 
-import json
 import inspect
+import json
 
 JSON_PATH = 'data/osconfeed.json'
 

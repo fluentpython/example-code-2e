@@ -20,7 +20,7 @@ if __name__ == '__main__':
     while abs(delta) <= epsilon:
         delta = next(ap0) - next(ap1)
         frac = next(ap_frac)
-        iteration +=1
+        iteration += 1
 
     print('iteration: {}\tfraction: {}\tepsilon: {}\tdelta: {}'.
           format(iteration, frac, epsilon, delta))

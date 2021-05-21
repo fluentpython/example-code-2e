@@ -1,7 +1,8 @@
-from curio import TaskGroup
-import curio.socket as socket
 from collections.abc import Iterable, AsyncIterator
 from typing import NamedTuple
+
+from curio import TaskGroup
+import curio.socket as socket
 
 
 class Result(NamedTuple):
@@ -9,7 +10,7 @@ class Result(NamedTuple):
     found: bool
 
 
- async def probe(domain: str) -> Result:
+async def probe(domain: str) -> Result:
     try:
         await socket.getaddrinfo(domain, None)
     except socket.gaierror:

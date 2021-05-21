@@ -44,8 +44,9 @@ def fibonacci():
 if __name__ == '__main__':
 
     for x, y in zip(Fibonacci(), fibonacci()):
-        assert x == y, '%s != %s' % (x, y)
+        assert x == y, f'{x} != {y}'
         print(x)
         if x > 10**10:
             break
     print('etc...')
+

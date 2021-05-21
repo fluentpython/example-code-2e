@@ -1,6 +1,6 @@
 import sys
 import collections
-from unicodedata import name, category
+from unicodedata import category
 
 
 def category_stats():
@@ -19,7 +19,7 @@ def category_scan(desired):
     for code in range(sys.maxunicode + 1):
         char = chr(code)
         if category(char) == desired:
-            yield char    
+            yield char
 
 
 def main(args):
@@ -30,7 +30,7 @@ def main(args):
             count += 1
             if count > 200:
                 break
-        print() 
+        print()
         print(count, 'characters shown')
     else:
         counts, firsts = category_stats()

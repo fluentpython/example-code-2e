@@ -1,5 +1,5 @@
 # tag::COLUMNIZE[]
-from typing import Sequence, Tuple, Iterator 
+from typing import Sequence, Tuple, Iterator
 
 def columnize(sequence: Sequence[str], num_columns: int = 0) -> Iterator[Tuple[str, ...]]:
     if num_columns == 0:

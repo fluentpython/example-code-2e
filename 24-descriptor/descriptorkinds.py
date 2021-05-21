@@ -5,20 +5,20 @@ Overriding descriptor (a.k.a. data descriptor or enforced descriptor):
 
     >>> obj = Managed()  # <1>
     >>> obj.over  # <2>
-    -> Overriding.__get__(<Overriding object>, <Managed object>, 
+    -> Overriding.__get__(<Overriding object>, <Managed object>,
         <class Managed>)
     >>> Managed.over  # <3>
     -> Overriding.__get__(<Overriding object>, None, <class Managed>)
     >>> obj.over = 7  # <4>
     -> Overriding.__set__(<Overriding object>, <Managed object>, 7)
     >>> obj.over  # <5>
-    -> Overriding.__get__(<Overriding object>, <Managed object>, 
+    -> Overriding.__get__(<Overriding object>, <Managed object>,
         <class Managed>)
     >>> obj.__dict__['over'] = 8  # <6>
     >>> vars(obj)  # <7>
     {'over': 8}
     >>> obj.over  # <8>
-    -> Overriding.__get__(<Overriding object>, <Managed object>, 
+    -> Overriding.__get__(<Overriding object>, <Managed object>,
         <class Managed>)
 
 # end::DESCR_KINDS_DEMO1[]
@@ -50,7 +50,7 @@ Non-overriding descriptor (a.k.a. non-data descriptor or shadowable descriptor):
 
     >>> obj = Managed()
     >>> obj.non_over  # <1>
-    -> NonOverriding.__get__(<NonOverriding object>, <Managed object>, 
+    -> NonOverriding.__get__(<NonOverriding object>, <Managed object>,
         <class Managed>)
     >>> obj.non_over = 7  # <2>
     >>> obj.non_over  # <3>
@@ -59,7 +59,7 @@ Non-overriding descriptor (a.k.a. non-data descriptor or shadowable descriptor):
     -> NonOverriding.__get__(<NonOverriding object>, None, <class Managed>)
     >>> del obj.non_over  # <5>
     >>> obj.non_over  # <6>
-    -> NonOverriding.__get__(<NonOverriding object>, <Managed object>, 
+    -> NonOverriding.__get__(<NonOverriding object>, <Managed object>,
         <class Managed>)
 
 # end::DESCR_KINDS_DEMO3[]

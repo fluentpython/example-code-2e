@@ -1,14 +1,15 @@
-from checkeddeco import checked
+#!/usr/bin/env python3
 
-@checked
-class Movie:
+from checkedlib import Checked
+
+class Movie(Checked):
     title: str
     year: int
-    megabucks: float
+    box_office: float
 
 
 if __name__ == '__main__':
-    movie = Movie(title='The Godfather', year=1972, megabucks=137)
+    movie = Movie(title='The Godfather', year=1972, box_office=137)
     print(movie.title)
     print(movie)
     try:
@@ -17,6 +18,6 @@ if __name__ == '__main__':
     except TypeError as e:
         print(e)
     try:
-        blockbuster = Movie(title='Avatar', year=2009, megabucks='billions')
+        blockbuster = Movie(title='Avatar', year=2009, box_office='billions')
     except TypeError as e:
         print(e)

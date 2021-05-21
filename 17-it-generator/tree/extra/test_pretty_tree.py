@@ -1,5 +1,3 @@
-import pytest
-
 from pretty_tree import tree, render_lines
 
 def test_1_level():
@@ -7,7 +5,7 @@ def test_1_level():
     expected = [
         'BrokenPipeError',
     ]
-    assert expected == result 
+    assert expected == result
 
 
 def test_2_levels_1_leaf():
@@ -16,7 +14,7 @@ def test_2_levels_1_leaf():
         'IndentationError',
         '└── TabError',
     ]
-    assert expected == result 
+    assert expected == result
 
 
 def test_3_levels_1_leaf():
@@ -29,7 +27,7 @@ def test_3_levels_1_leaf():
         '└── Y',
         '    └── Z',
     ]
-    assert expected == result 
+    assert expected == result
 
 
 def test_4_levels_1_leaf():
@@ -98,4 +96,5 @@ def test_4_levels_4_leaves():
     ]
 
     result = list(render_lines(tree(A)))
-    assert expected == result 
+    assert expected == result
+

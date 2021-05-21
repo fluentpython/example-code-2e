@@ -1,21 +1,25 @@
+#!/usr/bin/env python3
+
+# tag::MOVIE_DEMO[]
 from checkedlib import Checked
 
 class Movie(Checked):
     title: str
     year: int
-    megabucks: float
-
+    box_office: float
 
 if __name__ == '__main__':
-    movie = Movie(title='The Godfather', year=1972, megabucks=137)
-    print(movie.title)
+    movie = Movie(title='The Godfather', year=1972, box_office=137)
     print(movie)
+    print(movie.title)
+    # end::MOVIE_DEMO[]
+
     try:
         # remove the "type: ignore" comment to see Mypy error
         movie.year = 'MCMLXXII'  # type: ignore
     except TypeError as e:
         print(e)
     try:
-        blockbuster = Movie(title='Avatar', year=2009, megabucks='billions')
+        blockbuster = Movie(title='Avatar', year=2009, box_office='billions')
     except TypeError as e:
         print(e)

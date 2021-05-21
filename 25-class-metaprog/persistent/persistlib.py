@@ -4,16 +4,16 @@ A ``Persistent`` class definition::
     >>> class Movie(Persistent):
     ...     title: str
     ...     year: int
-    ...     megabucks: float
+    ...     box_office: float
 
 Implemented behavior::
 
     >>> Movie._connect()  # doctest: +ELLIPSIS
     <sqlite3.Connection object at 0x...>
-    >>> movie = Movie(title='The Godfather', year=1972, megabucks=137)
+    >>> movie = Movie(title='The Godfather', year=1972, box_office=137)
     >>> movie.title
     'The Godfather'
-    >>> movie.megabucks
+    >>> movie.box_office
     137.0
 
 Instances always have a ``._pk`` attribute, but it is ``None`` until the
@@ -32,7 +32,7 @@ using ``Movie[pk]``—item access on the class itself::
     >>> del movie
     >>> film = Movie[1]
     >>> film
-    Movie(title='The Godfather', year=1972, megabucks=137.0, _pk=1)
+    Movie(title='The Godfather', year=1972, box_office=137.0, _pk=1)
 
 By default, the table name is the class name lowercased, with an appended
 "s" for plural::
@@ -84,34 +84,11 @@ class Persistent:
             if not name.startswith('_')
         }
 
-    def __init_subclass__(cls, *, table: str = '', **kwargs: dict):
+    def __init_subclass__(cls, *, table: str = '', **kwargs: Any):
         super().__init_subclass__(**kwargs)  # type:ignore
         cls._TABLE_NAME = table if table else cls.__name__.lower() + 's'
         for name, py_type in cls._fields().items():
             setattr(cls, name, Field(name, py_type))
-
-    @staticmethod
-    def _connect(db_path: str = db.DEFAULT_DB_PATH):
-        return db.connect(db_path)
-
-    @classmethod
-    def _ensure_table(cls) -> str:
-        if not cls._TABLE_READY:
-            db.ensure_table(cls._TABLE_NAME, cls._fields())
-            cls._TABLE_READY = True
-        return cls._TABLE_NAME
-
-    def __class_getitem__(cls, pk: int) -> 'Persistent':
-        field_names = ['_pk'] + list(cls._fields())
-        values = db.fetch_record(cls._TABLE_NAME, pk)
-        return cls(**dict(zip(field_names, values)))
-
-    def _asdict(self) -> dict[str, Any]:
-        return {
-            name: getattr(self, name)
-            for name, attr in self.__class__.__dict__.items()
-            if isinstance(attr, Field)
-        }
 
     def __init__(self, *, _pk=None, **kwargs):
         field_names = self._asdict().keys()
@@ -130,6 +107,32 @@ class Persistent:
         if self._pk is None:
             return f'{cls_name}({kwargs})'
         return f'{cls_name}({kwargs}, _pk={self._pk})'
+
+    def _asdict(self) -> dict[str, Any]:
+        return {
+            name: getattr(self, name)
+            for name, attr in self.__class__.__dict__.items()
+            if isinstance(attr, Field)
+        }
+
+
+    # database methods
+
+    @staticmethod
+    def _connect(db_path: str = db.DEFAULT_DB_PATH):
+        return db.connect(db_path)
+
+    @classmethod
+    def _ensure_table(cls) -> str:
+        if not cls._TABLE_READY:
+            db.ensure_table(cls._TABLE_NAME, cls._fields())
+            cls._TABLE_READY = True
+        return cls._TABLE_NAME
+
+    def __class_getitem__(cls, pk: int) -> 'Persistent':
+        field_names = ['_pk'] + list(cls._fields())
+        values = db.fetch_record(cls._TABLE_NAME, pk)
+        return cls(**dict(zip(field_names, values)))
 
     def _save(self) -> int:
         table = self.__class__._ensure_table()

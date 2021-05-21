@@ -1,4 +1,5 @@
-import sys, locale
+import locale
+import sys
 
 expressions = """
         locale.getpreferredencoding()

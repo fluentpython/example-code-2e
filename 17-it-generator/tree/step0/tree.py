@@ -8,4 +8,4 @@ def display(cls):
 
 
 if __name__ == '__main__':
-	display(BaseException)
+    display(BaseException)

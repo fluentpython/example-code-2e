@@ -3,7 +3,7 @@ from typing import Any, Iterable, TYPE_CHECKING
 
 from randompick import RandomPicker  # <1>
 
-class SimplePicker():  # <2>
+class SimplePicker:  # <2>
     def __init__(self, items: Iterable) -> None:
         self._items = list(items)
         random.shuffle(self._items)

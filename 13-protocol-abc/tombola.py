@@ -19,7 +19,6 @@ class Tombola(abc.ABC):  # <1>
         """Return `True` if there's at least 1 item, `False` otherwise."""
         return bool(self.inspect())  # <5>
 
-
     def inspect(self):
         """Return a sorted tuple with the items currently inside."""
         items = []

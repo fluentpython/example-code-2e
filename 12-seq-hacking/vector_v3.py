@@ -170,7 +170,7 @@ class Vector:
     def __repr__(self):
         components = reprlib.repr(self._components)
         components = components[components.find('['):-1]
-        return 'Vector({})'.format(components)
+        return f'Vector({components})'
 
     def __str__(self):
         return str(tuple(self))
@@ -183,7 +183,7 @@ class Vector:
         return tuple(self) == tuple(other)
 
     def __abs__(self):
-        return math.sqrt(sum(x * x for x in self))
+        return math.hypot(*self)
 
     def __bool__(self):
         return bool(abs(self))
@@ -207,8 +207,8 @@ class Vector:
             pos = cls.shortcut_names.find(name)  # <3>
             if 0 <= pos < len(self._components):  # <4>
                 return self._components[pos]
-        msg = '{.__name__!r} object has no attribute {!r}'  # <5>
-        raise AttributeError(msg.format(cls, name))
+        msg = f'{cls.__name__!r} object has no attribute {name!r}'  # <5>
+        raise AttributeError(msg)
 # end::VECTOR_V3_GETATTR[]
 
 # tag::VECTOR_V3_SETATTR[]
@@ -216,7 +216,7 @@ class Vector:
         cls = type(self)
         if len(name) == 1:  # <1>
             if name in cls.shortcut_names:  # <2>
-                error = 'readonly attribute {attr_name!r}'
+                error = 'read-only attribute {attr_name!r}'
             elif name.islower():  # <3>
                 error = "can't set attributes 'a' to 'z' in {cls_name!r}"
             else:

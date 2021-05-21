@@ -2,9 +2,9 @@
 # shared privately with me, with permission to use in Fluent Python 2e.
 
 """
-Testing ``AutoFillDict``::
+Testing ``WilyDict``::
 
-    >>> adict = AutoFillDict()
+    >>> adict = WilyDict()
     >>> len(adict)
     0
     >>> adict['first']
@@ -37,7 +37,7 @@ Testing ``MicroEnum``::
 """
 
 
-class AutoFillDict(dict):
+class WilyDict(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.__next_value = 0
@@ -52,12 +52,14 @@ class AutoFillDict(dict):
 
 class MicroEnumMeta(type):
     def __prepare__(name, bases, **kwargs):
-        return AutoFillDict()
+        return WilyDict()
 
-
-class MicroEnum(metaclass=MicroEnumMeta):
-    def __class_getitem__(cls, key):
+    def __getitem__(cls, key):
         for k, v in cls.__dict__.items():
             if v == key:
                 return k
         raise KeyError(key)
+
+
+class MicroEnum(metaclass=MicroEnumMeta):
+    pass

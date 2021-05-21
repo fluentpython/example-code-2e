@@ -54,7 +54,7 @@ class Quantity:
             msg = f'{self.storage_name} must be > 0'
             raise ValueError(msg)
 
-    # no __get__ needed
+    # no __get__ needed  # <4>
 
 class LineItem:
     weight = Quantity()  # <5>

@@ -32,5 +32,5 @@ class NonBlank(Validated):
         value = value.strip()
         if len(value) == 0:
             raise ValueError(f'{name} cannot be blank')
-        return value  # <8>
+        return value  # <2>
 # end::MODEL_V5_VALIDATED_SUB[]

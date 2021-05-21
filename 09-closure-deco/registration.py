@@ -25,7 +25,7 @@ def main():  # <8>
     f2()
     f3()
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()  # <9>
 
 # end::REGISTRATION[]

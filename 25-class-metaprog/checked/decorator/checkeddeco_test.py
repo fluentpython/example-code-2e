@@ -38,3 +38,13 @@ def test_constructor_attribute_error():
         felix = Cat(name='Felix', weight=3.2, age=7)
 
     assert str(e.value) == "'Cat' has no attribute 'age'"
+
+
+def test_field_invalid_constructor():
+    with pytest.raises(TypeError) as e:
+        @checked
+        class Cat:
+            name: str
+            weight: None
+
+    assert str(e.value) == "'weight' type hint must be callable"

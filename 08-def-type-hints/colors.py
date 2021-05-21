@@ -76,6 +76,5 @@ def demo():
     print(n, name2hex(n, o))
 
 
-
 if __name__ == '__main__':
     demo()

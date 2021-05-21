@@ -1,9 +1,9 @@
 import random
-from typing import Any, Iterable, TYPE_CHECKING
+from typing import Any, Iterable
 
 from randompickload import LoadableRandomPicker
 
-class SimplePicker():
+class SimplePicker:
     def __init__(self, items: Iterable) -> None:
         self._items = list(items)
         random.shuffle(self._items)
@@ -11,7 +11,7 @@ class SimplePicker():
     def pick(self) -> Any:
         return self._items.pop()
 
-class LoadablePicker():  # <1>
+class LoadablePicker:  # <1>
     def __init__(self, items: Iterable) -> None:
         self.load(items)
 

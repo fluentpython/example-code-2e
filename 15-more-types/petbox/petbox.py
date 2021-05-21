@@ -29,14 +29,6 @@ class Box(Generic[T]):
         return self.contents
 
 
-T_contra = TypeVar('T_contra', contravariant=True)
-
-
-class InBox(Generic[T_contra]):
-    def put(self, item: T) -> None:
-        self.contents = item
-
-
 T_co = TypeVar('T_co', covariant=True)
 
 
@@ -46,3 +38,11 @@ class OutBox(Generic[T_co]):
 
     def get(self) -> Any:
         return self.contents
+
+
+T_contra = TypeVar('T_contra', contravariant=True)
+
+
+class InBox(Generic[T_contra]):
+    def put(self, item: T) -> None:
+        self.contents = item

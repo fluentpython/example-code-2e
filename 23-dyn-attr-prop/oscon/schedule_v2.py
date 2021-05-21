@@ -16,8 +16,8 @@ schedule_v2.py: property to get venue linked to an event
 """
 
 # tag::SCHEDULE2_RECORD[]
-import json
 import inspect  # <1>
+import json
 
 JSON_PATH = 'data/osconfeed.json'
 

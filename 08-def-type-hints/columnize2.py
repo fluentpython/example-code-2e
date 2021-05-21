@@ -10,7 +10,6 @@ def columnize(sequence: Sequence[T], num_columns: int = 0) -> List[Tuple[T, ...]
     return [tuple(sequence[i::num_rows]) for i in range(num_rows)]
 
 
-
 def demo() -> None:
     nato = ('Alfa Bravo Charlie Delta Echo Foxtrot Golf Hotel India'
             ' Juliett Kilo Lima Mike November Oscar Papa Quebec Romeo'
@@ -21,7 +20,6 @@ def demo() -> None:
         for word in line:
             print(f'{word:15}', end='')
         print()
-
 
     print()
     for length in range(2, 21, 6):
