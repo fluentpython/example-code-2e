@@ -4,7 +4,7 @@ from typing import Iterable, TYPE_CHECKING
 from randompick_generic import GenericRandomPicker
 
 
-class LottoPicker():
+class LottoPicker:
     def __init__(self, items: Iterable[int]) -> None:
         self._items = list(items)
         random.shuffle(self._items)

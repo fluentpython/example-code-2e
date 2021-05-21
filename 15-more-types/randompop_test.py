@@ -3,7 +3,7 @@ import random
 from typing import Any, Iterable, TYPE_CHECKING
 
 
-class SimplePopper():
+class SimplePopper:
     def __init__(self, items: Iterable) -> None:
         self._items = list(items)
         random.shuffle(self._items)

@@ -1,5 +1,4 @@
-import random
-from typing import Iterable, TYPE_CHECKING, List
+from typing import TYPE_CHECKING
 
 from erp import EnterpriserRandomPopper
 import randompop
@@ -7,7 +6,6 @@ import randompop
 
 def test_issubclass() -> None:
     assert issubclass(EnterpriserRandomPopper, randompop.RandomPopper)
-
 
 
 def test_isinstance_untyped_items_argument() -> None:
