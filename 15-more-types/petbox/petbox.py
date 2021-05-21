@@ -1,3 +1,8 @@
+"""
+Example adapted from `Atomic Kotlin` by Bruce Eckel & Svetlana Isakova,
+chapter `Creating Generics`, section `Variance`.
+"""
+
 from typing import TypeVar, Generic, Any
 
 

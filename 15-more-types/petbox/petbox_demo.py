@@ -1,3 +1,8 @@
+"""
+Example adapted from `Atomic Kotlin` by Bruce Eckel & Svetlana Isakova,
+chapter `Creating Generics`, section `Variance`.
+"""
+
 from typing import TYPE_CHECKING
 
 from petbox import *
@@ -11,7 +16,7 @@ cat_box.put(si)
 
 animal = cat_box.get()
 
-#if TYPE_CHECKING:
+# if TYPE_CHECKING:
 #    reveal_type(animal)  # Revealed: petbox.Cat*
 
 
