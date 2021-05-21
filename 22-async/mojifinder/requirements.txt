@@ -1,7 +1,7 @@
 click==7.1.2
 fastapi==0.63.0
 h11==0.12.0
-pydantic==1.8.1
+pydantic==1.8.2
 starlette==0.13.6
 typing-extensions==3.7.4.3
 uvicorn==0.13.4
