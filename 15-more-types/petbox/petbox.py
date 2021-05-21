@@ -10,10 +10,6 @@ class Pet:
     """Domestic animal kept for companionship."""
 
 
-class Dog(Pet):
-    """Canis familiaris"""
-
-
 class Cat(Pet):
     """Felis catus"""
 
