@@ -17,6 +17,7 @@ def test_pickle():
     ps = loads(s)
     assert ps is PlainSentinel
 
+
 def test_custom_repr():
     assert repr(SentinelCustomRepr) == '***SentinelRepr***'
     
