@@ -41,7 +41,7 @@ T_contra = TypeVar('T_contra', contravariant=True)
 
 class TrashCan(Generic[T_contra]):
     def put(self, trash: T_contra) -> None:
-        """Store trash until dumped..."""
+        """Store trash until dumped."""
 
 
 class Cafeteria:
