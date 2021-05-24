@@ -1,3 +1,5 @@
+import pickle
+
 from sentinel import Sentinel
 
 class PlainSentinel(Sentinel): pass
@@ -12,12 +14,17 @@ def test_repr():
 
 
 def test_pickle():
-    from pickle import dumps, loads
-    s = dumps(PlainSentinel)
-    ps = loads(s)
+    s = pickle.dumps(PlainSentinel)
+    ps = pickle.loads(s)
     assert ps is PlainSentinel
 
 
 def test_custom_repr():
     assert repr(SentinelCustomRepr) == '***SentinelRepr***'
-    
+
+
+def test_sentinel_comes_ready_to_use():
+    assert repr(Sentinel) == 'Sentinel'
+    s = pickle.dumps(Sentinel)
+    ps = pickle.loads(s)
+    assert ps is Sentinel
