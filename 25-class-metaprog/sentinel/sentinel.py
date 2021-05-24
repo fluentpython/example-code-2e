@@ -32,7 +32,7 @@ class _SentinelMeta(type):
         try:
             return cls.repr
         except AttributeError:
-            return f'{cls.__name__}'
+            return cls.__name__
 
 
 class Sentinel(metaclass=_SentinelMeta):
