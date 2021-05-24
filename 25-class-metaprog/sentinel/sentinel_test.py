@@ -8,7 +8,7 @@ class SentinelCustomRepr(Sentinel):
 
 
 def test_repr():
-    assert repr(PlainSentinel) == '<PlainSentinel>'
+    assert repr(PlainSentinel) == 'PlainSentinel'
 
 
 def test_pickle():

@@ -2,12 +2,12 @@
 
     >>> class Missing(Sentinel): pass
     >>> Missing
-    <Missing>
+    Missing
     >>> class CustomRepr(Sentinel):
-    ...     repr = '*** sentinel ***'
+    ...     repr = '<CustomRepr>'
     ...
     >>> CustomRepr
-    *** sentinel ***
+    <CustomRepr>
 
 """
 
@@ -16,9 +16,8 @@ class SentinelMeta(type):
         try:
             return cls.repr
         except AttributeError:
-            return f'<{cls.__name__}>'
+            return cls.__name__
 
 class Sentinel(metaclass=SentinelMeta):
     def __new__(cls):
         return cls
-
