@@ -4,6 +4,9 @@ from pytest import mark, fixture
 
 from lis import parse, evaluate, Expression, Environment, standard_env
 
+# Norvig's tests are not isolated: they assume the
+# same environment from first to last test.
+ENV_FOR_FIRST_TEST = standard_env()
 
 @mark.parametrize( 'source, expected', [
     ("(quote (testing 1 (2.0) -3.14e159))", ['testing', 1, [2.0], -3.14e159]),
@@ -40,7 +43,7 @@ from lis import parse, evaluate, Expression, Environment, standard_env
     ("(riff-shuffle (riff-shuffle (riff-shuffle (list 1 2 3 4 5 6 7 8))))", [1,2,3,4,5,6,7,8]),
 ])
 def test_evaluate(source: str, expected: Optional[Expression]) -> None:
-    got = evaluate(parse(source))
+    got = evaluate(parse(source), ENV_FOR_FIRST_TEST)
     assert got == expected
 
 
@@ -58,31 +61,31 @@ def test_evaluate_variable() -> None:
     assert got == expected
 
 
-def test_evaluate_literal() -> None:
+def test_evaluate_literal(std_env: Environment) -> None:
     source = '3.3'
     expected = 3.3
-    got = evaluate(parse(source))
+    got = evaluate(parse(source), std_env)
     assert got == expected
 
 
-def test_evaluate_quote() -> None:
+def test_evaluate_quote(std_env: Environment) -> None:
     source = '(quote (1.1 is not 1))'
     expected = [1.1, 'is', 'not', 1]
-    got = evaluate(parse(source))
+    got = evaluate(parse(source), std_env)
     assert got == expected
 
 
-def test_evaluate_if_true() -> None:
+def test_evaluate_if_true(std_env: Environment) -> None:
     source = '(if 1 10 no-such-thing)'
     expected = 10
-    got = evaluate(parse(source))
+    got = evaluate(parse(source), std_env)
     assert got == expected
 
 
-def test_evaluate_if_false() -> None:
+def test_evaluate_if_false(std_env: Environment) -> None:
     source = '(if 0 no-such-thing 20)'
     expected = 20
-    got = evaluate(parse(source))
+    got = evaluate(parse(source), std_env)
     assert got == expected
 
 

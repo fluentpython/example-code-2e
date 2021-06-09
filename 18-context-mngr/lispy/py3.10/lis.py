@@ -139,7 +139,7 @@ def lispstr(exp: object) -> str:
 ################ eval
 
 
-def evaluate(x: Expression, env: Environment = global_env) -> Any:
+def evaluate(x: Expression, env: Environment) -> Any:
     "Evaluate an expression in an environment."
     match x:
         case str():                               # variable reference
