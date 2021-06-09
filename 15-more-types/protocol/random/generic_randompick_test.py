@@ -1,24 +1,26 @@
 import random
-from typing import Iterable, TYPE_CHECKING
+from typing import Iterable, Generic, TypeVar, TYPE_CHECKING
 
-from randompick_generic import GenericRandomPicker
+T_co = TypeVar('T_co', covariant=True)
+
+from generic_randompick import RandomPicker
 
 
-class LottoPicker:
-    def __init__(self, items: Iterable[int]) -> None:
+class LottoPicker(Generic[T_co]):
+    def __init__(self, items: Iterable[T_co]) -> None:
         self._items = list(items)
         random.shuffle(self._items)
 
-    def pick(self) -> int:
+    def pick(self) -> T_co:
         return self._items.pop()
 
 
 def test_issubclass() -> None:
-    assert issubclass(LottoPicker, GenericRandomPicker)
+    assert issubclass(LottoPicker, RandomPicker)
 
 
 def test_isinstance() -> None:
-    popper: GenericRandomPicker = LottoPicker([1])
+    popper: RandomPicker = LottoPicker[int]([1])
     if TYPE_CHECKING:
         reveal_type(popper)
         # Revealed type is '???'

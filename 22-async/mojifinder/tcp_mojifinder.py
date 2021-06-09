@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 # tag::TCP_MOJIFINDER_TOP[]
-import sys
 import asyncio
 import functools
+import sys
+from asyncio.trsock import TransportSocket
+from typing import cast
 
 from charindex import InvertedIndex, format_results  # <1>
 
@@ -54,17 +56,19 @@ async def supervisor(index: InvertedIndex, host: str, port: int):
     server = await asyncio.start_server(    # <1>
         functools.partial(finder, index),   # <2>
         host, port)                         # <3>
-    addr = server.sockets[0].getsockname()  # type: ignore  # <4>
-    print(f'Serving on {addr}. Hit CTRL-C to stop.')
-    await server.serve_forever()  # <5>
+
+    socket_list = cast(tuple[TransportSocket, ...], server.sockets)  # <4>
+    addr = socket_list[0].getsockname()
+    print(f'Serving on {addr}. Hit CTRL-C to stop.')  # <5>
+    await server.serve_forever()  # <6>
 
 def main(host: str = '127.0.0.1', port_arg: str = '2323'):
     port = int(port_arg)
     print('Building index.')
-    index = InvertedIndex()                         # <6>
+    index = InvertedIndex()                         # <7>
     try:
-        asyncio.run(supervisor(index, host, port))  # <7>
-    except KeyboardInterrupt:                       # <8>
+        asyncio.run(supervisor(index, host, port))  # <8>
+    except KeyboardInterrupt:                       # <9>
         print('\nServer shut down.')
 
 if __name__ == '__main__':

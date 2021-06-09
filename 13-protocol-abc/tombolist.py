@@ -18,6 +18,6 @@ class TomboList(list):  # <2>
         return bool(self)  # <6>
 
     def inspect(self):
-        return tuple(sorted(self))
+        return tuple(self)
 
 # Tombola.register(TomboList)  # <7>

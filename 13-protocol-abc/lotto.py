@@ -5,7 +5,7 @@ import random
 from tombola import Tombola
 
 
-class LotteryBlower(Tombola):
+class LottoBlower(Tombola):
 
     def __init__(self, iterable):
         self._balls = list(iterable)  # <1>
@@ -17,14 +17,14 @@ class LotteryBlower(Tombola):
         try:
             position = random.randrange(len(self._balls))  # <2>
         except ValueError:
-            raise LookupError('pick from empty BingoCage')
+            raise LookupError('pick from empty LottoBlower')
         return self._balls.pop(position)  # <3>
 
     def loaded(self):  # <4>
         return bool(self._balls)
 
     def inspect(self):  # <5>
-        return tuple(sorted(self._balls))
+        return tuple(self._balls)
 
 
 # end::LOTTERY_BLOWER[]

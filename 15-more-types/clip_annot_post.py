@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """
     >>> clip('banana ', 6)
     'banana'
@@ -18,9 +20,9 @@
 """
 
 # tag::CLIP_ANNOT[]
-
-def clip(text: str, max_len: 'int > 0' = 80) -> str:  # <1>
-    """Return text clipped at the last space before or after max_len
+def clip(text: str, max_len: int = 80) -> str:
+    """Return new ``str`` clipped at last space before or after ``max_len``.
+       Return full ``text`` if no space found.
     """
     end = None
     if len(text) > max_len:
@@ -31,7 +33,7 @@ def clip(text: str, max_len: 'int > 0' = 80) -> str:  # <1>
             space_after = text.rfind(' ', max_len)
             if space_after >= 0:
                 end = space_after
-    if end is None:  # no spaces were found
+    if end is None:
         end = len(text)
     return text[:end].rstrip()
 

@@ -1,13 +1,14 @@
-from functools import reduce  # <1>
-from operator import add
-from typing import overload, Iterable, Union, TypeVar
+import functools
+import operator
+from collections.abc import Iterable
+from typing import overload, Union, TypeVar
 
 T = TypeVar('T')
-S = TypeVar('S')  # <2>
+S = TypeVar('S')  # <1>
 
 @overload
-def sum(it: Iterable[T]) -> Union[T, int]: ...  # <3>
+def sum(it: Iterable[T]) -> Union[T, int]: ...  # <2>
 @overload
-def sum(it: Iterable[T], /, start: S) -> Union[T, S]: ...  # <4>
-def sum(it, /, start=0):  # <5>
-    return reduce(add, it, start)
+def sum(it: Iterable[T], /, start: S) -> Union[T, S]: ...  # <3>
+def sum(it, /, start=0):  # <4>
+    return functools.reduce(operator.add, it, start)

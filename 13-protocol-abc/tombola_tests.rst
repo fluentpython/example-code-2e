@@ -11,8 +11,8 @@ Create and load instance from iterable::
     >>> globe = ConcreteTombola(balls)
     >>> globe.loaded()
     True
-    >>> globe.inspect()
-    (0, 1, 2)
+    >>> sorted(globe.inspect())
+    [0, 1, 2]
 
 
 Pick and collect balls::

@@ -38,8 +38,7 @@ deploy(trash_can)
 # tag::DEPLOY_NOT_VALID[]
 compost_can: TrashCan[Compostable] = TrashCan()
 deploy(compost_can)
-# end::DEPLOY_NOT_VALID[]
-
-## Argument 1 to "deploy" has
+## mypy: Argument 1 to "deploy" has
 ## incompatible type "TrashCan[Compostable]"
 ##          expected "TrashCan[Biodegradable]"
+# end::DEPLOY_NOT_VALID[]

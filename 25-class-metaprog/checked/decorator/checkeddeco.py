@@ -96,7 +96,7 @@ def checked(cls: type) -> type:  # <1>
     for name, constructor in _fields(cls).items():    # <2>
         setattr(cls, name, Field(name, constructor))  # <3>
 
-    cls._fields = classmethod(_fields)  #type: ignore  # <4>
+    cls._fields = classmethod(_fields)  # type: ignore  # <4>
 
     instance_methods = (  # <5>
         __init__,

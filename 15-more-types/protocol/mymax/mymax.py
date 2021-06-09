@@ -12,10 +12,10 @@ MISSING = object()
 EMPTY_MSG = 'max() arg is an empty sequence'
 
 @overload
-def max(__arg1: LT, __arg2: LT, *_args: LT, key: None = ...) -> LT:
+def max(__arg1: LT, __arg2: LT, *args: LT, key: None = ...) -> LT:
     ...
 @overload
-def max(__arg1: T, __arg2: T, *_args: T, key: Callable[[T], LT]) -> T:
+def max(__arg1: T, __arg2: T, *args: T, key: Callable[[T], LT]) -> T:
     ...
 @overload
 def max(__iterable: Iterable[LT], *, key: None = ...) -> LT:

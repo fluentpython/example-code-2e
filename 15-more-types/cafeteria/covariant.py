@@ -38,11 +38,12 @@ orange_juice_dispenser = BeverageDispenser(OrangeJuice())
 install(orange_juice_dispenser)
 # end::INSTALL_JUICE_DISPENSERS[]
 
-################################################ not a juice dispenser
+################################################ more general dispenser
 
+# tag::INSTALL_BEVERAGE_DISPENSER[]
 beverage_dispenser = BeverageDispenser(Beverage())
-
-## Argument 1 to "install" has
+install(beverage_dispenser)
+## mypy: Argument 1 to "install" has
 ## incompatible type "BeverageDispenser[Beverage]"
 ##          expected "BeverageDispenser[Juice]"
-install(beverage_dispenser)
+# end::INSTALL_BEVERAGE_DISPENSER[]
