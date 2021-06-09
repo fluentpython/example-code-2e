@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pytest import mark
+from pytest import mark, fixture
 
 from lis import parse, evaluate, Expression, Environment, standard_env
 
@@ -39,11 +39,14 @@ from lis import parse, evaluate, Expression, Environment, standard_env
     ("((repeat riff-shuffle) (list 1 2 3 4 5 6 7 8))",  [1, 3, 5, 7, 2, 4, 6, 8]),
     ("(riff-shuffle (riff-shuffle (riff-shuffle (list 1 2 3 4 5 6 7 8))))", [1,2,3,4,5,6,7,8]),
 ])
-@mark.skip
 def test_evaluate(source: str, expected: Optional[Expression]) -> None:
     got = evaluate(parse(source))
     assert got == expected
 
+
+@fixture
+def std_env() -> Environment:
+    return standard_env()
 
 # tests for each of the cases in evaluate
 
@@ -83,65 +86,58 @@ def test_evaluate_if_false() -> None:
     assert got == expected
 
 
-def test_define() -> None:
-    env: Environment = standard_env()
+def test_define(std_env: Environment) -> None:
     source = '(define answer (* 6 7))'
-    got = evaluate(parse(source), env)
+    got = evaluate(parse(source), std_env)
     assert got is None
-    assert env['answer'] == 42
+    assert std_env['answer'] == 42
 
 
-def test_lambda() -> None:
-    env: Environment = standard_env()
+def test_lambda(std_env: Environment) -> None:
     source = '(lambda (a b) (if (>= a b) a b))'
-    func = evaluate(parse(source), env)
+    func = evaluate(parse(source), std_env)
     assert func.parms == ['a', 'b']
     assert func.body == ['if', ['>=', 'a', 'b'], 'a', 'b']
-    assert func.env is env
+    assert func.env is std_env
     assert func(1, 2) == 2
     assert func(3, 2) == 3
 
 
-def test_begin() -> None:
-    env: Environment = standard_env()
+def test_begin(std_env: Environment) -> None:
     source = """
         (begin
             (define x (* 2 3))
             (* x 7)
         )
         """
-    got = evaluate(parse(source), env)
+    got = evaluate(parse(source), std_env)
     assert got == 42
 
 
-def test_invocation_builtin_car() -> None:
-    env: Environment = standard_env()
+def test_invocation_builtin_car(std_env: Environment) -> None:
     source = '(car (quote (11 22 33)))'
-    got = evaluate(parse(source), env)
+    got = evaluate(parse(source), std_env)
     assert got == 11
 
 
-def test_invocation_builtin_append() -> None:
-    env: Environment = standard_env()
+def test_invocation_builtin_append(std_env: Environment) -> None:
     source = '(append (quote (a b)) (quote (c d)))'
-    got = evaluate(parse(source), env)
+    got = evaluate(parse(source), std_env)
     assert got == ['a', 'b', 'c', 'd']
 
 
-def test_invocation_builtin_map() -> None:
-    env: Environment = standard_env()
+def test_invocation_builtin_map(std_env: Environment) -> None:
     source = '(map (lambda (x) (* x 2)) (quote (1 2 3))))'
-    got = evaluate(parse(source), env)
+    got = evaluate(parse(source), std_env)
     assert got == [2, 4, 6]
 
 
-def test_invocation_user_procedure() -> None:
-    env: Environment = standard_env()
+def test_invocation_user_procedure(std_env: Environment) -> None:
     source = """
         (begin
             (define max (lambda (a b) (if (>= a b) a b)))
             (max 22 11)
         )
         """
-    got = evaluate(parse(source), env)
+    got = evaluate(parse(source), std_env)
     assert got == 22
