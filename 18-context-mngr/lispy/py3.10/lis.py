@@ -142,8 +142,8 @@ def lispstr(exp: object) -> str:
 def evaluate(x: Expression, env: Environment) -> Any:
     "Evaluate an expression in an environment."
     match x:
-        case str():                               # variable reference
-            return env[x]
+        case str(var):                            # variable reference
+            return env[var]
         case literal if not isinstance(x, list):  # constant literal
             return literal
         case ['quote', exp]:                      # (quote exp)
