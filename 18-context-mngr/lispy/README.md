@@ -15,7 +15,7 @@ The `py3.9/` and `py3.10/` directories also have identical `lis_test.py` to run 
 These files include all the
 [`lis_tests` suite](https://github.com/norvig/pytudes/blob/60168bce8cdfacf57c92a5b2979f0b2e95367753/py/lispytest.py#L5)
 from `original/lispytest.py`,
-and individual tests for each expression and special form handled by `evaluate`.
+and separate tests for each expression and special form handled by `evaluate`.
 
 ## Provenance, Copyright and License
 
