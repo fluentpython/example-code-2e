@@ -1,6 +1,6 @@
 # lis.py
 
-This directory contains 4 versions of
+This directory contains 3 versions of
 [Peter Norvig's `lis.py` interpreter](https://norvig.com/lispy.html)
 for a subset of [Scheme](https://en.wikipedia.org/wiki/Scheme_(programming_language)).
 
