@@ -6,7 +6,7 @@ for Scheme.
 
 * `original/`: Norvig's `lis.py` unchanged, `lispy.py` with
 [minor changes](https://github.com/norvig/pytudes/pull/106) to run on Python 3,
-and the `lispytest.py` custom test suite;
+and the `lispytest.py` custom test script;
 * `py3.9/`: `lis.py` with type hints and a few minor edits—requires Python 3.9;
 * `py3.10/`: `lis.py` with type hints, pattern matching, and minor edits—requires Python 3.10.
 
