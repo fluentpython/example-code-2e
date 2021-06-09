@@ -25,7 +25,8 @@ class Procedure:
         self.parms, self.body, self.env = parms, body, env
 
     def __call__(self, *args: Expression) -> Any:
-        env: Environment = ChainMap(dict(zip(self.parms, args)), self.env)
+        local_env = dict(zip(self.parms, args))
+        env: Environment = ChainMap(local_env, self.env)
         return evaluate(self.body, env)
 
 
