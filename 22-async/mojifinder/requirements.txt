@@ -1,5 +1,5 @@
 click==7.1.2
-fastapi==0.63.0
+fastapi==0.65.2
 h11==0.12.0
 pydantic==1.8.2
 starlette==0.13.6
