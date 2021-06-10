@@ -142,22 +142,22 @@ def lispstr(exp: object) -> str:
 def evaluate(x: Expression, env: Environment) -> Any:
     "Evaluate an expression in an environment."
     match x:
-        case Symbol(var):                            # variable reference
+        case Symbol(var):                               # variable reference
             return env[var]
-        case literal if not isinstance(x, list):  # constant literal
+        case literal if not isinstance(x, list):        # constant literal
             return literal
-        case ['quote', exp]:                      # (quote exp)
+        case ['quote', exp]:                            # (quote exp)
             return exp
-        case ['if', test, conseq, alt]:           # (if test conseq alt)
+        case ['if', test, conseq, alt]:                 # (if test conseq alt)
             exp = conseq if evaluate(test, env) else alt
             return evaluate(exp, env)
-        case ['define', Symbol(var), exp]:           # (define var exp)
-            env[var] = evaluate(exp, env)
-        case ['define', [name, *parms], body]:    # (define (fun parm...) body)
-            env[name] = Procedure(parms, body, env)
-        case ['lambda', parms, body]:             # (lambda (parm...) body)
+        case ['lambda', parms, body]:                   # (lambda (parm...) body)
             return Procedure(parms, body, env)
-        case [op, *args]:                         # (proc arg...)
+        case ['define', Symbol(var), exp]:              # (define var exp)
+            env[var] = evaluate(exp, env)
+        case ['define', [name, *parms], body]:          # (define (fun parm...) body)
+            env[name] = Procedure(parms, body, env)
+        case [op, *args]:                               # (proc arg...)
             proc = evaluate(op, env)
             values = (evaluate(arg, env) for arg in args)
             return proc(*values)
