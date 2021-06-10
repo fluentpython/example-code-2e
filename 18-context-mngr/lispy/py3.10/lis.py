@@ -12,16 +12,17 @@ from collections import ChainMap
 from collections.abc import MutableMapping
 from typing import Any, TypeAlias
 
-Atom: TypeAlias = float | int | str
+Symbol: TypeAlias = str
+Atom: TypeAlias = float | int | Symbol
 Expression: TypeAlias = Atom | list
 
-Environment: TypeAlias = MutableMapping[str, object]
+Environment: TypeAlias = MutableMapping[Symbol, object]
 
 
 class Procedure:
     "A user-defined Scheme procedure."
 
-    def __init__(self, parms: list[str], body: Expression, env: Environment):
+    def __init__(self, parms: list[Symbol], body: Expression, env: Environment):
         self.parms, self.body, self.env = parms, body, env
 
     def __call__(self, *args: Expression) -> Any:
@@ -68,13 +69,11 @@ def standard_env() -> Environment:
             'number?': lambda x: isinstance(x, (int, float)),
             'procedure?': callable,
             'round': round,
-            'symbol?': lambda x: isinstance(x, str),
+            'symbol?': lambda x: isinstance(x, Symbol),
         }
     )
     return env
 
-
-global_env: Environment = standard_env()
 
 ################ Parsing: parse, tokenize, and read_from_tokens
 
@@ -114,7 +113,7 @@ def parse_atom(token: str) -> Atom:
         try:
             return float(token)
         except ValueError:
-            return str(token)
+            return Symbol(token)
 
 
 ################ Interaction: A REPL
@@ -122,8 +121,9 @@ def parse_atom(token: str) -> Atom:
 
 def repl(prompt: str = 'lis.py> ') -> None:
     "A prompt-read-evaluate-print loop."
+    global_env: Environment = standard_env()
     while True:
-        val = evaluate(parse(input(prompt)))
+        val = evaluate(parse(input(prompt)), global_env)
         if val is not None:
             print(lispstr(val))
 
@@ -142,7 +142,7 @@ def lispstr(exp: object) -> str:
 def evaluate(x: Expression, env: Environment) -> Any:
     "Evaluate an expression in an environment."
     match x:
-        case str(var):                            # variable reference
+        case Symbol(var):                            # variable reference
             return env[var]
         case literal if not isinstance(x, list):  # constant literal
             return literal
@@ -151,9 +151,11 @@ def evaluate(x: Expression, env: Environment) -> Any:
         case ['if', test, conseq, alt]:           # (if test conseq alt)
             exp = conseq if evaluate(test, env) else alt
             return evaluate(exp, env)
-        case ['define', var, exp]:                # (define var exp)
+        case ['define', Symbol(var), exp]:           # (define var exp)
             env[var] = evaluate(exp, env)
-        case ['lambda', parms, body]:             # (lambda (var...) body)
+        case ['define', [name, *parms], body]:    # (define (fun parm...) body)
+            env[name] = Procedure(parms, body, env)
+        case ['lambda', parms, body]:             # (lambda (parm...) body)
             return Procedure(parms, body, env)
         case [op, *args]:                         # (proc arg...)
             proc = evaluate(op, env)

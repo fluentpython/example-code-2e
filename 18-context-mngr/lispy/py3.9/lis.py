@@ -12,20 +12,21 @@ from collections import ChainMap
 from collections.abc import MutableMapping
 from typing import Union, Any
 
-Atom = Union[float, int, str]
+Symbol = str
+Atom = Union[float, int, Symbol]
 Expression = Union[Atom, list]
 
-Environment = MutableMapping[str, object]
+Environment = MutableMapping[Symbol, object]
 
 
 class Procedure:
     "A user-defined Scheme procedure."
-
-    def __init__(self, parms: list[str], body: Expression, env: Environment):
+    def __init__(self, parms: list[Symbol], body: Expression, env: Environment):
         self.parms, self.body, self.env = parms, body, env
 
     def __call__(self, *args: Expression) -> Any:
-        env: Environment = ChainMap(dict(zip(self.parms, args)), self.env)
+        local_env = dict(zip(self.parms, args))
+        env: Environment = ChainMap(local_env, self.env)
         return evaluate(self.body, env)
 
 
@@ -67,13 +68,11 @@ def standard_env() -> Environment:
             'number?': lambda x: isinstance(x, (int, float)),
             'procedure?': callable,
             'round': round,
-            'symbol?': lambda x: isinstance(x, str),
+            'symbol?': lambda x: isinstance(x, Symbol),
         }
     )
     return env
 
-
-global_env: Environment = standard_env()
 
 ################ Parsing: parse, tokenize, and read_from_tokens
 
@@ -113,7 +112,7 @@ def parse_atom(token: str) -> Atom:
         try:
             return float(token)
         except ValueError:
-            return str(token)
+            return Symbol(token)
 
 
 ################ Interaction: A REPL
@@ -121,8 +120,9 @@ def parse_atom(token: str) -> Atom:
 
 def repl(prompt: str = 'lis.py> ') -> None:
     "A prompt-read-evaluate-print loop."
+    global_env: Environment = standard_env()
     while True:
-        val = evaluate(parse(input(prompt)))
+        val = evaluate(parse(input(prompt)), global_env)
         if val is not None:
             print(lispstr(val))
 

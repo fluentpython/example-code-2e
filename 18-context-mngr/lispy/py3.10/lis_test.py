@@ -6,7 +6,7 @@ from lis import parse, evaluate, Expression, Environment, standard_env
 
 # Norvig's tests are not isolated: they assume the
 # same environment from first to last test.
-ENV_FOR_FIRST_TEST = standard_env()
+global_env_for_first_test = standard_env()
 
 @mark.parametrize( 'source, expected', [
     ("(quote (testing 1 (2.0) -3.14e159))", ['testing', 1, [2.0], -3.14e159]),
@@ -48,7 +48,7 @@ ENV_FOR_FIRST_TEST = standard_env()
     ("(riff-shuffle (riff-shuffle (riff-shuffle (list 1 2 3 4 5 6 7 8))))", [1,2,3,4,5,6,7,8]),
 ])
 def test_evaluate(source: str, expected: Optional[Expression]) -> None:
-    got = evaluate(parse(source), ENV_FOR_FIRST_TEST)
+    got = evaluate(parse(source), global_env_for_first_test)
     assert got == expected
 
 
@@ -149,3 +149,17 @@ def test_invocation_user_procedure(std_env: Environment) -> None:
         """
     got = evaluate(parse(source), std_env)
     assert got == 22
+
+
+###################################### for py3.10/lis.py only
+
+def test_define_function(std_env: Environment) -> None:
+    source = '(define (max a b) (if (>= a b) a b))'
+    got = evaluate(parse(source), std_env)
+    assert got is None
+    max_fn = std_env['max']
+    assert max_fn.parms == ['a', 'b']
+    assert max_fn.body == ['if', ['>=', 'a', 'b'], 'a', 'b']
+    assert max_fn.env is std_env
+    assert max_fn(1, 2) == 2
+    assert max_fn(3, 2) == 3
