@@ -18,8 +18,7 @@ for line in zwg_sample.strip().split('\n'):
     code, descr, version = (s.strip() for s in line.split('|'))
     chars = [chr(int(c, 16)) for c in code.split()]
     print(''.join(chars), version, descr, sep='\t', end='')
-    while chars:
-        char = chars.pop(0)
+    for char in chars:
         if char in markers:
             print(' + ' + markers[char], end='')
         else:

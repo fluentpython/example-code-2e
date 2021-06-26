@@ -8,7 +8,7 @@ htmlize(): generic function example
 >>> htmlize(abs)
 '<pre>&lt;built-in function abs&gt;</pre>'
 >>> htmlize('Heimlich & Co.\n- a game')  # <2>
-'<p>Heimlich &amp; Co.<br>\n- a game</p>'
+'<p>Heimlich &amp; Co.<br/>\n- a game</p>'
 >>> htmlize(42)  # <3>
 '<pre>42 (0x2a)</pre>'
 >>> print(htmlize(['alpha', 66, {3, 2, 1}]))  # <4>
@@ -45,7 +45,7 @@ def htmlize(obj: object) -> str:
 
 @htmlize.register  # <2>
 def _(text: str) -> str:  # <3>
-    content = html.escape(text).replace('\n', '<br>\n')
+    content = html.escape(text).replace('\n', '<br/>\n')
     return f'<p>{content}</p>'
 
 @htmlize.register  # <4>

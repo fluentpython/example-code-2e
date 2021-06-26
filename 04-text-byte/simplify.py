@@ -51,7 +51,7 @@ def shave_marks_latin(txt):
         if unicodedata.combining(c) and latin_base:   # <2>
             continue  # ignore diacritic on Latin base char
         preserve.append(c)                            # <3>
-        # if it isn't combining char, it's a new base char
+        # if it isn't a combining char, it's a new base char
         if not unicodedata.combining(c):              # <4>
             latin_base = c in string.ascii_letters
     shaved = ''.join(preserve)

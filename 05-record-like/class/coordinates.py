@@ -9,8 +9,8 @@
 # tag::COORDINATE[]
 class Coordinate:
 
-    def __init__(self, lat, long):
+    def __init__(self, lat, lon):
         self.lat = lat
-        self.long = long
+        self.lon = lon
 
 # end::COORDINATE[]
