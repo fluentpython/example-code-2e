@@ -1,4 +1,4 @@
-# Norvig's originals and updates
+# Norvig's `lis.py` and updates
 
 This directory contains:
 
