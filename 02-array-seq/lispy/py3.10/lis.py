@@ -23,7 +23,7 @@ Environment: TypeAlias = MutableMapping[Symbol, object]
 class Procedure:
     "A user-defined Scheme procedure."
 
-    def __init__(self, parms: list[Symbol], body: Expression, env: Environment):
+    def __init__(self, parms: list[Symbol], body: list[Expression], env: Environment):
         self.parms = parms
         self.body = body
         self.env = env
@@ -31,7 +31,9 @@ class Procedure:
     def __call__(self, *args: Expression) -> Any:
         local_env = dict(zip(self.parms, args))
         env: Environment = ChainMap(local_env, self.env)
-        return evaluate(self.body, env)
+        for exp in self.body:
+            result = evaluate(exp, env)
+        return result
 
 
 ################ global environment
@@ -160,9 +162,9 @@ def evaluate(exp: Expression, env: Environment) -> Any:
                 return evaluate(alternative, env)
         case ['define', Symbol(var), value_exp]:
             env[var] = evaluate(value_exp, env)
-        case ['define', [Symbol(name), *parms], body]:
+        case ['define', [Symbol(name), *parms], *body]:
             env[name] = Procedure(parms, body, env)
-        case ['lambda', [*parms], body]:
+        case ['lambda', [*parms], *body]:
             return Procedure(parms, body, env)
         case [op, *args]:
             proc = evaluate(op, env)
