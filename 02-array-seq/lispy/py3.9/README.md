@@ -19,7 +19,7 @@ _Luciano Ramalho_
 a standard [pytest](https://docs.pytest.org) test suite including new test cases, preserving all Norvig's test cases for
 [lis.py](https://github.com/norvig/pytudes/blob/705c0a335c1811a203e79587d7d41865cf7f41c7/py/lis.py)
 but removing the test cases for the features implemented only in
-[lispy.py](https://github.com/norvig/pytudes/blob/705c0a335c1811a203e79587d7d41865cf7f41c7/py/lispy.py)
+[lispy.py](https://github.com/norvig/pytudes/blob/705c0a335c1811a203e79587d7d41865cf7f41c7/py/lispy.py).
 
 
 ## Minor changes
