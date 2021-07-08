@@ -8,7 +8,7 @@ Norvig's [`lis.py`](https://github.com/norvig/pytudes/blob/c33cd6835a506a57d9fe7
 * `py3.10/`: `lis.py` with type hints, pattern matching, and minor edits—requires Python 3.10.
 
 The `py3.10/` directory also has `lis_test.py` to run with
-[pytest](https://docs.pytest.org), including all the
+[pytest](https://docs.pytest.org), including the
 [`lis_tests` suite](https://github.com/norvig/pytudes/blob/60168bce8cdfacf57c92a5b2979f0b2e95367753/py/lispytest.py#L5)
 from `original/lispytest.py`,
 and additional separate tests for each expression and special form handled by `evaluate`.
@@ -28,7 +28,7 @@ The copyright holder is Peter Norvig and the code is licensed under the
 I made small changes to the programs in `original/`:
 
 * In `lis.py`:
-  * The `Procedure` class accepts a list of expressions as the `body`, and `__call__` evaluates all those expressions in order, returning the value of the last. This is consistent with Scheme's `lambda` syntax and provided a useful example for pattern matching.
+  * The `Procedure` class accepts a list of expressions as the `body`, and `__call__` evaluates those expressions in order, and returns the value of the last. This is consistent with Scheme's `lambda` syntax and provided a useful example for pattern matching.
   * In the `elif` block for `'lambda'`, I added the `*` in front of the `*body` variable in the tuple unpacking to capture the expressions as a list, before calling the `Procedure` constructor.
 
 * In `lispy.py` I made [changes and a pull request](https://github.com/norvig/pytudes/pull/106) to make it run on Python 3.
