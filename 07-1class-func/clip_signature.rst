@@ -1,8 +1,8 @@
 >>> from clip import clip
 >>> from inspect import signature
 >>> sig = signature(clip)
->>> sig  # doctest: +ELLIPSIS
-<inspect.Signature object at 0x...>
+>>> sig
+<Signature (text, max_len=80)>
 >>> str(sig)
 '(text, max_len=80)'
 >>> for name, param in sig.parameters.items():

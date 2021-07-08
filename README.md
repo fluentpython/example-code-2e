@@ -26,7 +26,7 @@ Part / Chapter #|Title|Directory|1<sup>st</sup> ed. Chapter&nbsp;#
 2|An Array of Sequences|[02-array-seq](02-array-seq)|2
 3|Dictionaries and Sets|[03-dict-set](03-dict-set)|3
 4|Text versus Bytes|[04-text-byte](04-text-byte)|4
-5|Record-like Data Structures|[05-record-like](05-record-like)|🆕
+5|Record-like Data Structures|[05-data-classes](05-data-classes)|🆕
 6|Object References, Mutability, and Recycling|[06-obj-ref](06-obj-ref)|8
 **III – Functions as Objects**|
 7|First-Class Funcions|[07-1class-func](07-1class-func)|5
@@ -42,7 +42,7 @@ Part / Chapter #|Title|Directory|1<sup>st</sup> ed. Chapter&nbsp;#
 16|Operator Overloading: Doing It Right|[16-op-overloading](16-op-overloading)|13
 **V – Control Flow**|
 17|Iterables, Iterators, and Generators|[17-it-generator](17-it-generator)|14
-18|Context Managers and else Blocks|[18-context-mngr](18-context-mngr)|15
+18|Context Managers and else Blocks|[18-with-match](18-with-match)|15
 19|Classic Coroutines|[19-coroutine](19-coroutine)|16
 20|Concurrency Models in Python|[20-concurrency](20-concurrency)|🆕
 21|Concurrency with Futures|[21-futures](21-futures)|17

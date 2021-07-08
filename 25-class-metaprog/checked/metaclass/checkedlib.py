@@ -58,7 +58,8 @@ Creating new attributes at runtime is restricted as well::
       ...
     AttributeError: 'Movie' object has no attribute 'director'
 
-The `_as_dict` instance creates a `dict` from the attributes of a `Movie` object::
+The `_asdict` instance method creates a `dict` from the attributes
+of a `Movie` object::
 
     >>> movie._asdict()
     {'title': 'The Godfather', 'year': 1972, 'box_office': 137.0}

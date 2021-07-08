@@ -34,11 +34,11 @@ def main(args):
         print(count, 'characters shown')
     else:
         counts, firsts = category_stats()
-        for cat, count in counts.most_common():
+        for i, (cat, count) in enumerate(counts.most_common(), 1):
             first = firsts[cat]
             if cat == 'Cs':
                 first = f'(surrogate U+{ord(first):04X})'
-            print(f'{count:6} {cat} {first}')
+            print(f'{i:2} {count:6} {cat} {first}')
 
 
 if __name__ == '__main__':

@@ -7,7 +7,7 @@ Demonstration of nested tuple unpacking::
                     |  latitude | longitude
     Mexico City     |   19.4333 |  -99.1333
     New York-Newark |   40.8086 |  -74.0204
-    Sao Paulo       |  -23.5478 |  -46.6358
+    São Paulo       |  -23.5478 |  -46.6358
 
 """
 
@@ -17,7 +17,7 @@ metro_areas = [
     ('Delhi NCR', 'IN', 21.935, (28.613889, 77.208889)),
     ('Mexico City', 'MX', 20.142, (19.433333, -99.133333)),
     ('New York-Newark', 'US', 20.104, (40.808611, -74.020386)),
-    ('Sao Paulo', 'BR', 19.649, (-23.547778, -46.635833)),
+    ('São Paulo', 'BR', 19.649, (-23.547778, -46.635833)),
 ]
 
 def main():

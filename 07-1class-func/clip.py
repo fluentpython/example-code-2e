@@ -15,22 +15,26 @@
     'banana'
     >>> clip('banana split', 12)
     'banana split'
+    >>> clip('bananasplit', 5)
+    'bananasplit'
+    >>> clip('banana  split', 8)
+    'banana'
 """
 
 # tag::CLIP[]
 def clip(text, max_len=80):
-    """Return text clipped at the last space before or after max_len
-    """
-    end = None
-    if len(text) > max_len:
-        space_before = text.rfind(' ', 0, max_len)
-        if space_before >= 0:
-            end = space_before
-        else:
-            space_after = text.rfind(' ', max_len)
-            if space_after >= 0:
-                end = space_after
-    if end is None:  # no spaces were found
-        return text.rstrip()
+    """Return text clipped at the last space before or after max_len"""
+    text = text.rstrip()
+    end = len(text)
+    if end <= max_len:
+        return text
+    space_before = text.rfind(' ', 0, max_len)
+    if space_before >= 0:
+        end = space_before
+    else:
+        space_after = text.find(' ', max_len)
+        if space_after >= 0:
+            end = space_after
     return text[:end].rstrip()
 # end::CLIP[]
+

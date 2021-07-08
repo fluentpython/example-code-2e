@@ -1,8 +1,8 @@
-from typing import Optional
+from typing import Any, Optional
 
 from pytest import mark, fixture
 
-from lis import parse, evaluate, Expression, Environment, standard_env
+from lis import parse, evaluate, standard_env, Symbol, Environment, Expression
 
 ############################################################# tests for parse
 
@@ -12,7 +12,7 @@ from lis import parse, evaluate, Expression, Environment, standard_env
     ('(sum 1 2 3)', ['sum', 1, 2, 3]),
     ('(+ (* 2 100) (* 1 10))', ['+', ['*', 2, 100], ['*', 1, 10]]),
     ('99 100', 99),  # parse stops at the first complete expression
-    ('(a)(b)', ['a']),  
+    ('(a)(b)', ['a']),
 ])
 def test_parse(source: str, expected: Expression) -> None:
     got = parse(source)
@@ -122,7 +122,7 @@ def test_lambda(std_env: Environment) -> None:
     source = '(lambda (a b) (if (>= a b) a b))'
     func = evaluate(parse(source), std_env)
     assert func.parms == ['a', 'b']
-    assert func.body == ['if', ['>=', 'a', 'b'], 'a', 'b']
+    assert func.body == [['if', ['>=', 'a', 'b'], 'a', 'b']]
     assert func.env is std_env
     assert func(1, 2) == 2
     assert func(3, 2) == 3
@@ -166,17 +166,3 @@ def test_invocation_user_procedure(std_env: Environment) -> None:
         """
     got = evaluate(parse(source), std_env)
     assert got == 22
-
-
-###################################### for py3.10/lis.py only
-
-def test_define_function(std_env: Environment) -> None:
-    source = '(define (max a b) (if (>= a b) a b))'
-    got = evaluate(parse(source), std_env)
-    assert got is None
-    max_fn = std_env['max']
-    assert max_fn.parms == ['a', 'b']
-    assert max_fn.body == ['if', ['>=', 'a', 'b'], 'a', 'b']
-    assert max_fn.env is std_env
-    assert max_fn(1, 2) == 2
-    assert max_fn(3, 2) == 3

@@ -4,7 +4,7 @@
 ## Minor edits for Fluent Python, Second Edition (O'Reilly, 2021)
 ## by Luciano Ramalho, adding type hints and pattern matching.
 
-################ imports and types
+################ Imports and Types
 
 import math
 import operator as op
@@ -23,7 +23,7 @@ Environment: TypeAlias = MutableMapping[Symbol, object]
 class Procedure:
     "A user-defined Scheme procedure."
 
-    def __init__(self, parms: list[Symbol], body: Expression, env: Environment):
+    def __init__(self, parms: list[Symbol], body: list[Expression], env: Environment):
         self.parms = parms
         self.body = body
         self.env = env
@@ -31,11 +31,12 @@ class Procedure:
     def __call__(self, *args: Expression) -> Any:
         local_env = dict(zip(self.parms, args))
         env: Environment = ChainMap(local_env, self.env)
-        return evaluate(self.body, env)
+        for exp in self.body:
+            result = evaluate(exp, env)
+        return result
 
 
-################ global environment
-
+################ Global Environment
 
 def standard_env() -> Environment:
     "An environment with some Scheme standard procedures."
@@ -77,9 +78,7 @@ def standard_env() -> Environment:
     })
     return env
 
-
-################ parse, tokenize, and read_from_tokens
-
+################ Parsing: parse, tokenize, and read_from_tokens
 
 def parse(program: str) -> Expression:
     "Read a Scheme expression from a string."
@@ -119,12 +118,11 @@ def parse_atom(token: str) -> Atom:
             return Symbol(token)
 
 
-################ interaction: a REPL
-
+################ Interaction: A REPL
 
 def repl(prompt: str = 'lis.py> ') -> None:
     "A prompt-read-evaluate-print loop."
-    global_env: Environment = standard_env()
+    global_env = standard_env()
     while True:
         val = evaluate(parse(input(prompt)), global_env)
         if val is not None:
@@ -160,9 +158,9 @@ def evaluate(exp: Expression, env: Environment) -> Any:
                 return evaluate(alternative, env)
         case ['define', Symbol(var), value_exp]:
             env[var] = evaluate(value_exp, env)
-        case ['define', [Symbol(name), *parms], body]:
+        case ['define', [Symbol(name), *parms], *body]:
             env[name] = Procedure(parms, body, env)
-        case ['lambda', [*parms], body]:
+        case ['lambda', [*parms], *body]:
             return Procedure(parms, body, env)
         case [op, *args]:
             proc = evaluate(op, env)
