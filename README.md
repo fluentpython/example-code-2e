@@ -25,11 +25,11 @@ Part / Chapter #|Title|Directory|1<sup>st</sup> ed. Chapter&nbsp;#
 **II – Data Structures**|
 2|An Array of Sequences|[02-array-seq](02-array-seq)|2
 3|Dictionaries and Sets|[03-dict-set](03-dict-set)|3
-4|Text versus Bytes|[04-text-byte](04-text-byte)|4
-5|Record-like Data Structures|[05-data-classes](05-data-classes)|🆕
+4|Unicode Text versus Bytes|[04-text-byte](04-text-byte)|4
+5|Data Class Builders|[05-data-classes](05-data-classes)|🆕
 6|Object References, Mutability, and Recycling|[06-obj-ref](06-obj-ref)|8
 **III – Functions as Objects**|
-7|First-Class Funcions|[07-1class-func](07-1class-func)|5
+7|Funcions as First-Class Objects|[07-1class-func](07-1class-func)|5
 8|Type Hints in Function Definitions|[08-def-type-hints](08-def-type-hints)|🆕
 9|Function Decorators and Closures|[09-closure-deco](09-closure-deco)|7
 10|Design Patterns with First-Class Functions|[10-dp-1class-func](10-dp-1class-func)|6
