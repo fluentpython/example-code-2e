@@ -4,6 +4,6 @@
 >>> clip.__code__  # doctest: +ELLIPSIS
 <code object clip at 0x...>
 >>> clip.__code__.co_varnames
-('text', 'max_len', 'end', 'space_before', 'space_after')
+('text', 'max_len', 'end', 'space_at')
 >>> clip.__code__.co_argcount
 2

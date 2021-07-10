@@ -23,8 +23,8 @@ metro_areas = [
 def main():
     print(f'{"":15} | {"latitude":>9} | {"longitude":>9}')
     for record in metro_areas:
-        match record:
-            case [name, _, _, (lat, lon)] if lon <= 0:
+        match record:  # <1>
+            case [name, _, _, (lat, lon)] if lon <= 0:  # <2>
                 print(f'{name:15} | {lat:9.4f} | {lon:9.4f}')
 # end::MAIN[]
 

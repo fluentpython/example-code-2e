@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 -m doctest cf_tests.rst $1
+python3 -m doctest README.rst $1
