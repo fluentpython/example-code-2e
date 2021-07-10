@@ -5,7 +5,7 @@ use in _Fluent Python, Second Edition_, I made a few changes for didactic reason
 
 _Luciano Ramalho_
 
-## Major changes
+## Significant changes
 
 * Make the `lambda` form accept more than one expression as the body. This is consistent with _Scheme_ syntax, and provides a useful example for the book. To implement this:
     * In `Procedure.__call__`: evaluate `self.body` as a list of expressions, instead of a single expression. Return the value of the last expression.
@@ -22,7 +22,7 @@ but removing the test cases for the features implemented only in
 [lispy.py](https://github.com/norvig/pytudes/blob/705c0a335c1811a203e79587d7d41865cf7f41c7/py/lispy.py)
 
 
-## Minor changes
+## Name changes
 
 Cosmetic changes to make the code look more familiar to
 Python programmers, the audience of _Fluent Python_.
