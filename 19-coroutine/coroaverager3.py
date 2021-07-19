@@ -63,8 +63,10 @@ def averager():  # <1>
 
 # the delegating generator
 def grouper(results, key):  # <5>
-    while True:  # <6>
-        results[key] = yield from averager()  # <7>
+    results[key] = yield from averager()
+    yield
+    # while True:  # <6>
+    #     results[key] = yield from averager()  # <7>
 
 
 # the client code, a.k.a. the caller
