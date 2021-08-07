@@ -1,10 +1,39 @@
-"""UpperDict uppercases all string keys.
+"""
+Short demos
+===========
 
-Test for initializer. `str` keys are uppercased::
+``UpperDict`` behaves like a case-insensitive mapping`::
+
+# tag::UPPERDICT_DEMO[]
+    >>> d = UpperDict([('a', 'letter A'), (2, 'digit two')])
+    >>> list(d.keys())
+    ['A', 2]
+    >>> d['b'] = 'letter B'
+    >>> 'b' in d
+    True
+    >>> d['a'], d.get('B')
+    ('letter A', 'letter B')
+    >>> list(d.keys())
+    ['A', 2, 'B']
+
+# end::UPPERDICT_DEMO[]
+
+And ``UpperCounter`` is also case-insensitive::
+
+# tag::UPPERCOUNTER_DEMO[]
+    >>> c = UpperCounter('BaNanA')
+    >>> c.most_common()
+    [('A', 3), ('N', 2), ('B', 1)]
+
+# end::UPPERCOUNTER_DEMO[]
+
+Detailed tests
+==============
+
+UpperDict uppercases all string keys.
 
     >>> d = UpperDict([('a', 'letter A'), ('B', 'letter B'), (2, 'digit two')])
-    >>> list(d.keys())
-    ['A', 'B', 2]
+
 
 Tests for item retrieval using `d[key]` notation::
 
@@ -82,13 +111,11 @@ Tests for count retrieval using `d[key]` notation::
 # tag::UPPERCASE_MIXIN[]
 import collections
 
-
 def _upper(key):  # <1>
     try:
         return key.upper()
     except AttributeError:
         return key
-
 
 class UpperCaseMixin:  # <2>
     def __setitem__(self, key, item):
@@ -108,8 +135,6 @@ class UpperCaseMixin:  # <2>
 class UpperDict(UpperCaseMixin, collections.UserDict):  # <1>
     pass
 
-
 class UpperCounter(UpperCaseMixin, collections.Counter):  # <2>
     """Specialized 'Counter' that uppercases string keys"""  # <3>
-
 # end::UPPERDICT[]

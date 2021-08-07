@@ -1,5 +1,5 @@
 """
-A 2-dimensional vector class
+A two-dimensional vector class
 
     >>> v1 = Vector2d(3, 4)
     >>> print(v1.x, v1.y)
@@ -72,7 +72,7 @@ Tests of `x` and `y` read-only properties:
     >>> v1.x = 123
     Traceback (most recent call last):
       ...
-    AttributeError: can't set attribute
+    AttributeError: can't set attribute 'x'
 
 
 Tests of hashing:
@@ -81,7 +81,7 @@ Tests of hashing:
     >>> v2 = Vector2d(3.1, 4.2)
     >>> hash(v1), hash(v2)
     (7, 384307168202284039)
-    >>> len(set([v1, v2]))
+    >>> len({v1, v2})
     2
 
 """
@@ -90,6 +90,8 @@ from array import array
 import math
 
 class Vector2d:
+    __match_args__ = ('x', 'y')
+
     typecode = 'd'
 
     def __init__(self, x, y):

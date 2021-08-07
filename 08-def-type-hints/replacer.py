@@ -13,9 +13,9 @@
 """
 
 # tag::ZIP_REPLACE[]
-from typing import Iterable, Tuple
+from collections.abc import Iterable
 
-FromTo = Tuple[str, str]  # <1>
+FromTo = tuple[str, str]  # <1>
 
 def zip_replace(text: str, changes: Iterable[FromTo]) -> str:  # <2>
     for from_, to in changes:

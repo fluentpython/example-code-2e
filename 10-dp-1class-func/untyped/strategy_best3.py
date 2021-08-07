@@ -17,16 +17,16 @@
     ...                LineItem('apple', 10, 1.5)]
     >>> Order(joe, banana_cart, bulk_item_promo)
     <Order total: 30.00 due: 28.50>
-    >>> long_order = [LineItem(str(item_code), 1, 1.0)
+    >>> long_cart = [LineItem(str(item_code), 1, 1.0)
     ...               for item_code in range(10)]
-    >>> Order(joe, long_order, large_order_promo)
+    >>> Order(joe, long_cart, large_order_promo)
     <Order total: 10.00 due: 9.30>
     >>> Order(joe, cart, large_order_promo)
     <Order total: 42.00 due: 42.00>
 
 # tag::STRATEGY_BEST_TESTS[]
 
-    >>> Order(joe, long_order, best_promo)
+    >>> Order(joe, long_cart, best_promo)
     <Order total: 10.00 due: 9.30>
     >>> Order(joe, banana_cart, best_promo)
     <Order total: 30.00 due: 28.50>

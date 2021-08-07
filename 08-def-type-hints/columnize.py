@@ -1,7 +1,7 @@
 # tag::COLUMNIZE[]
-from typing import Sequence, List, Tuple
+from collections.abc import Sequence
 
-def columnize(sequence: Sequence[str], num_columns: int = 0) -> List[Tuple[str, ...]]:
+def columnize(sequence: Sequence[str], num_columns: int = 0) -> list[tuple[str, ...]]:
     if num_columns == 0:
         num_columns = round(len(sequence) ** .5)
     num_rows, reminder = divmod(len(sequence), num_columns)

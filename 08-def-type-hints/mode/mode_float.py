@@ -1,6 +1,6 @@
 # tag::MODE_FLOAT[]
 from collections import Counter
-from typing import Iterable
+from collections.abc import Iterable
 
 def mode(data: Iterable[float]) -> float:
     pairs = Counter(data).most_common(1)

@@ -199,15 +199,17 @@ class Vector:
         return self._components[index]
 
 # tag::VECTOR_V3_GETATTR[]
-    shortcut_names = 'xyzt'
+    __match_args__ = ('x', 'y', 'z', 't')  # <1>
 
     def __getattr__(self, name):
-        cls = type(self)  # <1>
-        if len(name) == 1:  # <2>
-            pos = cls.shortcut_names.find(name)  # <3>
-            if 0 <= pos < len(self._components):  # <4>
-                return self._components[pos]
-        msg = f'{cls.__name__!r} object has no attribute {name!r}'  # <5>
+        cls = type(self)  # <2>
+        try:
+            pos = cls.__match_args__.index(name)  # <3>
+        except ValueError:  # <4>
+            pos = -1
+        if 0 <= pos < len(self._components):  # <5>
+            return self._components[pos]
+        msg = f'{cls.__name__!r} object has no attribute {name!r}'  # <6>
         raise AttributeError(msg)
 # end::VECTOR_V3_GETATTR[]
 
@@ -215,8 +217,8 @@ class Vector:
     def __setattr__(self, name, value):
         cls = type(self)
         if len(name) == 1:  # <1>
-            if name in cls.shortcut_names:  # <2>
-                error = 'read-only attribute {attr_name!r}'
+            if name in cls.__match_args__:  # <2>
+                error = 'readonly attribute {attr_name!r}'
             elif name.islower():  # <3>
                 error = "can't set attributes 'a' to 'z' in {cls_name!r}"
             else:

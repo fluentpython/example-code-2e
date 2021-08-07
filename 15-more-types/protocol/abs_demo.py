@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+# tag::ABS_DEMO[]
 import math
 from typing import NamedTuple, SupportsAbs
 
@@ -30,3 +31,4 @@ assert is_unit(v3)
 assert is_unit(v4)
 
 print('OK')
+# end::ABS_DEMO[]

@@ -170,5 +170,5 @@ class Vector2d:
     @classmethod
     def fromcomplex(cls, datum: SupportsComplex) -> Vector2d:  # <3>
         c = complex(datum)  # <4>
-        return Vector2d(c.real, c.imag)
+        return cls(c.real, c.imag)
 # end::VECTOR2D_V5_COMPLEX[]

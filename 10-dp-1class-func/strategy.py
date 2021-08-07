@@ -6,20 +6,20 @@
 
     >>> joe = Customer('John Doe', 0)  # <1>
     >>> ann = Customer('Ann Smith', 1100)
-    >>> cart = [LineItem('banana', 4, .5),
-    ...         LineItem('apple', 10, 1.5),
-    ...         LineItem('watermelon', 5, 5.0)]
+    >>> cart = [LineItem('banana', 4, Decimal('.5')),
+    ...         LineItem('apple', 10, Decimal('1.5')),
+    ...         LineItem('watermelon', 5, Decimal(5))]
     >>> Order(joe, cart, fidelity_promo)  # <2>
     <Order total: 42.00 due: 42.00>
     >>> Order(ann, cart, fidelity_promo)
     <Order total: 42.00 due: 39.90>
-    >>> banana_cart = [LineItem('banana', 30, .5),
-    ...                LineItem('apple', 10, 1.5)]
+    >>> banana_cart = [LineItem('banana', 30, Decimal('.5')),
+    ...                LineItem('apple', 10, Decimal('1.5'))]
     >>> Order(joe, banana_cart, bulk_item_promo)  # <3>
     <Order total: 30.00 due: 28.50>
-    >>> big_cart = [LineItem(str(item_code), 1, 1.0)
+    >>> long_cart = [LineItem(str(item_code), 1, Decimal(1))
     ...               for item_code in range(10)]
-    >>> Order(joe, big_cart, large_order_promo)
+    >>> Order(joe, long_cart, large_order_promo)
     <Order total: 10.00 due: 9.30>
     >>> Order(joe, cart, large_order_promo)
     <Order total: 42.00 due: 42.00>
@@ -28,75 +28,71 @@
 """
 # tag::STRATEGY[]
 
-import typing
-from typing import Sequence, Optional, Callable
+from collections.abc import Sequence
+from dataclasses import dataclass
+from decimal import Decimal
+from typing import Optional, Callable, NamedTuple
 
 
-class Customer(typing.NamedTuple):
+class Customer(NamedTuple):
     name: str
     fidelity: int
 
 
-class LineItem:
-    def __init__(self, product: str, quantity: int, price: float):
-        self.product = product
-        self.quantity = quantity
-        self.price = price
+class LineItem(NamedTuple):
+    product: str
+    quantity: int
+    price: Decimal
 
     def total(self):
         return self.price * self.quantity
 
-
+@dataclass(frozen=True)
 class Order:  # the Context
-    def __init__(
-        self,
-        customer: Customer,
-        cart: Sequence[LineItem],
-        promotion: Optional[Callable[['Order'], float]] = None,
-    ) -> None:
-        self.customer = customer
-        self.cart = list(cart)
-        self.promotion = promotion
+    customer: Customer
+    cart: Sequence[LineItem]
+    promotion: Optional[Callable[['Order'], Decimal]] = None  # <1>
 
-    def total(self) -> float:
-        if not hasattr(self, '__total'):
-            self.__total = sum(item.total() for item in self.cart)
-        return self.__total
+    def total(self) -> Decimal:
+        totals = (item.total() for item in self.cart)
+        return sum(totals, start=Decimal(0))
 
-    def due(self) -> float:
+    def due(self) -> Decimal:
         if self.promotion is None:
-            discount = 0.0
+            discount = Decimal(0)
         else:
-            discount = self.promotion(self)  # <1>
+            discount = self.promotion(self)  # <2>
         return self.total() - discount
 
     def __repr__(self):
         return f'<Order total: {self.total():.2f} due: {self.due():.2f}>'
 
 
-# <2>
+# <3>
 
 
-def fidelity_promo(order: Order) -> float:  # <3>
+def fidelity_promo(order: Order) -> Decimal:  # <4>
     """5% discount for customers with 1000 or more fidelity points"""
-    return order.total() * 0.05 if order.customer.fidelity >= 1000 else 0
+    if order.customer.fidelity >= 1000:
+        return order.total() * Decimal('0.05')
+    return Decimal(0)
 
 
-def bulk_item_promo(order: Order):
+def bulk_item_promo(order: Order) -> Decimal:
     """10% discount for each LineItem with 20 or more units"""
-    discount = 0
+    discount = Decimal(0)
     for item in order.cart:
         if item.quantity >= 20:
-            discount += item.total() * 0.1
+            discount += item.total() * Decimal('0.1')
     return discount
 
 
-def large_order_promo(order: Order):
+def large_order_promo(order: Order) -> Decimal:
     """7% discount for orders with 10 or more distinct items"""
     distinct_items = {item.product for item in order.cart}
     if len(distinct_items) >= 10:
-        return order.total() * 0.07
-    return 0
+        return order.total() * Decimal('0.07')
+    return Decimal(0)
 
 
 # end::STRATEGY[]

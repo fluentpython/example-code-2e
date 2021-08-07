@@ -12,4 +12,4 @@ def test_show_count(qty, expected):
 
 def test_show_count_zero():
     got = show_count(0, 'part')
-    assert got == 'no part'
+    assert got == 'no parts'

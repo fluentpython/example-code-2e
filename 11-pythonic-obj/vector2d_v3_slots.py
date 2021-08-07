@@ -72,7 +72,7 @@ Tests of `x` and `y` read-only properties:
     >>> v1.x = 123
     Traceback (most recent call last):
       ...
-    AttributeError: can't set attribute
+    AttributeError: can't set attribute 'x'
 
 Tests of hashing:
 
@@ -90,11 +90,10 @@ import math
 
 # tag::VECTOR2D_V3_SLOTS[]
 class Vector2d:
-    __slots__ = ('__x', '__y')
+    __match_args__ = ('x', 'y')  # <1>
+    __slots__ = ('__x', '__y')  # <2>
 
     typecode = 'd'
-
-    # methods follow (omitted in book listing)
 # end::VECTOR2D_V3_SLOTS[]
 
     def __init__(self, x, y):

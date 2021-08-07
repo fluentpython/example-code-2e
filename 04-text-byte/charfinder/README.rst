@@ -58,7 +58,7 @@ Test ``find`` with single result::
 
 Test ``find`` with two results::
 
-    >>> find('chess', 'queen', last=0xFFFF)  # doctest:+NORMALIZE_WHITESPACE
+    >>> find('chess', 'queen', end=0xFFFF)  # doctest:+NORMALIZE_WHITESPACE
     U+2655	♕	WHITE CHESS QUEEN
     U+265B	♛	BLACK CHESS QUEEN
 
