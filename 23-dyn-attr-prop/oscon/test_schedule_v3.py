@@ -2,7 +2,7 @@ import pytest
 
 import schedule_v3 as schedule
 
-@pytest.yield_fixture
+@pytest.fixture
 def records():
     yield schedule.load(schedule.JSON_PATH)
 
