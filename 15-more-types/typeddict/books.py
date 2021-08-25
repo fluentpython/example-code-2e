@@ -1,6 +1,6 @@
+import json
 # tag::BOOKDICT[]
 from typing import TypedDict
-import json
 
 class BookDict(TypedDict):
     isbn: str
@@ -10,14 +10,14 @@ class BookDict(TypedDict):
 # end::BOOKDICT[]
 
 # tag::TOXML[]
-AUTHOR_EL = '<AUTHOR>{}</AUTHOR>'
+AUTHOR_ELEMENT = '<AUTHOR>{}</AUTHOR>'
 
 def to_xml(book: BookDict) -> str:  # <1>
     elements: list[str] = []  # <2>
     for key, value in book.items():
         if isinstance(value, list):  # <3>
             elements.extend(
-                AUTHOR_EL.format(n) for n in value)  # <4>
+                AUTHOR_ELEMENT.format(n) for n in value)  # <4>
         else:
             tag = key.upper()
             elements.append(f'<{tag}>{value}</{tag}>')

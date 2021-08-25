@@ -10,13 +10,13 @@ class BookDict(TypedDict):
 # end::BOOKDICT[]
 
 # tag::TOXML[]
-AUTHOR_EL = '<AUTHOR>{}</AUTHOR>'
+AUTHOR_ELEMENT = '<AUTHOR>{}</AUTHOR>'
 
 def to_xml(book: BookDict) -> str:  # <1>
     elements: List[str] = []  # <2>
     for key, value in book.items():
         if isinstance(value, list):  # <3>
-            elements.extend(AUTHOR_EL.format(n)
+            elements.extend(AUTHOR_ELEMENT.format(n)
                 for n in value)
         else:
             tag = key.upper()

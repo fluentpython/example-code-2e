@@ -1243,7 +1243,7 @@
         "time_start": "2014-07-21 13:30:00",
         "time_stop": "2014-07-21 17:00:00",
         "venue_serial": 1451,
-        "description": "Metaprograming in Python is fun and profitable thanks to its rich Data Model \u2013 APIs that let you handle functions, modules and even classes as objects that you can create, inspect and modify at runtime. The Data Model also enables your own objects to support infix operators, become iterable and emulate collections. This workshop shows how, through a diverse selection of examples and exercises.",
+        "description": "Metaprogramming in Python is fun and profitable thanks to its rich Data Model \u2013 APIs that let you handle functions, modules and even classes as objects that you can create, inspect and modify at runtime. The Data Model also enables your own objects to support infix operators, become iterable and emulate collections. This workshop shows how, through a diverse selection of examples and exercises.",
         "website_url": "http://oscon.com/oscon2014/public/schedule/detail/34107",
         "speakers": [150170],
         "categories": [

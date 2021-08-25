@@ -1,4 +1,4 @@
-# pseudo-code for object construction
+# pseudocode for object construction
 def make(the_class, some_arg):
     new_object = the_class.__new__(some_arg)
     if isinstance(new_object, the_class):
