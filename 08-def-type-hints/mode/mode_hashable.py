@@ -1,6 +1,7 @@
 # tag::MODE_HASHABLE_T[]
 from collections import Counter
-from typing import Iterable, Hashable, TypeVar
+from collections.abc import Iterable, Hashable
+from typing import TypeVar
 
 HashableT = TypeVar('HashableT', bound=Hashable)
 

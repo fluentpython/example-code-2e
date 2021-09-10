@@ -1,4 +1,4 @@
-from typing import Tuple, Mapping
+from collections.abc import Mapping
 
 NAMES = {
     'aqua': 65535,
@@ -19,7 +19,7 @@ NAMES = {
     'yellow': 16776960,
 }
 
-def rgb2hex(color=Tuple[int, int, int]) -> str:
+def rgb2hex(color: tuple[int, int, int]) -> str:
     if any(c not in range(256) for c in color):
         raise ValueError('Color components must be in range(256)')
     values = (f'{n % 256:02x}' for n in color)
@@ -27,7 +27,7 @@ def rgb2hex(color=Tuple[int, int, int]) -> str:
 
 HEX_ERROR = "Color must use format '#0099ff', got: {!r}"
 
-def hex2rgb(color=str) -> Tuple[int, int, int]:
+def hex2rgb(color: str) -> tuple[int, int, int]:
     if len(color) != 7 or color[0] != '#':
         raise ValueError(HEX_ERROR.format(color))
     try:

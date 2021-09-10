@@ -20,11 +20,14 @@ Example:
 """
 
 # tag::TOP[]
-from typing import TypeVar, Iterable, List
+from collections.abc import Iterable
+from typing import TypeVar
+
 from comparable import SupportsLessThan
 
 LT = TypeVar('LT', bound=SupportsLessThan)
 
-def top(series: Iterable[LT], length: int) -> List[LT]:
-    return sorted(series, reverse=True)[:length]
+def top(series: Iterable[LT], length: int) -> list[LT]:
+    ordered = sorted(series, reverse=True)
+    return ordered[:length]
 # end::TOP[]

@@ -34,9 +34,7 @@ from club import ClubMember
 
 @dataclass
 class HackerClubMember(ClubMember):                         # <1>
-
     all_handles = set()                                     # <2>
-
     handle: str = ''                                        # <3>
 
     def __post_init__(self):

@@ -361,14 +361,16 @@ class Vector:
         index = operator.index(key)
         return self._components[index]
 
-    shortcut_names = 'xyzt'
+    __match_args__ = ('x', 'y', 'z', 't')
 
     def __getattr__(self, name):
         cls = type(self)
-        if len(name) == 1:
-            pos = cls.shortcut_names.find(name)
-            if 0 <= pos < len(self._components):
-                return self._components[pos]
+        try:
+            pos = cls.__match_args__.index(name)
+        except ValueError:
+            pos = -1
+        if 0 <= pos < len(self._components):
+            return self._components[pos]
         msg = f'{cls.__name__!r} object has no attribute {name!r}'
         raise AttributeError(msg)
 

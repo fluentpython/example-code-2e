@@ -13,7 +13,6 @@ This version has a field with a default value::
 from typing import NamedTuple
 
 class Coordinate(NamedTuple):
-
     lat: float                # <1>
     lon: float
     reference: str = 'WGS84'  # <2>

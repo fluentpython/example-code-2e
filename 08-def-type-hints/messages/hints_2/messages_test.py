@@ -1,4 +1,4 @@
-from pytest import mark  # type: ignore
+from pytest import mark
 
 from messages import show_count
 
@@ -6,9 +6,9 @@ from messages import show_count
 @mark.parametrize('qty, expected', [
     (1, '1 part'),
     (2, '2 parts'),
-    (0, 'no part'),
+    (0, 'no parts'),
 ])
-def test_show_count(qty, expected):
+def test_show_count(qty: int, expected: str) -> None:
     got = show_count(qty, 'part')
     assert got == expected
 
@@ -17,9 +17,9 @@ def test_show_count(qty, expected):
 @mark.parametrize('qty, expected', [
     (1, '1 child'),
     (2, '2 children'),
-    (0, 'no child'),
+    (0, 'no children'),
 ])
-def test_irregular(qty, expected) -> None:
+def test_irregular(qty: int, expected: str) -> None:
     got = show_count(qty, 'child', 'children')
     assert got == expected
 # end::TEST_IRREGULAR[]

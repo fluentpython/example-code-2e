@@ -5,16 +5,15 @@
 >>> show_count(1, 'bird')
 '1 bird'
 >>> show_count(0, 'bird')
-'no bird'
+'no birds'
 
 # end::SHOW_COUNT_DOCTEST[]
 """
 
 # tag::SHOW_COUNT[]
 def show_count(count: int, word: str) -> str:
-    if count == 0:
-        return f'no {word}'
-    elif count == 1:
-        return f'{count} {word}'
-    return f'{count} {word}s'
+    if count == 1:
+        return f'1 {word}'
+    count_str = str(count) if count else 'no'
+    return f'{count_str} {word}s'
 # end::SHOW_COUNT[]

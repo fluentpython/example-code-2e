@@ -1,7 +1,6 @@
 import typing
 
 class Coordinate(typing.NamedTuple):
-
     lat: float
     lon: float
 

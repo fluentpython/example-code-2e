@@ -1,5 +1,6 @@
 # tag::MYMAX_TYPES[]
-from typing import Protocol, Any, TypeVar, overload, Callable, Iterable, Union
+from collections.abc import Callable, Iterable
+from typing import Protocol, Any, TypeVar, overload, Union
 
 class SupportsLessThan(Protocol):
     def __lt__(self, other: Any) -> bool: ...

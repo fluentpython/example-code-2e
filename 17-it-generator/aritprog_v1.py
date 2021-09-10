@@ -19,7 +19,7 @@ Arithmetic progression class
     >>> from decimal import Decimal
     >>> ap = ArithmeticProgression(0, Decimal('.1'), .3)
     >>> list(ap)
-    [Decimal('0.0'), Decimal('0.1'), Decimal('0.2')]
+    [Decimal('0'), Decimal('0.1'), Decimal('0.2')]
 
 # end::ARITPROG_CLASS_DEMO[]
 """

@@ -12,14 +12,14 @@ class SimplePicker:  # <2>
         return self._items.pop()
 
 def test_isinstance() -> None:  # <4>
-    popper = SimplePicker([1])
-    assert isinstance(popper, RandomPicker)
+    popper: RandomPicker = SimplePicker([1])  # <5>
+    assert isinstance(popper, RandomPicker)  # <6>
 
-def test_item_type() -> None:  # <5>
+def test_item_type() -> None:  # <7>
     items = [1, 2]
     popper = SimplePicker(items)
     item = popper.pick()
     assert item in items
     if TYPE_CHECKING:
-        reveal_type(item)  # <6>
+        reveal_type(item)  # <8>
     assert isinstance(item, int)

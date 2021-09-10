@@ -46,7 +46,7 @@ Tests for __iadd__:
     >>> globe += 1  # <6>
     Traceback (most recent call last):
       ...
-    TypeError: right operand in += must be 'AddableBingoCage' or an iterable
+    TypeError: right operand in += must be 'Tombola' or an iterable
 
 # end::ADDABLE_BINGO_IADD_DEMO[]
 
@@ -72,9 +72,9 @@ class AddableBingoCage(BingoCage):  # <1>
             try:
                 other_iterable = iter(other)  # <4>
             except TypeError:  # <5>
-                self_cls = type(self).__name__
-                msg = "right operand in += must be {!r} or an iterable"
-                raise TypeError(msg.format(self_cls))
+                msg = ('right operand in += must be '
+                       "'Tombola' or an iterable")
+                raise TypeError(msg)
         self.load(other_iterable)  # <6>
         return self  # <7>
 

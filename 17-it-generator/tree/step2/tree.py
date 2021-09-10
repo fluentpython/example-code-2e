@@ -9,7 +9,7 @@ def sub_tree(cls):
 
 
 def display(cls):
-    for cls_name, level in tree(cls):
+    for cls_name, level in tree(cls):     # <3>
         indent = ' ' * 4 * level
         print(f'{indent}{cls_name}')
 

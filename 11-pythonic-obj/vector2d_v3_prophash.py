@@ -72,7 +72,7 @@ Tests of `x` and `y` read-only properties:
     >>> v1.x = 123
     Traceback (most recent call last):
       ...
-    AttributeError: can't set attribute
+    AttributeError: can't set attribute 'x'
 
 # end::VECTOR2D_V3_HASH_DEMO[]
 
@@ -112,7 +112,7 @@ class Vector2d:
     def __iter__(self):
         return (i for i in (self.x, self.y))  # <6>
 
-    # remaining methods follow (omitted in book listing)
+    # remaining methods: same as previous Vector2d
 # end::VECTOR2D_V3_PROP[]
 
     def __repr__(self):

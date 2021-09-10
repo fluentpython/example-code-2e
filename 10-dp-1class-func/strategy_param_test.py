@@ -47,7 +47,7 @@ def test_large_order_promo_with_discount(customer_fidelity_0) -> None:
     assert order.due() == 9.3
 
 
-def test_general_discount(customer_fidelity_0, cart_plain) -> None:
+def test_general_discount(customer_fidelity_1100, cart_plain) -> None:
     general_promo: Promotion = functools.partial(general_discount, 5)
     order = Order(customer_fidelity_1100, cart_plain, general_promo)
     assert order.total() == 42.0

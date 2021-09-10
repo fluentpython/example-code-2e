@@ -23,4 +23,14 @@ The copyright holder is Peter Norvig and the code is licensed under the
 [MIT license](https://github.com/norvig/pytudes/blob/60168bce8cdfacf57c92a5b2979f0b2e95367753/LICENSE).
 
 
+## Changes to Norvig's code
+
+I made small changes to the programs in `original/`:
+
+* In `lis.py`:
+  * The `Procedure` class accepts a list of expressions as the `body`, and `__call__` evaluates those expressions in order, and returns the value of the last. This is consistent with Scheme's `lambda` syntax and provided a useful example for pattern matching.
+  * In the `elif` block for `'lambda'`, I added the `*` in front of the `*body` variable in the tuple unpacking to capture the expressions as a list, before calling the `Procedure` constructor.
+
+* In `lispy.py` I made [changes and a pull request](https://github.com/norvig/pytudes/pull/106) to make it run on Python 3.
+
 _Luciano Ramalho<br/>June 29, 2021_

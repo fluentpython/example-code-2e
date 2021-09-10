@@ -32,7 +32,7 @@ from enum import Enum, auto
 from datetime import date
 
 
-class ResourceType(Enum):                              # <1>
+class ResourceType(Enum):  # <1>
     BOOK = auto()
     EBOOK = auto()
     VIDEO = auto()
