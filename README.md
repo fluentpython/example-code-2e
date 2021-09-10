@@ -41,13 +41,12 @@ Part / Chapter #|Title|Directory|1<sup>st</sup> ed. Chapter&nbsp;#
 15|More About Type Hints|[15-more-types](15-more-types)|🆕
 16|Operator Overloading: Doing It Right|[16-op-overloading](16-op-overloading)|13
 **V – Control Flow**|
-17|Iterables, Iterators, and Generators|[17-it-generator](17-it-generator)|14
+17|Iterators, Generators, and Classic Coroutines|[17-it-generator](17-it-generator)|14
 18|Context Managers and else Blocks|[18-with-match](18-with-match)|15
-19|Classic Coroutines|[19-coroutine](19-coroutine)|16
-20|Concurrency Models in Python|[20-concurrency](20-concurrency)|🆕
-21|Concurrency with Futures|[21-futures](21-futures)|17
-22|Asynchronous Programming|[22-async](22-async)|18
+19|Concurrency Models in Python|[19-concurrency](19-concurrency)|🆕
+20|Concurrency with Futures|[20-futures](20-futures)|17
+21|Asynchronous Programming|[21-async](21-async)|18
 **VI – Metaprogramming**|
-23|Dynamic Attributes and Properties|[22-dyn-attr-prop](22-dyn-attr-prop)|19
-24|Attribute Descriptors|[23-descriptor](23-descriptor)|20
-25|Class Metaprogramming|[24-class-metaprog](24-class-metaprog)|21
+22|Dynamic Attributes and Properties|[22-dyn-attr-prop](22-dyn-attr-prop)|19
+23|Attribute Descriptors|[23-descriptor](23-descriptor)|20
+24|Class Metaprogramming|[24-class-metaprog](24-class-metaprog)|21
