@@ -35,22 +35,36 @@ This exposes the context manager operation::
     >>> manager  # doctest: +ELLIPSIS
     >...x0 ta tcejbo reganaMtxetnoCrotareneG_.biltxetnoc<
     >>> manager.__exit__(None, None, None)  # <4>
+    False
     >>> monster
     'JABBERWOCKY'
 
 # end::MIRROR_GEN_DEMO_2[]
 
+The decorated generator also works as a decorator:
+
+
+# tag::MIRROR_GEN_DECO[]
+    >>> @looking_glass()
+    ... def verse():
+    ...     print('The time has come')
+    ...
+    >>> verse()  # <1>
+    emoc sah emit ehT
+    >>> print('back to normal')  # <2>
+    back to normal
+
+# end::MIRROR_GEN_DECO[]
+
 """
 
 
 # tag::MIRROR_GEN_EX[]
-
 import contextlib
-
+import sys
 
 @contextlib.contextmanager  # <1>
 def looking_glass():
-    import sys
     original_write = sys.stdout.write  # <2>
 
     def reverse_write(text):  # <3>
@@ -59,6 +73,4 @@ def looking_glass():
     sys.stdout.write = reverse_write  # <4>
     yield 'JABBERWOCKY'  # <5>
     sys.stdout.write = original_write  # <6>
-
-
 # end::MIRROR_GEN_EX[]

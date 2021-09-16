@@ -38,6 +38,7 @@ class SlowHTTPRequestHandler(SimpleHTTPRequestHandler):
         """Serve a GET request."""
         time.sleep(.5)
         if random() < self.error_rate:
+            # HTTPStatus.IM_A_TEAPOT requires Python >= 3.9
             self.send_error(HTTPStatus.IM_A_TEAPOT, "I'm a Teapot")
         else:
             f = self.send_head()

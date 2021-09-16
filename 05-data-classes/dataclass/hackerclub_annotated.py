@@ -6,7 +6,7 @@
     >>> anna
     HackerClubMember(name='Anna Ravenscroft', guests=[], handle='AnnaRaven')
 
-If ``handle`` is ommitted, it's set to the first part of the member's name::
+If ``handle`` is omitted, it's set to the first part of the member's name::
 
     >>> leo = HackerClubMember('Leo Rochael')
     >>> leo

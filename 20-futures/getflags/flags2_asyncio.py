@@ -36,10 +36,10 @@ async def get_flag(session: aiohttp.ClientSession,  # <2>
             resp.raise_for_status()  # <3>
             return bytes()
 
-async def download_one(session: aiohttp.ClientSession,  # <4>
+async def download_one(session: aiohttp.ClientSession,
                        cc: str,
                        base_url: str,
-                       semaphore: asyncio.Semaphore,
+                       semaphore: asyncio.Semaphore,  # <4>
                        verbose: bool) -> Result:
     try:
         async with semaphore:  # <5>

@@ -36,9 +36,9 @@ async def get_flag(session: aiohttp.ClientSession,
             return bytes()
 
 # tag::FLAGS3_ASYNCIO_GET_COUNTRY[]
-async def get_country(session: aiohttp.ClientSession,  # <1>
+async def get_country(session: aiohttp.ClientSession,
                       base_url: str,
-                      cc: str) -> str:
+                      cc: str) -> str:  # <1>
     url = f'{base_url}/{cc}/metadata.json'
     async with session.get(url) as resp:
         if resp.status == 200:

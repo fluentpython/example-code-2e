@@ -140,16 +140,18 @@ def evaluate(x: Expression, env: Environment) -> Any:
         (_, exp) = x
         return exp
     elif x[0] == 'if':             # (if test conseq alt)
-        (_, test, conseq, alt) = x
-        exp = (conseq if evaluate(test, env) else alt)
-        return evaluate(exp, env)
-    elif x[0] == 'define':         # (define var exp)
-        (_, var, exp) = x
-        env[var] = evaluate(exp, env)
-    elif x[0] == 'lambda':         # (lambda (var...) body)
+        (_, test, consequence, alternative) = x
+        if evaluate(test, env):
+            return evaluate(consequence, env)
+        else:
+            return evaluate(alternative, env)
+    elif x[0] == 'define':         # (define name exp)
+        (_, name, exp) = x
+        env[name] = evaluate(exp, env)
+    elif x[0] == 'lambda':         # (lambda (parm…) body)
         (_, parms, *body) = x
         return Procedure(parms, body, env)
-    else:                          # (proc arg...)
+    else:                          # (proc arg…)
         proc = evaluate(x[0], env)
         args = [evaluate(exp, env) for exp in x[1:]]
         return proc(*args)

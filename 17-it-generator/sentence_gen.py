@@ -21,7 +21,7 @@ class Sentence:
     def __iter__(self):
         for word in self.words:  # <1>
             yield word  # <2>
-        return  # <3>
+        # <3>
 
 # done! <4>
 

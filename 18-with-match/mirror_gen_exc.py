@@ -35,6 +35,7 @@ This exposes the context manager operation::
     >>> manager  # doctest: +ELLIPSIS
     >...x0 ta tcejbo reganaMtxetnoCrotareneG_.biltxetnoc<
     >>> manager.__exit__(None, None, None)  # <4>
+    False
     >>> monster
     'JABBERWOCKY'
 
@@ -48,7 +49,7 @@ is handled by the context manager):
 
 # tag::MIRROR_GEN_DEMO_3[]
 
-    >>> from mirror_gen import looking_glass
+    >>> from mirror_gen_exc import looking_glass
     >>> with looking_glass():
     ...      print('Humpty Dumpty')
     ...      x = 1/0  # <1>
@@ -74,13 +75,11 @@ is handled by the context manager):
 
 
 # tag::MIRROR_GEN_EXC[]
-
 import contextlib
-
+import sys
 
 @contextlib.contextmanager
 def looking_glass():
-    import sys
     original_write = sys.stdout.write
 
     def reverse_write(text):
@@ -96,6 +95,4 @@ def looking_glass():
         sys.stdout.write = original_write  # <3>
         if msg:
             print(msg)  # <4>
-
-
 # end::MIRROR_GEN_EXC[]

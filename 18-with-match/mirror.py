@@ -11,11 +11,11 @@ While active, the context manager reverses text output to
     ...      print('Alice, Kitty and Snowdrop')  # <2>
     ...      print(what)
     ...
-    pordwonS dna yttiK ,ecilA  # <3>
+    pordwonS dna yttiK ,ecilA
     YKCOWREBBAJ
-    >>> what  # <4>
+    >>> what  # <3>
     'JABBERWOCKY'
-    >>> print('Back to normal.')  # <5>
+    >>> print('Back to normal.')  # <4>
     Back to normal.
 
 # end::MIRROR_DEMO_1[]
@@ -27,15 +27,15 @@ This exposes the context manager operation::
 
     >>> from mirror import LookingGlass
     >>> manager = LookingGlass()  # <1>
-    >>> manager
-    <mirror.LookingGlass object at 0x2a578ac>
+    >>> manager  # doctest: +ELLIPSIS
+    <mirror.LookingGlass object at 0x...>
     >>> monster = manager.__enter__()  # <2>
     >>> monster == 'JABBERWOCKY'  # <3>
     eurT
     >>> monster
     'YKCOWREBBAJ'
-    >>> manager
-    >ca875a2x0 ta tcejbo ssalGgnikooL.rorrim<
+    >>> manager  # doctest: +ELLIPSIS
+    >... ta tcejbo ssalGgnikooL.rorrim<
     >>> manager.__exit__(None, None, None)  # <4>
     >>> monster
     'JABBERWOCKY'
@@ -69,10 +69,11 @@ The context manager can handle and "swallow" exceptions.
 
 
 # tag::MIRROR_EX[]
+import sys
+
 class LookingGlass:
 
     def __enter__(self):  # <1>
-        import sys
         self.original_write = sys.stdout.write  # <2>
         sys.stdout.write = self.reverse_write  # <3>
         return 'JABBERWOCKY'  # <4>
@@ -81,12 +82,9 @@ class LookingGlass:
         self.original_write(text[::-1])
 
     def __exit__(self, exc_type, exc_value, traceback):  # <6>
-        import sys  # <7>
-        sys.stdout.write = self.original_write  # <8>
-        if exc_type is ZeroDivisionError:  # <9>
+        sys.stdout.write = self.original_write  # <7>
+        if exc_type is ZeroDivisionError:  # <8>
             print('Please DO NOT divide by zero!')
-            return True  # <10>
-        # <11>
-
-
+            return True  # <9>
+        # <10>
 # end::MIRROR_EX[]
