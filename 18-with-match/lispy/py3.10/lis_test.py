@@ -73,10 +73,10 @@ def test_evaluate(source: str, expected: Optional[Expression]) -> None:
 def std_env() -> Environment:
     return standard_env()
 
-# tests for each of the cases in evaluate
+# tests for cases in evaluate
 
 def test_evaluate_variable() -> None:
-    env: Environment = dict(x=10)
+    env = Environment({'x': 10})
     source = 'x'
     expected = 10
     got = evaluate(parse(source), env)
@@ -167,8 +167,6 @@ def test_invocation_user_procedure(std_env: Environment) -> None:
     got = evaluate(parse(source), std_env)
     assert got == 22
 
-
-###################################### for py3.10/lis.py only
 
 def test_define_function(std_env: Environment) -> None:
     source = '(define (max a b) (if (>= a b) a b))'

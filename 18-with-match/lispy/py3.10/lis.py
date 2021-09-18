@@ -58,10 +58,11 @@ def parse_atom(token: str) -> Atom:
         except ValueError:
             return Symbol(token)
 
+
 ################ Global Environment
 
 # tag::ENV_CLASS[]
-class Environment(ChainMap):
+class Environment(ChainMap[Symbol, Any]):
     "A ChainMap that allows changing an item in-place."
 
     def change(self, key: Symbol, value: object) -> None:
@@ -119,11 +120,11 @@ def standard_env() -> Environment:
 ################ Interaction: A REPL
 
 # tag::REPL[]
-def repl() -> NoReturn:
+def repl(prompt: str = 'lis.py> ') -> NoReturn:
     "A prompt-read-eval-print loop."
     global_env = standard_env()
     while True:
-        ast = parse(input('lis.py> '))
+        ast = parse(input(prompt))
         val = evaluate(ast, global_env)
         if val is not None:
             print(lispstr(val))
@@ -140,7 +141,10 @@ def lispstr(exp: object) -> str:
 ################ Evaluator
 
 # tag::EVALUATE[]
-KEYWORDS = ['quote', 'if', 'lambda', 'define', 'set!']
+KEYWORDS = {'quote', 'if', 'lambda', 'define', 'set!'}
+
+def is_keyword(s: Any) -> bool:
+    return isinstance(s, Symbol) and s in KEYWORDS
 
 def evaluate(exp: Expression, env: Environment) -> Any:
     "Evaluate an expression in an environment."
@@ -149,8 +153,6 @@ def evaluate(exp: Expression, env: Environment) -> Any:
             return x
         case Symbol(var):
             return env[var]
-        case []:
-            return []
         case ['quote', x]:
             return x
         case ['if', test, consequence, alternative]:
@@ -166,8 +168,8 @@ def evaluate(exp: Expression, env: Environment) -> Any:
             env[name] = Procedure(parms, body, env)
         case ['set!', Symbol(var), value_exp]:
             env.change(var, evaluate(value_exp, env))
-        case [op, *args] if op not in KEYWORDS:
-            proc = evaluate(op, env)
+        case [func_exp, *args] if not is_keyword(func_exp):
+            proc = evaluate(func_exp, env)
             values = [evaluate(arg, env) for arg in args]
             return proc(*values)
         case _:

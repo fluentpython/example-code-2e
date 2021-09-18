@@ -1,8 +1,8 @@
-from typing import Any, Optional
+from typing import Optional
 
 from pytest import mark, fixture
 
-from lis import parse, evaluate, standard_env, Symbol, Environment, Expression
+from lis import parse, evaluate, Expression, Environment, standard_env
 
 ############################################################# tests for parse
 
@@ -73,10 +73,10 @@ def test_evaluate(source: str, expected: Optional[Expression]) -> None:
 def std_env() -> Environment:
     return standard_env()
 
-# tests for each of the cases in evaluate
+# tests for cases in evaluate
 
 def test_evaluate_variable() -> None:
-    env: Environment = dict(x=10)
+    env = Environment({'x': 10})
     source = 'x'
     expected = 10
     got = evaluate(parse(source), env)
@@ -166,3 +166,15 @@ def test_invocation_user_procedure(std_env: Environment) -> None:
         """
     got = evaluate(parse(source), std_env)
     assert got == 22
+
+
+def test_define_function(std_env: Environment) -> None:
+    source = '(define (max a b) (if (>= a b) a b))'
+    got = evaluate(parse(source), std_env)
+    assert got is None
+    max_fn = std_env['max']
+    assert max_fn.parms == ['a', 'b']
+    assert max_fn.body == [['if', ['>=', 'a', 'b'], 'a', 'b']]
+    assert max_fn.env is std_env
+    assert max_fn(1, 2) == 2
+    assert max_fn(3, 2) == 3
