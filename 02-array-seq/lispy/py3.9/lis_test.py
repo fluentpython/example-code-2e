@@ -169,7 +169,7 @@ def test_invocation_user_procedure(std_env: Environment) -> None:
 
 
 def test_define_function(std_env: Environment) -> None:
-    source = '(define (max a b) (if (>= a b) a b))'
+    source = '(define max (lambda (a b) (if (>= a b) a b)))'
     got = evaluate(parse(source), std_env)
     assert got is None
     max_fn = std_env['max']

@@ -98,7 +98,7 @@ KeyError: 'ni!'
 
 # tag::EVAL_DEFUN[]
 >>> global_env = standard_env()
->>> percent = '(define (% a b) (* (/ a b) 100))'
+>>> percent = '(define % (lambda (a b) (* (/ a b) 100)))'
 >>> evaluate(parse(percent), global_env)
 >>> global_env['%']  # doctest: +ELLIPSIS
 <lis.Procedure object at 0x...>
@@ -115,14 +115,6 @@ function call:
 
 # end::EVAL_CALL[]
 
-# tag::EVAL_SYNTAX_ERROR[]
->>> evaluate(parse('(lambda is not like this)'), standard_env())
-Traceback (most recent call last):
-    ...
-SyntaxError: (lambda is not like this)
-
-# end::EVAL_SYNTAX_ERROR[]
-
 """
 
 import math
@@ -131,10 +123,12 @@ from lis import run
 
 
 fact_src = """
-(define (! n)
-    (if (< n 2)
-        1
-        (* n (! (- n 1)))
+(define !
+    (lambda (n)
+        (if (< n 2)
+            1
+            (* n (! (- n 1)))
+        )
     )
 )
 (! 42)
@@ -144,71 +138,11 @@ def test_factorial():
     assert got == 1405006117752879898543142606244511569936384000000000
     assert got == math.factorial(42)
 
-
-gcd_src = """
-(define (mod m n)
-    (- m (* n (// m n))))
-(define (gcd m n)
-    (if (= n 0)
-        m
-        (gcd n (mod m n))))
-(display (gcd 18 45))
-"""
-def test_gcd(capsys):
-    run(gcd_src)
-    captured = capsys.readouterr()
-    assert captured.out == '9\n'
-
-
-quicksort_src = """
-(define (quicksort lst)
-    (if (null? lst)
-        lst
-        (begin
-            (define pivot (car lst))
-            (define rest (cdr lst))
-            (append
-                (quicksort
-                    (filter (lambda (x) (< x pivot)) rest))
-                (list pivot)
-                (quicksort
-                    (filter (lambda (x) (>= x pivot)) rest)))
-        )
-    )
-)
-(quicksort (list 2 1 6 3 4 0 8 9 7 5))
-"""
-def test_quicksort():
-    got = run(quicksort_src)
-    assert got == [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-
-# Example from Structure and Interpretation of Computer Programs
-# https://mitpress.mit.edu/sites/default/files/sicp/full-text/sicp/book/node12.html
-
-newton_src = """
-(define (sqrt x)
-    (sqrt-iter 1.0 x))
-(define (sqrt-iter guess x)
-    (if (good-enough? guess x)
-        guess
-        (sqrt-iter (improve guess x) x)))
-(define (good-enough? guess x)
-    (< (abs (- (* guess guess) x)) 0.001))
-(define (improve guess x)
-    (average guess (/ x guess)))
-(define (average x y)
-    (/ (+ x y) 2))
-(sqrt 123454321)
-"""
-def test_newton():
-    got = run(newton_src)
-    assert math.isclose(got, 11111)
-
-
 closure_src = """
-(define (make-adder increment)
-    (lambda (x) (+ increment x))
+(define make-adder
+    (lambda (increment)
+        (lambda (x) (+ increment x))
+    )
 )
 (define inc (make-adder 1))
 (inc 99)
@@ -218,11 +152,13 @@ def test_closure():
     assert got == 100
 
 closure_with_change_src = """
-(define (make-counter)
-    (define n 0)
+(define make-counter
     (lambda ()
-        (set! n (+ n 1))
-        n)
+        (define n 0)
+        (lambda ()
+            (set! n (+ n 1))
+            n)
+    )
 )
 (define counter (make-counter))
 (display (counter))
@@ -238,13 +174,15 @@ def test_closure_with_change(capsys):
 
 # tag::RUN_AVERAGER[]
 closure_averager_src = """
-(define (make-averager)
-    (define count 0)
-    (define total 0)
-    (lambda (new-value)
-        (set! count (+ count 1))
-        (set! total (+ total new-value))
-        (/ total count)
+(define make-averager
+    (lambda ()
+        (define count 0)
+        (define total 0)
+        (lambda (new-value)
+            (set! count (+ count 1))
+            (set! total (+ total new-value))
+            (/ total count)
+        )
     )
 )
 (define avg (make-averager))

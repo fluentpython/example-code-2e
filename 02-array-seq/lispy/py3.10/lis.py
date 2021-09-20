@@ -74,6 +74,7 @@ class Environment(ChainMap[Symbol, Any]):
         raise KeyError(key)
 # end::ENV_CLASS[]
 
+
 def standard_env() -> Environment:
     "An environment with some Scheme standard procedures."
     env = Environment()
@@ -139,38 +140,42 @@ def lispstr(exp: object) -> str:
 
 ################ Evaluator
 
-# tag::EVALUATE[]
 KEYWORDS = ['quote', 'if', 'lambda', 'define', 'set!']
 
+# tag::EVAL_MATCH_TOP[]
 def evaluate(exp: Expression, env: Environment) -> Any:
     "Evaluate an expression in an environment."
     match exp:
+# end::EVAL_MATCH_TOP[]
         case int(x) | float(x):
             return x
-        case Symbol(var):
-            return env[var]
-        case ['quote', x]:
+        case Symbol(name):
+            return env[name]
+# tag::EVAL_MATCH_MIDDLE[]
+        case ['quote', x]:  # <1>
             return x
-        case ['if', test, consequence, alternative]:
+        case ['if', test, consequence, alternative]:  # <2>
             if evaluate(test, env):
                 return evaluate(consequence, env)
             else:
                 return evaluate(alternative, env)
-        case ['lambda', [*parms], *body] if body:
+        case ['lambda', [*parms], *body] if body:  # <3>
             return Procedure(parms, body, env)
-        case ['define', Symbol(var), value_exp]:
-            env[var] = evaluate(value_exp, env)
+        case ['define', Symbol(name), value_exp]:  # <4>
+            env[name] = evaluate(value_exp, env)
+# end::EVAL_MATCH_MIDDLE[]
         case ['define', [Symbol(name), *parms], *body] if body:
             env[name] = Procedure(parms, body, env)
-        case ['set!', Symbol(var), value_exp]:
-            env.change(var, evaluate(value_exp, env))
+        case ['set!', Symbol(name), value_exp]:
+            env.change(name, evaluate(value_exp, env))
         case [func_exp, *args] if func_exp not in KEYWORDS:
             proc = evaluate(func_exp, env)
             values = [evaluate(arg, env) for arg in args]
             return proc(*values)
-        case _:
+# tag::EVAL_MATCH_BOTTOM[]
+        case _:  # <5>
             raise SyntaxError(lispstr(exp))
-# end::EVALUATE[]
+# end::EVAL_MATCH_BOTTOM[]
 
 # tag::PROCEDURE[]
 class Procedure:
