@@ -140,7 +140,10 @@ def lispstr(exp: object) -> str:
 ################ Evaluator
 
 # tag::EVALUATE[]
-KEYWORDS = ['quote', 'if', 'lambda', 'define', 'set!']
+KEYWORDS = {'quote', 'if', 'lambda', 'define', 'set!'}
+
+def is_keyword(s: Any) -> bool:
+    return isinstance(s, Symbol) and s in KEYWORDS
 
 def evaluate(exp: Expression, env: Environment) -> Any:
     "Evaluate an expression in an environment."
@@ -164,7 +167,11 @@ def evaluate(exp: Expression, env: Environment) -> Any:
             env[name] = Procedure(parms, body, env)
         case ['set!', Symbol(var), value_exp]:
             env.change(var, evaluate(value_exp, env))
+<<<<<<< HEAD
         case [func_exp, *args] if func_exp not in KEYWORDS:
+=======
+        case [func_exp, *args] if not is_keyword(func_exp):
+>>>>>>> 3ecfb212c6273122797c76876d6b373b2cb94fa6
             proc = evaluate(func_exp, env)
             values = [evaluate(arg, env) for arg in args]
             return proc(*values)
