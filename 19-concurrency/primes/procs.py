@@ -30,6 +30,7 @@ def check(n: int) -> PrimeResult:  # <6>
 def worker(jobs: JobQueue, results: ResultQueue) -> None:  # <7>
     while n := jobs.get():  # <8>
         results.put(check(n))  # <9>
+    results.put(PrimeResult(0, False, 0.0))  # <10>
 # end::PRIMES_PROC_TOP[]
 
 # tag::PRIMES_PROC_MAIN[]
@@ -53,15 +54,19 @@ def main() -> None:
         proc.start()  # <5>
         jobs.put(0)  # <6>
 
-    while True:
-        n, prime, elapsed = results.get()  # <7>
-        label = 'P' if prime else ' '
-        print(f'{n:16}  {label} {elapsed:9.6f}s')  # <8>
-        if jobs.empty():  # <9>
-            break
+    workers_done = 0
+    checked = 0
+    while workers_done < workers:  # <7>
+        n, prime, elapsed = results.get()  # <8>
+        if n == 0:
+            workers_done += 1  # <9>
+        else:
+            checked += 1
+            label = 'P' if prime else ' '
+            print(f'{n:16}  {label} {elapsed:9.6f}s')  # <10>
 
     elapsed = perf_counter() - t0
-    print(f'Total time: {elapsed:.2f}s')
+    print(f'{checked} checks in {elapsed:.2f}s')  # <11>
 
 if __name__ == '__main__':
     main()
