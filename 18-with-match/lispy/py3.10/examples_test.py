@@ -48,7 +48,6 @@ Doctests for `evaluate`
 # end::EVAL_NUMBER[]
 
 # tag::EVAL_SYMBOL[]
->>> from lis import standard_env
 >>> evaluate(parse('+'), standard_env())
 <built-in function add>
 >>> evaluate(parse('ni!'), standard_env())

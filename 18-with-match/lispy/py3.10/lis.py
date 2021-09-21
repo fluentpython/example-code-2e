@@ -121,7 +121,7 @@ def standard_env() -> Environment:
 # tag::REPL[]
 def repl(prompt: str = 'lis.py> ') -> NoReturn:
     "A prompt-read-eval-print loop."
-    global_env = standard_env()
+    global_env = Environment({}, standard_env())
     while True:
         ast = parse(input(prompt))
         val = evaluate(ast, global_env)
@@ -140,10 +140,7 @@ def lispstr(exp: object) -> str:
 ################ Evaluator
 
 # tag::EVALUATE[]
-KEYWORDS = {'quote', 'if', 'lambda', 'define', 'set!'}
-
-def is_keyword(s: Any) -> bool:
-    return isinstance(s, Symbol) and s in KEYWORDS
+KEYWORDS = ['quote', 'if', 'lambda', 'define', 'set!']
 
 def evaluate(exp: Expression, env: Environment) -> Any:
     "Evaluate an expression in an environment."
@@ -161,17 +158,13 @@ def evaluate(exp: Expression, env: Environment) -> Any:
                 return evaluate(alternative, env)
         case ['lambda', [*parms], *body] if body:
             return Procedure(parms, body, env)
-        case ['define', Symbol(var), value_exp]:
-            env[var] = evaluate(value_exp, env)
+        case ['define', Symbol(name), value_exp]:
+            env[name] = evaluate(value_exp, env)
         case ['define', [Symbol(name), *parms], *body] if body:
             env[name] = Procedure(parms, body, env)
-        case ['set!', Symbol(var), value_exp]:
-            env.change(var, evaluate(value_exp, env))
-<<<<<<< HEAD
+        case ['set!', Symbol(name), value_exp]:
+            env.change(name, evaluate(value_exp, env))
         case [func_exp, *args] if func_exp not in KEYWORDS:
-=======
-        case [func_exp, *args] if not is_keyword(func_exp):
->>>>>>> 3ecfb212c6273122797c76876d6b373b2cb94fa6
             proc = evaluate(func_exp, env)
             values = [evaluate(arg, env) for arg in args]
             return proc(*values)
@@ -202,7 +195,7 @@ class Procedure:
 ################ command-line interface
 
 def run(source: str) -> Any:
-    global_env = standard_env()
+    global_env = Environment({}, standard_env())
     tokens = tokenize(source)
     while tokens:
         exp = read_from_tokens(tokens)

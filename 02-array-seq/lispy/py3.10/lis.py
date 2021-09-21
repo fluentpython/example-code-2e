@@ -122,7 +122,7 @@ def standard_env() -> Environment:
 # tag::REPL[]
 def repl(prompt: str = 'lis.py> ') -> NoReturn:
     "A prompt-read-eval-print loop."
-    global_env = standard_env()
+    global_env = Environment({}, standard_env())
     while True:
         ast = parse(input(prompt))
         val = evaluate(ast, global_env)
@@ -200,7 +200,7 @@ class Procedure:
 ################ command-line interface
 
 def run(source: str) -> Any:
-    global_env = standard_env()
+    global_env = Environment({}, standard_env())
     tokens = tokenize(source)
     while tokens:
         exp = read_from_tokens(tokens)

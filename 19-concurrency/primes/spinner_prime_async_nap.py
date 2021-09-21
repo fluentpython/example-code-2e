@@ -7,6 +7,7 @@
 import asyncio
 import itertools
 import math
+import functools
 
 # tag::PRIME_NAP[]
 async def is_prime(n):
@@ -21,8 +22,8 @@ async def is_prime(n):
     for i in range(3, root + 1, 2):
         if n % i == 0:
             return False
-        if i % 100_000 == 1:  # <2>
-            await asyncio.sleep(0)
+        if i % 100_000 == 1:
+            await asyncio.sleep(0)  # <1>
     return True
 # end::PRIME_NAP[]
 
@@ -39,13 +40,13 @@ async def spin(msg: str) -> None:
     print(f'\r{blanks}\r', end='')
 
 async def check(n: int) -> int:
-    return await is_prime(n)  # <4>
+    return await is_prime(n)
 
 async def supervisor(n: int) -> int:
-    spinner = asyncio.create_task(spin('thinking!'))  # <1>
-    print('spinner object:', spinner)  # <2>
-    result = await check(n)  # <3>
-    spinner.cancel()  # <5>
+    spinner = asyncio.create_task(spin('thinking!'))
+    print('spinner object:', spinner)
+    result = await check(n)
+    spinner.cancel()
     return result
 
 def main() -> None:
