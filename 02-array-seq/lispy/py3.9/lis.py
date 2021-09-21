@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-################ Lispy: Scheme Interpreter in Python 3.10
+################ Lispy: Scheme Interpreter in Python 3.9
 
 ## (c) Peter Norvig, 2010-18; See http://norvig.com/lispy.html
 ## Minor edits for Fluent Python, Second Edition (O'Reilly, 2021)
@@ -9,17 +9,15 @@
 
 ################ Imports and Types
 
-# tag::IMPORTS[]
 import math
 import operator as op
 from collections import ChainMap
 from itertools import chain
-from typing import Any, TypeAlias, NoReturn
+from typing import Any, Union, NoReturn
 
-Symbol: TypeAlias = str
-Atom: TypeAlias = float | int | Symbol
-Expression: TypeAlias = Atom | list
-# end::IMPORTS[]
+Symbol = str
+Atom = Union[float, int, Symbol]
+Expression = Union[Atom, list]
 
 
 ################ Parsing: parse, tokenize, and read_from_tokens
@@ -61,7 +59,6 @@ def parse_atom(token: str) -> Atom:
 
 ################ Global Environment
 
-# tag::ENV_CLASS[]
 class Environment(ChainMap[Symbol, Any]):
     "A ChainMap that allows changing an item in-place."
 
@@ -69,10 +66,10 @@ class Environment(ChainMap[Symbol, Any]):
         "Find where key is defined and change the value there."
         for map in self.maps:
             if key in map:
-                map[key] = value
+                map[key] = value  # type: ignore[index]
                 return
         raise KeyError(key)
-# end::ENV_CLASS[]
+
 
 def standard_env() -> Environment:
     "An environment with some Scheme standard procedures."
@@ -118,7 +115,6 @@ def standard_env() -> Environment:
 
 ################ Interaction: A REPL
 
-# tag::REPL[]
 def repl(prompt: str = 'lis.py> ') -> NoReturn:
     "A prompt-read-eval-print loop."
     global_env = Environment({}, standard_env())
@@ -134,62 +130,61 @@ def lispstr(exp: object) -> str:
         return '(' + ' '.join(map(lispstr, exp)) + ')'
     else:
         return str(exp)
-# end::REPL[]
 
 
 ################ Evaluator
 
-# tag::EVALUATE[]
-KEYWORDS = ['quote', 'if', 'lambda', 'define', 'set!']
-
+# tag::EVAL_IF_TOP[]
 def evaluate(exp: Expression, env: Environment) -> Any:
     "Evaluate an expression in an environment."
-    match exp:
-        case int(x) | float(x):
-            return x
-        case Symbol(var):
-            return env[var]
-        case ['quote', x]:
-            return x
-        case ['if', test, consequence, alternative]:
-            if evaluate(test, env):
-                return evaluate(consequence, env)
-            else:
-                return evaluate(alternative, env)
-        case ['lambda', [*parms], *body] if body:
-            return Procedure(parms, body, env)
-        case ['define', Symbol(name), value_exp]:
-            env[name] = evaluate(value_exp, env)
-        case ['define', [Symbol(name), *parms], *body] if body:
-            env[name] = Procedure(parms, body, env)
-        case ['set!', Symbol(name), value_exp]:
-            env.change(name, evaluate(value_exp, env))
-        case [func_exp, *args] if func_exp not in KEYWORDS:
-            proc = evaluate(func_exp, env)
-            values = [evaluate(arg, env) for arg in args]
-            return proc(*values)
-        case _:
-            raise SyntaxError(lispstr(exp))
-# end::EVALUATE[]
+    if isinstance(exp, Symbol):      # variable reference
+        return env[exp]
+# end::EVAL_IF_TOP[]
+    elif not isinstance(exp, list):  # constant literal
+        return exp
+# tag::EVAL_IF_MIDDLE[]
+    elif exp[0] == 'quote':          # (quote exp)
+        (_, x) = exp
+        return x
+    elif exp[0] == 'if':             # (if test conseq alt)
+        (_, test, consequence, alternative) = exp
+        if evaluate(test, env):
+            return evaluate(consequence, env)
+        else:
+            return evaluate(alternative, env)
+    elif exp[0] == 'lambda':         # (lambda (parm…) body…)
+        (_, parms, *body) = exp
+        return Procedure(parms, body, env)
+    elif exp[0] == 'define':
+        (_, name, value_exp) = exp
+        env[name] = evaluate(value_exp, env)
+# end::EVAL_IF_MIDDLE[]
+    elif exp[0] == 'set!':
+        (_, name, value_exp) = exp
+        env.change(name, evaluate(value_exp, env))
+    else:                          # (proc arg…)
+        (func_exp, *args) = exp
+        proc = evaluate(func_exp, env)
+        args = [evaluate(arg, env) for arg in args]
+        return proc(*args)
 
-# tag::PROCEDURE[]
+
 class Procedure:
     "A user-defined Scheme procedure."
 
-    def __init__(  # <1>
+    def __init__(
         self, parms: list[Symbol], body: list[Expression], env: Environment
     ):
-        self.parms = parms  # <2>
+        self.parms = parms
         self.body = body
         self.env = env
 
-    def __call__(self, *args: Expression) -> Any:  # <3>
-        local_env = dict(zip(self.parms, args))  # <4>
-        env = Environment(local_env, self.env)  # <5>
-        for exp in self.body:  # <6>
+    def __call__(self, *args: Expression) -> Any:
+        local_env = dict(zip(self.parms, args))
+        env = Environment(local_env, self.env)
+        for exp in self.body:
             result = evaluate(exp, env)
-        return result  # <7>
-# end::PROCEDURE[]
+        return result
 
 
 ################ command-line interface

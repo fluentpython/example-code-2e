@@ -14,7 +14,7 @@ class Foo:
 
     @property
     def bar(self):
-        '''The bar attribute'''
+        """The bar attribute"""
         return self.__dict__['bar']
 
     @bar.setter

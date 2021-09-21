@@ -15,6 +15,9 @@ While active, the context manager reverses text output to
     YKCOWREBBAJ
     >>> what
     'JABBERWOCKY'
+    >>> print('back to normal')
+    back to normal
+
 
 # end::MIRROR_GEN_DEMO_1[]
 
