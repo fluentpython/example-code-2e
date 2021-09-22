@@ -69,7 +69,7 @@ class Environment(ChainMap[Symbol, Any]):
         "Find where key is defined and change the value there."
         for map in self.maps:
             if key in map:
-                map[key] = value
+                map[key] = value  # type: ignore[index]
                 return
         raise KeyError(key)
 # end::ENV_CLASS[]

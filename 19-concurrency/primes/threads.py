@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 """
-threads.py: shows that Python threads are slower than
-sequential code for CPU-intensive work.
+threads.py: shows that Python threads are slower
+than sequential code for CPU-intensive work.
 """
 
 import os
@@ -14,52 +14,60 @@ from threading import Thread
 
 from primes import is_prime, NUMBERS
 
-class PrimeResult(NamedTuple):  # <3>
+class PrimeResult(NamedTuple):
     n: int
     prime: bool
     elapsed: float
 
-JobQueue = SimpleQueue[int]
-ResultQueue = SimpleQueue[PrimeResult]
+JobQueue = SimpleQueue[int]  # <4>
+ResultQueue = SimpleQueue[PrimeResult]  # <5>
 
-def check(n: int) -> PrimeResult:
+def check(n: int) -> PrimeResult:  # <6>
     t0 = perf_counter()
     res = is_prime(n)
     return PrimeResult(n, res, perf_counter() - t0)
 
-def worker(jobs: JobQueue, results: ResultQueue) -> None:
-    while n := jobs.get():
-        results.put(check(n))
+def worker(jobs: JobQueue, results: ResultQueue) -> None:  # <7>
+    while n := jobs.get():  # <8>
+        results.put(check(n))  # <9>
+    results.put(PrimeResult(0, False, 0.0))
 
-def main() -> None:
-    if len(sys.argv) < 2:  # <1>
-        workers = os.cpu_count() or 1  # make mypy happy
-    else:
-        workers = int(sys.argv[1])
-
-    print(f'Checking {len(NUMBERS)} numbers with {workers} threads:')
-
-    jobs: JobQueue = SimpleQueue() # <2>
-    results: ResultQueue = SimpleQueue()
-    t0 = perf_counter()
-
+def start_jobs(workers: int, jobs: JobQueue, results: ResultQueue) -> None:
     for n in NUMBERS:  # <3>
         jobs.put(n)
-
     for _ in range(workers):
         proc = Thread(target=worker, args=(jobs, results))  # <4>
         proc.start()  # <5>
         jobs.put(0)  # <6>
 
-    while True:
-        n, prime, elapsed = results.get()  # <7>
-        label = 'P' if prime else ' '
-        print(f'{n:16}  {label} {elapsed:9.6f}s')
-        if jobs.empty():  # <8>
-            break
+def report(workers: int, results: ResultQueue) -> int:
+    checked = 0
+    workers_done = 0
+    while workers_done < workers:
+        n, prime, elapsed = results.get()
+        if n == 0:
+            workers_done += 1
+        else:
+            checked += 1
+            label = 'P' if prime else ' '
+            print(f'{n:16}  {label} {elapsed:9.6f}s')
+    return checked
 
+def main() -> None:
+    if len(sys.argv) < 2:
+        workers = os.cpu_count()
+    else:
+        workers = int(sys.argv[1])
+
+    print(f'Checking {len(NUMBERS)} numbers with {workers} threads:')
+    t0 = perf_counter()
+    jobs: JobQueue = SimpleQueue()
+    results: ResultQueue = SimpleQueue()
+    start_jobs(workers, jobs, results)
+    checked = report(workers, results)
     elapsed = perf_counter() - t0
-    print(f'Total time: {elapsed:.2f}s')
+    print(f'{checked} checks in {elapsed:.2f}s')
 
 if __name__ == '__main__':
     main()
+

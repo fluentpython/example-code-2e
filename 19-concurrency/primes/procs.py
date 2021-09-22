@@ -33,40 +33,44 @@ def worker(jobs: JobQueue, results: ResultQueue) -> None:  # <7>
     results.put(PrimeResult(0, False, 0.0))  # <10>
 # end::PRIMES_PROC_TOP[]
 
+# tag::PRIMES_PROC_MIDDLE[]
+def start_jobs(workers: int, jobs: JobQueue, results: ResultQueue) -> None:
+    for n in NUMBERS:
+        jobs.put(n)  # <1>
+    for _ in range(workers):
+        proc = Process(target=worker, args=(jobs, results))  # <2>
+        proc.start()  # <3>
+        jobs.put(0)  # <4>
+
+def report(workers: int, results: ResultQueue) -> int:
+    checked = 0
+    workers_done = 0
+    while workers_done < workers:
+        n, prime, elapsed = results.get()
+        if n == 0:
+            workers_done += 1
+        else:
+            checked += 1
+            label = 'P' if prime else ' '
+            print(f'{n:16}  {label} {elapsed:9.6f}s')
+    return checked
+# end::PRIMES_PROC_MIDDLE[]
+
 # tag::PRIMES_PROC_MAIN[]
 def main() -> None:
-    if len(sys.argv) < 2:  # <1>
+    if len(sys.argv) < 2:
         workers = cpu_count()
     else:
         workers = int(sys.argv[1])
 
     print(f'Checking {len(NUMBERS)} numbers with {workers} processes:')
-
-    jobs: JobQueue = SimpleQueue() # <2>
-    results: ResultQueue = SimpleQueue()
     t0 = perf_counter()
-
-    for n in NUMBERS:  # <3>
-        jobs.put(n)
-
-    for _ in range(workers):
-        proc = Process(target=worker, args=(jobs, results))  # <4>
-        proc.start()  # <5>
-        jobs.put(0)  # <6>
-
-    workers_done = 0
-    checked = 0
-    while workers_done < workers:  # <7>
-        n, prime, elapsed = results.get()  # <8>
-        if n == 0:
-            workers_done += 1  # <9>
-        else:
-            checked += 1
-            label = 'P' if prime else ' '
-            print(f'{n:16}  {label} {elapsed:9.6f}s')  # <10>
-
+    jobs: JobQueue = SimpleQueue()
+    results: ResultQueue = SimpleQueue()
+    start_jobs(workers, jobs, results)
+    checked = report(workers, results)
     elapsed = perf_counter() - t0
-    print(f'{checked} checks in {elapsed:.2f}s')  # <11>
+    print(f'{checked} checks in {elapsed:.2f}s')
 
 if __name__ == '__main__':
     main()
