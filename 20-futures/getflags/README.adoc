@@ -1,25 +1,25 @@
 = Experimenting with the `flags2*` examples
 
-== Install SSL Certificates (for MacOS)
+The `flags2*` examples enhance the `flags*` examples with error handling and reporting.
+Therefore, we need a server that generates errors and delays to test them.
 
-On Macos, depending on how in installed Python you may need to manually run a command
-after Python's installer finishes, to install SSL certificates for HTTPS connections.
+The main reason for these instructions is to document how to configure one such server
+in your machine, and how to run the clients to use it.
 
-Using the Finder, open the `Python 3.X` folder inside `/Applications` folder
-and double-click "Install Certificates" or "Install Certificates.command".
+The other reason is to alert of an installation step that MacOS users sometimes overlook.
 
-Using the terminal, you can type for example:
+Contents:
 
-[source, text]
-----
-$ open /Applications/Python 3.10/"Install Certificates.command"
-----
+* <<server_setup>>
+* <<client_setup>>
+* <<macos_certificates>>
 
-
+[[server_setup]]
 == Setting up a test server
 
 If you don't already have a local HTTP server for testing,
-here are the steps to experiment using only Python ≥ 3.9:
+here are the steps to experiment with the `flags2*` examples
+using just the Python ≥ 3.9 distribution and
 
 . Clone or download the https://github.com/fluentpython/example-code-2e[_Fluent Python 2e_ code repository] (this repo!).
 . Open your shell and go to the _20-futures/getflags/_ directory of your local copy of the repository (this directory!)
@@ -39,7 +39,7 @@ https://docs.python.org/3/library/http.server.html[documentation].
 
 [NOTE]
 ====
-This is a simple testing environment that does nor require any external libraries or
+This is a simple testing environment that does not require any external libraries or
 tools—apart from the libraries used in the `flags2*` scripts themselves, as discussed in the book.
 
 For a more robust testing environment, I recommend configuring
@@ -47,6 +47,7 @@ https://www.nginx.com/[NGINX] and
 https://github.com/shopify/toxiproxy[Toxiproxy] with equivalent parameters.
 ====
 
+[[client_setup]]
 == Running a `flags2*` script
 
 The `flags2*` examples provide a command-line interface.
@@ -86,13 +87,35 @@ optional arguments:
 
 All arguments are optional. The most important arguments are discussed next.
 
-One option you can't ignore is `-s/--server`: it lets you choose which HTTP server and base URL will be used in the test. You can pass one of four strings to determine where the script will look for the flags (the strings are case insensitive):
+One option you can't ignore is `-s/--server`: it lets you choose which HTTP server and base URL will be used in the test.
+You can pass one of four strings to determine where the script will look for the flags (the strings are case insensitive):
 
-`LOCAL`:: Use `http://localhost:8000/flags`; this is the default. You should configure a local HTTP server to answer at port 8000. See <<setting_up_servers_box>> for instructions.
+`LOCAL`:: Use `http://localhost:8000/flags`; this is the default.
+You should configure a local HTTP server to answer at port 8000. See <<setting_up_servers_box>> for instructions.
 
-`REMOTE`:: Use `http://fluentpython.com/data/flags`; that is a public website owned by me, hosted on a shared server. Please do not pound it with too many concurrent requests. The `fluentpython.com` domain is handled by the http://www.cloudflare.com/[Cloudflare] CDN (Content Delivery Network) so you may notice that the first downloads are slower, but they get faster when the CDN cache warms up.footnote:[Before configuring Cloudflare, I got HTTP 503 errors--Service Temporarily Unavailable--when testing the scripts with a few dozen concurrent requests on my inexpensive shared host account. Now those errors are gone.]
+`REMOTE`:: Use `http://fluentpython.com/data/flags`; that is a public website owned by me, hosted on a shared server.
+Please do not pound it with too many concurrent requests.
+The `fluentpython.com` domain is handled by the http://www.cloudflare.com/[Cloudflare] CDN (Content Delivery Network)
+so you may notice that the first downloads are slower, but they get faster when the CDN cache warms
+up.footnote:[Before configuring Cloudflare, I got HTTP 503 errors--Service Temporarily Unavailable--when
+testing the scripts with a few dozen concurrent requests on my inexpensive shared host account. Now those errors are gone.]
 
 `DELAY`:: Use `http://localhost:8001/flags`; a server delaying HTTP responses should be listening to port 8001. I wrote _slow_server.py_ to make it easier to experiment. You'll find it in the _20-futures/getflags/_ directory of the https://github.com/fluentpython/example-code-2e[_Fluent Python 2e_ code repository]. See <<setting_up_servers_box>> for instructions.
 
 `ERROR`:: Use `http://localhost:8002/flags`; a server introducing HTTP errors and delaying responses should be installed at port 8002. Running _slow_server.py_ is an easy way to do it. See <<setting_up_servers_box>>.
 
+[[macos_certificates]]
+== Install SSL Certificates (for MacOS)
+
+On Macos, depending on how in installed Python you may need to manually run a command
+after Python's installer finishes, to install SSL certificates for HTTPS connections.
+
+Using the Finder, open the `Python 3.X` folder inside `/Applications` folder
+and double-click "Install Certificates" or "Install Certificates.command".
+
+Using the terminal, you can type for example:
+
+[source, text]
+----
+$ open /Applications/Python 3.10/"Install Certificates.command"
+----
