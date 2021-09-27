@@ -1,25 +1,51 @@
 = Experimenting with the `flags2*` examples
 
+== Install SSL Certificates (for MacOS)
+
+On Macos, depending on how in installed Python you may need to manually run a command
+after Python's installer finishes, to install SSL certificates for HTTPS connections.
+
+Using the Finder, open the `Python 3.X` folder inside `/Applications` folder
+and double-click "Install Certificates" or "Install Certificates.command".
+
+Using the terminal, you can type for example:
+
+[source, text]
+----
+$ open /Applications/Python 3.10/"Install Certificates.command"
+----
+
+
 == Setting up a test server
 
 If you don't already have a local HTTP server for testing,
-here are the steps to experiment using only Python ≥ 3.9—no external libraries:
+here are the steps to experiment using only Python ≥ 3.9:
 
-. Clone or download the https://github.com/fluentpython/example-code-2e[_Fluent Python 2e_ code repository].
-. Open your shell and go to the _20-futures/getflags/_ directory of your local copy of the repository.
+. Clone or download the https://github.com/fluentpython/example-code-2e[_Fluent Python 2e_ code repository] (this repo!).
+. Open your shell and go to the _20-futures/getflags/_ directory of your local copy of the repository (this directory!)
 . Unzip the _flags.zip_ file, creating a _flags_ directory at _20-futures/getflags/flags/_.
 . Open a second shell, go to the _20-futures/getflags/_ directory and run `python3 -m http.server`. This will start a `ThreadingHTTPServer` listening to port 8000, serving the local files. If you open the URL http://localhost:8000/flags/[http://localhost:8000/flags/] with your browser, you'll see a long list of directories named with two-letter country codes from `ad/` to `zw/`.
 . Now you can go back to the first shell and run the _flags2*.py_ examples with the default `--server LOCAL` option.
-. To test with the `--server DELAY` option, go to _20-futures/getflags/_ and run `python3 slow_server.py 8001`. This will add a .5s delay before each response.
-. To test with the `--server ERROR` option, go to _20-futures/getflags/_ and run `python3 slow_server.py 8002 --error-rate .25`. Each request will have a 25% probability of getting a https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418[418 I'm a teapot] response, and all responses will be delayed .5s.
+. To test with the `--server DELAY` option, go to _20-futures/getflags/_ and run `python3 slow_server.py`. This bind to port 8001 by default. It will add a .5s delay before each response.
+. To test with the `--server ERROR` option, go to _20-futures/getflags/_ and run `python3 slow_server.py 8002 --error-rate .25`.
+Each request will have a 25% probability of getting a
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418[418 I'm a teapot] response,
+and all responses will be delayed .5s.
 
 I wrote _slow_server.py_ reusing code from Python's
 https://github.com/python/cpython/blob/917eca700aa341f8544ace43b75d41b477e98b72/Lib/http/server.py[`http.server`] standard library module,
 which "is not recommended for production"—according to the
 https://docs.python.org/3/library/http.server.html[documentation].
-To set up a more reliable testing environment, I recommend configuring
+
+[NOTE]
+====
+This is a simple testing environment that does nor require any external libraries or
+tools—apart from the libraries used in the `flags2*` scripts themselves, as discussed in the book.
+
+For a more robust testing environment, I recommend configuring
 https://www.nginx.com/[NGINX] and
 https://github.com/shopify/toxiproxy[Toxiproxy] with equivalent parameters.
+====
 
 == Running a `flags2*` script
 
