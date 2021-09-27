@@ -1,4 +1,4 @@
-= Running the flags2* examples
+= Experimenting with the `flags2*` examples
 
 == Setting up a test server
 
@@ -21,7 +21,7 @@ To set up a more reliable testing environment, I recommend configuring
 https://www.nginx.com/[NGINX] and
 https://github.com/shopify/toxiproxy[Toxiproxy] with equivalent parameters.
 
-== Running a flags2* example
+== Running a `flags2*` script
 
 The `flags2*` examples provide a command-line interface.
 All three scripts accept the same options,
