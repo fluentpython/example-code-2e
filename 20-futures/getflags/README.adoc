@@ -108,8 +108,8 @@ Running _slow_server.py_ is an easy way to do it. See <<server_setup>>.
 [[macos_certificates]]
 == Install SSL Certificates (for MacOS)
 
-On Macos, depending on how in installed Python you may need to manually run a command
-after Python's installer finishes, to install SSL certificates for HTTPS connections.
+On Macos, depending on how you installed Python you may need to manually run a command
+after Python's installer finishes, to install the SSL certificates Python uses to make HTTPS connections.
 
 Using the Finder, open the `Python 3.X` folder inside `/Applications` folder
 and double-click "Install Certificates" or "Install Certificates.command".
