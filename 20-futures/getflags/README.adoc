@@ -1,11 +1,10 @@
 = Experimenting with the `flags2*` examples
 
 The `flags2*` examples enhance the `flags*` examples with error handling and reporting.
-Therefore, we need a server that generates errors and delays to test them.
+Therefore, we need a server that generates errors and delays to experiment with them.
 
 The main reason for these instructions is to document how to configure one such server
-in your machine, and how to run the clients to use it.
-
+in your machine, and how to tell the `flags2*` clients to access it.
 The other reason is to alert of an installation step that MacOS users sometimes overlook.
 
 Contents:
@@ -19,14 +18,14 @@ Contents:
 
 If you don't already have a local HTTP server for testing,
 here are the steps to experiment with the `flags2*` examples
-using just the Python ≥ 3.9 distribution and
+using just the Python ≥ 3.9 distribution:
 
 . Clone or download the https://github.com/fluentpython/example-code-2e[_Fluent Python 2e_ code repository] (this repo!).
 . Open your shell and go to the _20-futures/getflags/_ directory of your local copy of the repository (this directory!)
 . Unzip the _flags.zip_ file, creating a _flags_ directory at _20-futures/getflags/flags/_.
 . Open a second shell, go to the _20-futures/getflags/_ directory and run `python3 -m http.server`. This will start a `ThreadingHTTPServer` listening to port 8000, serving the local files. If you open the URL http://localhost:8000/flags/[http://localhost:8000/flags/] with your browser, you'll see a long list of directories named with two-letter country codes from `ad/` to `zw/`.
 . Now you can go back to the first shell and run the _flags2*.py_ examples with the default `--server LOCAL` option.
-. To test with the `--server DELAY` option, go to _20-futures/getflags/_ and run `python3 slow_server.py`. This bind to port 8001 by default. It will add a .5s delay before each response.
+. To test with the `--server DELAY` option, go to _20-futures/getflags/_ and run `python3 slow_server.py`. This binds to port 8001 by default. It will add a .5s delay before each response.
 . To test with the `--server ERROR` option, go to _20-futures/getflags/_ and run `python3 slow_server.py 8002 --error-rate .25`.
 Each request will have a 25% probability of getting a
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418[418 I'm a teapot] response,
@@ -52,8 +51,7 @@ https://github.com/shopify/toxiproxy[Toxiproxy] with equivalent parameters.
 
 The `flags2*` examples provide a command-line interface.
 All three scripts accept the same options,
-and you can see them by running any of the scripts with the `-h` option.
-<<flags2_help_demo>> shows the help text.
+and you can see them by running any of the scripts with the `-h` option:
 
 [[flags2_help_demo]]
 .Help screen for the scripts in the flags2 series
@@ -91,18 +89,21 @@ One option you can't ignore is `-s/--server`: it lets you choose which HTTP serv
 You can pass one of four strings to determine where the script will look for the flags (the strings are case insensitive):
 
 `LOCAL`:: Use `http://localhost:8000/flags`; this is the default.
-You should configure a local HTTP server to answer at port 8000. See <<setting_up_servers_box>> for instructions.
+You should configure a local HTTP server to answer at port 8000. See <<server_setup>> for instructions.
+Feel free to hit this as hard as you can. It's your machine!
 
 `REMOTE`:: Use `http://fluentpython.com/data/flags`; that is a public website owned by me, hosted on a shared server.
-Please do not pound it with too many concurrent requests.
+Please do not hit it with too many concurrent requests.
 The `fluentpython.com` domain is handled by the http://www.cloudflare.com/[Cloudflare] CDN (Content Delivery Network)
 so you may notice that the first downloads are slower, but they get faster when the CDN cache warms
 up.footnote:[Before configuring Cloudflare, I got HTTP 503 errors--Service Temporarily Unavailable--when
 testing the scripts with a few dozen concurrent requests on my inexpensive shared host account. Now those errors are gone.]
 
-`DELAY`:: Use `http://localhost:8001/flags`; a server delaying HTTP responses should be listening to port 8001. I wrote _slow_server.py_ to make it easier to experiment. You'll find it in the _20-futures/getflags/_ directory of the https://github.com/fluentpython/example-code-2e[_Fluent Python 2e_ code repository]. See <<setting_up_servers_box>> for instructions.
+`DELAY`:: Use `http://localhost:8001/flags`; a server delaying HTTP responses should be listening to port 8001.
+I wrote _slow_server.py_ to make it easier to experiment. See <<server_setup>> for instructions.
 
-`ERROR`:: Use `http://localhost:8002/flags`; a server introducing HTTP errors and delaying responses should be installed at port 8002. Running _slow_server.py_ is an easy way to do it. See <<setting_up_servers_box>>.
+`ERROR`:: Use `http://localhost:8002/flags`; a server introducing HTTP errors and delaying responses should be installed at port 8002.
+Running _slow_server.py_ is an easy way to do it. See <<server_setup>>.
 
 [[macos_certificates]]
 == Install SSL Certificates (for MacOS)
