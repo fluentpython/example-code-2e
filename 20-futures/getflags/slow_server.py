@@ -15,8 +15,10 @@ import time
 from functools import partial
 from http import server, HTTPStatus
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
-from random import random
+from random import random, uniform
 
+MIN_DELAY = 0.5  # minimum delay for do_GET (seconds)
+MAX_DELAY = 5.0  # maximum delay for do_GET (seconds)
 
 class SlowHTTPRequestHandler(SimpleHTTPRequestHandler):
     """SlowHTTPRequestHandler adds delays and errors to test HTTP clients.
@@ -36,15 +38,23 @@ class SlowHTTPRequestHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         """Serve a GET request."""
-        time.sleep(.5)
+        delay = uniform(MIN_DELAY, MAX_DELAY)
+        cc = self.path[-6:-4].upper()
+        print(f'{cc} delay: {delay:0.2}s')
+        time.sleep(delay)
         if random() < self.error_rate:
             # HTTPStatus.IM_A_TEAPOT requires Python >= 3.9
-            self.send_error(HTTPStatus.IM_A_TEAPOT, "I'm a Teapot")
+            try:
+                self.send_error(HTTPStatus.IM_A_TEAPOT, "I'm a Teapot")
+            except BrokenPipeError as exc:
+                print(f'{cc} *** BrokenPipeError: client closed')
         else:
             f = self.send_head()
             if f:
                 try:
                     self.copyfile(f, self.wfile)
+                except BrokenPipeError as exc:
+                    print(f'{cc} *** BrokenPipeError: client closed')
                 finally:
                     f.close()
 
@@ -67,9 +77,9 @@ if __name__ == '__main__':
                         help='Error rate; e.g. use .25 for 25%% probability '
                              '[default:0.0]')
     parser.add_argument('port', action='store',
-                        default=8000, type=int,
+                        default=8001, type=int,
                         nargs='?',
-                        help='Specify alternate port [default: 8000]')
+                        help='Specify alternate port [default: 8001]')
     args = parser.parse_args()
     handler_class = partial(SlowHTTPRequestHandler,
                             directory=args.directory,

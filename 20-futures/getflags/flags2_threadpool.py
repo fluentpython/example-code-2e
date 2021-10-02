@@ -22,48 +22,49 @@ Sample run::
 from collections import Counter
 from concurrent import futures
 
-import requests
-import tqdm  # type: ignore  # <1>
+import httpx
+import tqdm  # type: ignore
 
-from flags2_common import main, HTTPStatus  # <2>
-from flags2_sequential import download_one  # <3>
+from flags2_common import main, DownloadStatus
+from flags2_sequential import download_one  # <1>
 
-DEFAULT_CONCUR_REQ = 30  # <4>
-MAX_CONCUR_REQ = 1000  # <5>
+DEFAULT_CONCUR_REQ = 30  # <2>
+MAX_CONCUR_REQ = 1000  # <3>
 
 
 def download_many(cc_list: list[str],
                   base_url: str,
                   verbose: bool,
-                  concur_req: int) -> Counter[int]:
-    counter: Counter[int] = Counter()
-    with futures.ThreadPoolExecutor(max_workers=concur_req) as executor:  # <6>
-        to_do_map = {}  # <7>
-        for cc in sorted(cc_list):  # <8>
+                  concur_req: int) -> Counter[DownloadStatus]:
+    counter: Counter[DownloadStatus] = Counter()
+    with futures.ThreadPoolExecutor(max_workers=concur_req) as executor:  # <4>
+        to_do_map = {}  # <5>
+        for cc in sorted(cc_list):  # <6>
             future = executor.submit(download_one, cc,
-                                     base_url, verbose)  # <9>
-            to_do_map[future] = cc  # <10>
-        done_iter = futures.as_completed(to_do_map)  # <11>
+                                     base_url, verbose)  # <7>
+            to_do_map[future] = cc  # <8>
+        done_iter = futures.as_completed(to_do_map)  # <9>
         if not verbose:
-            done_iter = tqdm.tqdm(done_iter, total=len(cc_list))  # <12>
-        for future in done_iter:  # <13>
+            done_iter = tqdm.tqdm(done_iter, total=len(cc_list))  # <10>
+        for future in done_iter:  # <11>
             try:
-                res = future.result()  # <14>
-            except requests.exceptions.HTTPError as exc:  # <15>
-                error_fmt = 'HTTP {res.status_code} - {res.reason}'
-                error_msg = error_fmt.format(res=exc.response)
-            except requests.exceptions.ConnectionError:
-                error_msg = 'Connection error'
+                status = future.result()  # <12>
+            except httpx.HTTPStatusError as exc:  # <13>
+                error_msg = 'HTTP error {resp.status_code} - {resp.reason_phrase}'
+                error_msg = error_msg.format(resp=exc.response)
+            except httpx.RequestError as exc:  # <15>
+                error_msg = f'{exc} {type(exc)}'.strip()
+            except KeyboardInterrupt:
+                break
             else:
                 error_msg = ''
-                status = res.status
 
             if error_msg:
-                status = HTTPStatus.error
+                status = DownloadStatus.ERROR
             counter[status] += 1
             if verbose and error_msg:
                 cc = to_do_map[future]  # <16>
-                print(f'*** Error for {cc}: {error_msg}')
+                print(f'{cc} error: {error_msg}')
 
     return counter
 

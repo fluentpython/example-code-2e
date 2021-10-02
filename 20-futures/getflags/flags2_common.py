@@ -5,13 +5,11 @@ import argparse
 import string
 import sys
 import time
-from collections import namedtuple, Counter
+from collections import Counter
 from enum import Enum
 from pathlib import Path
 
-Result = namedtuple('Result', 'status data')
-
-HTTPStatus = Enum('HTTPStatus', 'ok not_found error')
+DownloadStatus = Enum('DownloadStatus', 'OK NOT_FOUND ERROR')
 
 POP20_CC = ('CN IN US ID BR PK NG BD RU JP '
             'MX PH VN ET EG DE IR TR CD FR').split()
@@ -20,7 +18,7 @@ DEFAULT_CONCUR_REQ = 1
 MAX_CONCUR_REQ = 1
 
 SERVERS = {
-    'REMOTE': 'http://fluentpython.com/data/flags',
+    'REMOTE': 'https://www.fluentpython.com/data/flags',
     'LOCAL':  'http://localhost:8000/flags',
     'DELAY':  'http://localhost:8001/flags',
     'ERROR':  'http://localhost:8002/flags',
@@ -52,17 +50,17 @@ def initial_report(cc_list: list[str],
 
 
 def final_report(cc_list: list[str],
-                 counter: Counter[HTTPStatus],
+                 counter: Counter[DownloadStatus],
                  start_time: float) -> None:
     elapsed = time.perf_counter() - start_time
     print('-' * 20)
-    plural = 's' if counter[HTTPStatus.ok] != 1 else ''
-    print(f'{counter[HTTPStatus.ok]} flag{plural} downloaded.')
-    if counter[HTTPStatus.not_found]:
-        print(f'{counter[HTTPStatus.not_found]} not found.')
-    if counter[HTTPStatus.error]:
-        plural = 's' if counter[HTTPStatus.error] != 1 else ''
-        print(f'{counter[HTTPStatus.error]} error{plural}.')
+    plural = 's' if counter[DownloadStatus.OK] != 1 else ''
+    print(f'{counter[DownloadStatus.OK]:3} flag{plural} downloaded.')
+    if counter[DownloadStatus.NOT_FOUND]:
+        print(f'{counter[DownloadStatus.NOT_FOUND]:3} not found.')
+    if counter[DownloadStatus.ERROR]:
+        plural = 's' if counter[DownloadStatus.ERROR] != 1 else ''
+        print(f'{counter[DownloadStatus.ERROR]:3} error{plural}.')
     print(f'Elapsed time: {elapsed:.2f}s')
 
 
@@ -142,7 +140,7 @@ def process_args(default_concur_req):
         sys.exit(2)  # command line usage error
 
     if not cc_list:
-        cc_list = sorted(POP20_CC)
+        cc_list = sorted(POP20_CC)[:args.limit]
     return args, cc_list
 
 
@@ -151,9 +149,7 @@ def main(download_many, default_concur_req, max_concur_req):
     actual_req = min(args.max_req, max_concur_req, len(cc_list))
     initial_report(cc_list, actual_req, args.server)
     base_url = SERVERS[args.server]
+    DEST_DIR.mkdir(exist_ok=True)
     t0 = time.perf_counter()
     counter = download_many(cc_list, base_url, args.verbose, actual_req)
-    assert sum(counter.values()) == len(cc_list), (
-        'some downloads are unaccounted for'
-    )
     final_report(cc_list, counter, t0)

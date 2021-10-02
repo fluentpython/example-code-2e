@@ -9,38 +9,38 @@ Sample run::
     $ python3 flags_asyncio.py
     EG VN IN TR RU ID US DE CN MX JP BD NG ET FR BR PH PK CD IR
     20 flags downloaded in 1.07s
-
 """
 # tag::FLAGS_ASYNCIO_TOP[]
 import asyncio
 
-from aiohttp import ClientSession  # <1>
+from httpx import AsyncClient  # <1>
 
 from flags import BASE_URL, save_flag, main  # <2>
 
-async def download_one(session: ClientSession, cc: str):  # <3>
+async def download_one(session: AsyncClient, cc: str):  # <3>
     image = await get_flag(session, cc)
     save_flag(image, f'{cc}.gif')
     print(cc, end=' ', flush=True)
     return cc
 
-async def get_flag(session: ClientSession, cc: str) -> bytes:  # <4>
+async def get_flag(session: AsyncClient, cc: str) -> bytes:  # <4>
     url = f'{BASE_URL}/{cc}/{cc}.gif'.lower()
-    async with session.get(url) as resp:  # <5>
-        return await resp.read()          # <6>
+    resp = await session.get(url, timeout=6.1,
+                                  follow_redirects=True)  # <5>
+    return resp.read()  # <6>
 # end::FLAGS_ASYNCIO_TOP[]
 
 # tag::FLAGS_ASYNCIO_START[]
-def download_many(cc_list: list[str]) -> int:     # <1>
-    return asyncio.run(supervisor(cc_list))       # <2>
+def download_many(cc_list: list[str]) -> int:    # <1>
+    return asyncio.run(supervisor(cc_list))      # <2>
 
 async def supervisor(cc_list: list[str]) -> int:
-    async with ClientSession() as session:        # <3>
-        to_do = [download_one(session, cc)        # <4>
-                 for cc in sorted(cc_list)]
-        res = await asyncio.gather(*to_do)        # <5>
+    async with AsyncClient() as session:         # <3>
+        to_do = [download_one(session, cc)
+                 for cc in sorted(cc_list)]      # <4>
+        res = await asyncio.gather(*to_do)       # <5>
 
-    return len(res)                               # <6>
+    return len(res)                              # <6>
 
 if __name__ == '__main__':
     main(download_many)

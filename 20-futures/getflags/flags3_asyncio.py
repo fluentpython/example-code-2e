@@ -8,11 +8,12 @@ asyncio async/await version using run_in_executor for save_flag.
 
 import asyncio
 from collections import Counter
+from http import HTTPStatus
 
 import aiohttp
 import tqdm  # type: ignore
 
-from flags2_common import main, HTTPStatus, Result, save_flag
+from flags2_common import main, DownloadStatus, save_flag
 
 # default set low to avoid errors from remote site, such as
 # 503 - Service Temporarily Unavailable
@@ -54,15 +55,15 @@ async def download_one(session: aiohttp.ClientSession,
                        cc: str,
                        base_url: str,
                        semaphore: asyncio.Semaphore,
-                       verbose: bool) -> Result:
+                       verbose: bool) -> DownloadStatus:
     try:
         async with semaphore:
             image = await get_flag(session, base_url, cc)  # <1>
         async with semaphore:
             country = await get_country(session, base_url, cc)  # <2>
     except aiohttp.ClientResponseError as exc:
-        if exc.status == 404:
-            status = HTTPStatus.not_found
+        if exc.status == HTTPStatus.NOT_FOUND:
+            status = DownloadStatus.NOT_FOUND
             msg = 'not found'
         else:
             raise FetchError(cc) from exc
@@ -72,18 +73,18 @@ async def download_one(session: aiohttp.ClientSession,
         loop = asyncio.get_running_loop()
         loop.run_in_executor(None,
                              save_flag, image, filename)
-        status = HTTPStatus.ok
+        status = DownloadStatus.OK
         msg = 'OK'
     if verbose and msg:
         print(cc, msg)
-    return Result(status, cc)
+    return status
 # end::FLAGS3_ASYNCIO_DOWNLOAD_ONE[]
 
 async def supervisor(cc_list: list[str],
                      base_url: str,
                      verbose: bool,
-                     concur_req: int) -> Counter[HTTPStatus]:
-    counter: Counter[HTTPStatus] = Counter()
+                     concur_req: int) -> Counter[DownloadStatus]:
+    counter: Counter[DownloadStatus] = Counter()
     semaphore = asyncio.Semaphore(concur_req)
     async with aiohttp.ClientSession() as session:
         to_do = [download_one(session, cc, base_url,
@@ -95,7 +96,7 @@ async def supervisor(cc_list: list[str],
             to_do_iter = tqdm.tqdm(to_do_iter, total=len(cc_list))
         for coro in to_do_iter:
             try:
-                res = await coro
+                status = await coro
             except FetchError as exc:
                 country_code = exc.country_code
                 try:
@@ -104,9 +105,7 @@ async def supervisor(cc_list: list[str],
                     error_msg = 'Unknown cause'
                 if verbose and error_msg:
                     print(f'*** Error for {country_code}: {error_msg}')
-                status = HTTPStatus.error
-            else:
-                status = res.status
+                status = DownloadStatus.ERROR
 
             counter[status] += 1
 
@@ -116,7 +115,7 @@ async def supervisor(cc_list: list[str],
 def download_many(cc_list: list[str],
                   base_url: str,
                   verbose: bool,
-                  concur_req: int) -> Counter[HTTPStatus]:
+                  concur_req: int) -> Counter[DownloadStatus]:
     coro = supervisor(cc_list, base_url, verbose, concur_req)
     counts = asyncio.run(coro)  # <14>
 

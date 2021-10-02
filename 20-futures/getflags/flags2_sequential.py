@@ -17,71 +17,72 @@ Sample run::
 
 """
 
+# tag::FLAGS2_BASIC_HTTP_FUNCTIONS[]
 from collections import Counter
+from http import HTTPStatus
 
-import requests
-import tqdm  # type: ignore
+import httpx
+import tqdm  # type: ignore  # <1>
 
-from flags2_common import main, save_flag, HTTPStatus, Result
+from flags2_common import main, save_flag, DownloadStatus  # <2>
 
 DEFAULT_CONCUR_REQ = 1
 MAX_CONCUR_REQ = 1
 
-# tag::FLAGS2_BASIC_HTTP_FUNCTIONS[]
 def get_flag(base_url: str, cc: str) -> bytes:
     url = f'{base_url}/{cc}/{cc}.gif'.lower()
-    resp = requests.get(url)
-    if resp.status_code != 200:  # <1>
-        resp.raise_for_status()
+    resp = httpx.get(url, timeout=3.1, follow_redirects=True)
+    resp.raise_for_status()  # <3>
     return resp.content
 
-def download_one(cc: str, base_url: str, verbose: bool = False):
+def download_one(cc: str, base_url: str, verbose: bool = False) -> DownloadStatus:
     try:
         image = get_flag(base_url, cc)
-    except requests.exceptions.HTTPError as exc:  # <2>
+    except httpx.HTTPStatusError as exc:  # <4>
         res = exc.response
-        if res.status_code == 404:
-            status = HTTPStatus.not_found  # <3>
-            msg = 'not found'
-        else:  # <4>
-            raise
+        if res.status_code == HTTPStatus.NOT_FOUND:
+            status = DownloadStatus.NOT_FOUND  # <5>
+            msg = f'not found: {res.url}'
+        else:
+            raise  # <6>
     else:
         save_flag(image, f'{cc}.gif')
-        status = HTTPStatus.ok
+        status = DownloadStatus.OK
         msg = 'OK'
 
-    if verbose:  # <5>
+    if verbose:  # <7>
         print(cc, msg)
 
-    return Result(status, cc)  # <6>
+    return status
 # end::FLAGS2_BASIC_HTTP_FUNCTIONS[]
 
 # tag::FLAGS2_DOWNLOAD_MANY_SEQUENTIAL[]
 def download_many(cc_list: list[str],
                   base_url: str,
                   verbose: bool,
-                  _unused_concur_req: int) -> Counter[int]:
-    counter: Counter[int] = Counter()  # <1>
+                  _unused_concur_req: int) -> Counter[DownloadStatus]:
+    counter: Counter[DownloadStatus] = Counter()  # <1>
     cc_iter = sorted(cc_list)  # <2>
     if not verbose:
         cc_iter = tqdm.tqdm(cc_iter)  # <3>
-    for cc in cc_iter:  # <4>
+    for cc in cc_iter:
         try:
-            res = download_one(cc, base_url, verbose)  # <5>
-        except requests.exceptions.HTTPError as exc:  # <6>
-            error_msg = 'HTTP error {res.status_code} - {res.reason}'
-            error_msg = error_msg.format(res=exc.response)
-        except requests.exceptions.ConnectionError:  # <7>
-            error_msg = 'Connection error'
+            status = download_one(cc, base_url, verbose)  # <4>
+        except httpx.HTTPStatusError as exc:  # <5>
+            error_msg = 'HTTP error {resp.status_code} - {resp.reason_phrase}'
+            error_msg = error_msg.format(resp=exc.response)
+        except httpx.RequestError as exc:  # <6>
+            error_msg = f'{exc} {type(exc)}'.strip()
+        except KeyboardInterrupt:  # <7>
+            break
         else:  # <8>
             error_msg = ''
-            status = res.status
 
         if error_msg:
-            status = HTTPStatus.error  # <9>
+            status = DownloadStatus.ERROR  # <9>
         counter[status] += 1           # <10>
         if verbose and error_msg:      # <11>
-            print(f'*** Error for {cc}: {error_msg}')
+            print(f'{cc} error: {error_msg}')
 
     return counter  # <12>
 # end::FLAGS2_DOWNLOAD_MANY_SEQUENTIAL[]

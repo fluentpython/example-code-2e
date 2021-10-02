@@ -14,7 +14,7 @@ Contents:
 * <<macos_certificates>>
 
 [[server_setup]]
-== Setting up a test server
+== Setting up test servers
 
 If you don't already have a local HTTP server for testing,
 here are the steps to experiment with the `flags2*` examples
@@ -25,7 +25,7 @@ using just the Python ≥ 3.9 distribution:
 . Unzip the _flags.zip_ file, creating a _flags_ directory at _20-futures/getflags/flags/_.
 . Open a second shell, go to the _20-futures/getflags/_ directory and run `python3 -m http.server`. This will start a `ThreadingHTTPServer` listening to port 8000, serving the local files. If you open the URL http://localhost:8000/flags/[http://localhost:8000/flags/] with your browser, you'll see a long list of directories named with two-letter country codes from `ad/` to `zw/`.
 . Now you can go back to the first shell and run the _flags2*.py_ examples with the default `--server LOCAL` option.
-. To test with the `--server DELAY` option, go to _20-futures/getflags/_ and run `python3 slow_server.py`. This binds to port 8001 by default. It will add a .5s delay before each response.
+. To test with the `--server DELAY` option, go to _20-futures/getflags/_ and run `python3 slow_server.py`. This binds to port 8001 by default. It will add a random delay of .5s to 5s before each response.
 . To test with the `--server ERROR` option, go to _20-futures/getflags/_ and run `python3 slow_server.py 8002 --error-rate .25`.
 Each request will have a 25% probability of getting a
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418[418 I'm a teapot] response,
@@ -86,7 +86,7 @@ optional arguments:
 All arguments are optional. The most important arguments are discussed next.
 
 One option you can't ignore is `-s/--server`: it lets you choose which HTTP server and base URL will be used in the test.
-You can pass one of four strings to determine where the script will look for the flags (the strings are case insensitive):
+You can pass one of four labels to determine where the script will look for the flags (the labels are case-insensitive):
 
 `LOCAL`:: Use `http://localhost:8000/flags`; this is the default.
 You should configure a local HTTP server to answer at port 8000. See <<server_setup>> for instructions.
