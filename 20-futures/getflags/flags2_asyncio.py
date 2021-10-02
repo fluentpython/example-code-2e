@@ -67,6 +67,7 @@ async def supervisor(cc_list: list[str],
         to_do_iter = asyncio.as_completed(to_do)  # <4>
         if not verbose:
             to_do_iter = tqdm.tqdm(to_do_iter, total=len(cc_list))  # <5>
+        error: httpx.HTTPError | None = None
         for coro in to_do_iter:  # <6>
             try:
                 status = await coro  # <7>
