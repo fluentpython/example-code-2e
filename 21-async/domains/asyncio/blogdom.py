@@ -2,11 +2,12 @@
 import asyncio
 import socket
 from keyword import kwlist
+from typing import Tuple
 
 MAX_KEYWORD_LEN = 4  # <1>
 
 
-async def probe(domain: str) -> tuple[str, bool]:  # <2>
+async def probe(domain: str) -> Tuple[str, bool]:  # <2>
     loop = asyncio.get_running_loop()  # <3>
     try:
         await loop.getaddrinfo(domain, None)  # <4>
