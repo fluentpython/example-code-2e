@@ -8,15 +8,15 @@ PIPE  = f'\N{BOX DRAWINGS LIGHT VERTICAL}{SP*3}'                  # │
 
 
 def render_lines(tree_iter):
-    name, _, _ = next(tree_iter)
-    yield name
+    cls, _, _ = next(tree_iter)
+    yield cls.__name__
     prefix = ''
 
-    for name, level, last in tree_iter:
+    for cls, level, last in tree_iter:
         prefix = prefix[:4 * (level-1)]
         prefix = prefix.replace(TEE, PIPE).replace(ELBOW, SP*4)
         prefix += ELBOW if last else TEE
-        yield prefix + name
+        yield prefix + cls.__name__
 
 
 def draw(cls):

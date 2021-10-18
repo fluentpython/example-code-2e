@@ -1,5 +1,5 @@
-def tree(cls, level=0, last_in_level=True):
-    yield cls.__name__, level, last_in_level
+def tree(cls, level=0, last_sibling=True):
+    yield cls, level, last_sibling
     subclasses = cls.__subclasses__()
     if subclasses:
         last = subclasses[-1]
@@ -8,9 +8,9 @@ def tree(cls, level=0, last_in_level=True):
 
 
 def display(cls):
-    for cls_name, level, _ in tree(cls):
+    for cls, level, _ in tree(cls):
         indent = ' ' * 4 * level
-        print(f'{indent}{cls_name}')
+        print(f'{indent}{cls.__name__}')
 
 
 if __name__ == '__main__':

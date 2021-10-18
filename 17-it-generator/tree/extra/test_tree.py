@@ -4,7 +4,8 @@ from tree import tree
 def test_1_level():
     class One: pass
     expected = [('One', 0, True)]
-    result = list(tree(One))
+    result = [(cls.__name__, level, last)
+              for cls, level, last in tree(One)]
     assert expected == result
 
 
@@ -17,7 +18,8 @@ def test_2_levels_2_leaves():
             ('Leaf1', 1, False),
             ('Leaf2', 1, True),
     ]
-    result = list(tree(Branch))
+    result = [(cls.__name__, level, last)
+              for cls, level, last in tree(Branch)]
     assert expected == result
 
 
@@ -30,7 +32,8 @@ def test_3_levels_1_leaf():
             ('Y', 1, True),
                 ('Z', 2, True),
     ]
-    result = list(tree(X))
+    result = [(cls.__name__, level, last)
+              for cls, level, last in tree(X)]
     assert expected == result
 
 
@@ -46,7 +49,8 @@ def test_4_levels_1_leaf():
                     ('Level3', 3, True),
     ]
 
-    result = list(tree(Level0))
+    result = [(cls.__name__, level, last)
+              for cls, level, last in tree(Level0)]
     assert expected == result
 
 
@@ -68,7 +72,8 @@ def test_4_levels_3_leaves():
                 ('C2', 2, True),
     ]
 
-    result = list(tree(A))
+    result = [(cls.__name__, level, last)
+              for cls, level, last in tree(A)]
     assert expected == result
 
 
@@ -83,7 +88,8 @@ def test_many_levels_1_leaf():
         expected.append((name, level, True))
         parent = cls
 
-    result = list(tree(Root))
+    result = [(cls.__name__, level, last)
+              for cls, level, last in tree(Root)]
     assert len(result) == level_count
     assert result[0] == ('Root', 0, True)
     assert result[-1] == ('Sub99', 99, True)
