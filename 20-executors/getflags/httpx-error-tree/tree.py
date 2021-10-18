@@ -5,12 +5,13 @@ import httpx  # make httpx classes available to .__subclasses__()
 
 def tree(cls, level=0, last_sibling=True):
     yield cls, level, last_sibling
-    subclasses = [c for c in cls.__subclasses__()
-                  if c.__module__ == 'httpx' or c is RuntimeError]
+    # get RuntimeError and exceptions defined in httpx
+    subclasses = [sub for sub in cls.__subclasses__()
+                  if sub is RuntimeError or sub.__module__ == 'httpx']
     if subclasses:
         last = subclasses[-1]
-    for sub_cls in subclasses:
-        yield from tree(sub_cls, level+1, sub_cls is last)
+    for sub in subclasses:
+        yield from tree(sub, level+1, sub is last)
 
 
 def display(cls):
