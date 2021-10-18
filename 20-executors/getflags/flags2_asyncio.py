@@ -16,37 +16,36 @@ import tqdm  # type: ignore
 
 from flags2_common import main, DownloadStatus, save_flag
 
-# default set low to avoid errors from remote site, such as
-# 503 - Service Temporarily Unavailable
+# low concurrency default to avoid errors from remote site,
+# such as 503 - Service Temporarily Unavailable
 DEFAULT_CONCUR_REQ = 5
 MAX_CONCUR_REQ = 1000
 
-async def get_flag(session: httpx.AsyncClient,  # <2>
+async def get_flag(client: httpx.AsyncClient,  # <1>
                    base_url: str,
                    cc: str) -> bytes:
     url = f'{base_url}/{cc}/{cc}.gif'.lower()
-    resp = await session.get(url, timeout=3.1, follow_redirects=True)   # <3>
+    resp = await client.get(url, timeout=3.1, follow_redirects=True)   # <2>
     resp.raise_for_status()
     return resp.content
 
-async def download_one(session: httpx.AsyncClient,
+async def download_one(client: httpx.AsyncClient,
                        cc: str,
                        base_url: str,
-                       semaphore: asyncio.Semaphore,  # <4>
+                       semaphore: asyncio.Semaphore,
                        verbose: bool) -> DownloadStatus:
     try:
-        async with semaphore:  # <5>
-            image = await get_flag(session, base_url, cc)
-    except httpx.HTTPStatusError as exc:  # <4>
+        async with semaphore:  # <3>
+            image = await get_flag(client, base_url, cc)
+    except httpx.HTTPStatusError as exc:  # <5>
         res = exc.response
         if res.status_code == HTTPStatus.NOT_FOUND:
-            status = DownloadStatus.NOT_FOUND  # <5>
+            status = DownloadStatus.NOT_FOUND
             msg = f'not found: {res.url}'
         else:
             raise
-
     else:
-        await asyncio.to_thread(save_flag, image, f'{cc}.gif')
+        await asyncio.to_thread(save_flag, image, f'{cc}.gif')  # <6>
         status = DownloadStatus.OK
         msg = 'OK'
     if verbose and msg:
@@ -61,33 +60,31 @@ async def supervisor(cc_list: list[str],
                      concur_req: int) -> Counter[DownloadStatus]:  # <1>
     counter: Counter[DownloadStatus] = Counter()
     semaphore = asyncio.Semaphore(concur_req)  # <2>
-    async with httpx.AsyncClient() as session:
-        to_do = [download_one(session, cc, base_url, semaphore, verbose)
+    async with httpx.AsyncClient() as client:
+        to_do = [download_one(client, cc, base_url, semaphore, verbose)
                  for cc in sorted(cc_list)]  # <3>
         to_do_iter = asyncio.as_completed(to_do)  # <4>
         if not verbose:
             to_do_iter = tqdm.tqdm(to_do_iter, total=len(cc_list))  # <5>
-        error: httpx.HTTPError | None = None
-        for coro in to_do_iter:  # <6>
+        error: httpx.HTTPError | None = None  # <6>
+        for coro in to_do_iter:  # <7>
             try:
-                status = await coro  # <7>
-            except httpx.HTTPStatusError as exc:  # <8>
+                status = await coro  # <8>
+            except httpx.HTTPStatusError as exc:
                 error_msg = 'HTTP error {resp.status_code} - {resp.reason_phrase}'
                 error_msg = error_msg.format(resp=exc.response)
-                error = exc
-            except httpx.RequestError as exc:  # <9>
+                error = exc  # <9>
+            except httpx.RequestError as exc:
                 error_msg = f'{exc} {type(exc)}'.strip()
-                error = exc
-            except KeyboardInterrupt:  # <10>
+                error = exc  # <10>
+            except KeyboardInterrupt:
                 break
-            else:  # <11>
-                error = None
 
             if error:
-                status = DownloadStatus.ERROR  # <12>
+                status = DownloadStatus.ERROR  # <11>
                 if verbose:
-                    url = str(error.request.url)  # <13>
-                    cc = Path(url).stem.upper()   # <14>
+                    url = str(error.request.url)  # <12>
+                    cc = Path(url).stem.upper()   # <13>
                     print(f'{cc} error: {error_msg}')
             counter[status] += 1
 

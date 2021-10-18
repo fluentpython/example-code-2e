@@ -31,46 +31,46 @@ def worker(jobs: JobQueue, results: ResultQueue) -> None:  # <7>
     while n := jobs.get():  # <8>
         results.put(check(n))  # <9>
     results.put(PrimeResult(0, False, 0.0))  # <10>
-# end::PRIMES_PROC_TOP[]
 
-# tag::PRIMES_PROC_MIDDLE[]
-def start_jobs(workers: int, jobs: JobQueue, results: ResultQueue) -> None:
+def start_jobs(
+    procs: int, jobs: JobQueue, results: ResultQueue  # <11>
+) -> None:
     for n in NUMBERS:
-        jobs.put(n)  # <1>
-    for _ in range(workers):
-        proc = Process(target=worker, args=(jobs, results))  # <2>
-        proc.start()  # <3>
-        jobs.put(0)  # <4>
-
-def report(workers: int, results: ResultQueue) -> int:
-    checked = 0
-    workers_done = 0
-    while workers_done < workers:
-        n, prime, elapsed = results.get()
-        if n == 0:
-            workers_done += 1
-        else:
-            checked += 1
-            label = 'P' if prime else ' '
-            print(f'{n:16}  {label} {elapsed:9.6f}s')
-    return checked
-# end::PRIMES_PROC_MIDDLE[]
+        jobs.put(n)  # <12>
+    for _ in range(procs):
+        proc = Process(target=worker, args=(jobs, results))  # <13>
+        proc.start()  # <14>
+        jobs.put(0)  # <15>
+# end::PRIMES_PROC_TOP[]
 
 # tag::PRIMES_PROC_MAIN[]
 def main() -> None:
-    if len(sys.argv) < 2:
-        workers = cpu_count()
+    if len(sys.argv) < 2:  # <1>
+        procs = cpu_count()
     else:
-        workers = int(sys.argv[1])
+        procs = int(sys.argv[1])
 
-    print(f'Checking {len(NUMBERS)} numbers with {workers} processes:')
+    print(f'Checking {len(NUMBERS)} numbers with {procs} processes:')
     t0 = perf_counter()
-    jobs: JobQueue = SimpleQueue()
+    jobs: JobQueue = SimpleQueue()  # <2>
     results: ResultQueue = SimpleQueue()
-    start_jobs(workers, jobs, results)
-    checked = report(workers, results)
+    start_jobs(procs, jobs, results)  # <3>
+    checked = report(procs, results)  # <4>
     elapsed = perf_counter() - t0
-    print(f'{checked} checks in {elapsed:.2f}s')
+    print(f'{checked} checks in {elapsed:.2f}s')  # <5>
+
+def report(procs: int, results: ResultQueue) -> int: # <6>
+    checked = 0
+    procs_done = 0
+    while procs_done < procs:  # <7>
+        n, prime, elapsed = results.get()  # <8>
+        if n == 0:  # <9>
+            procs_done += 1
+        else:
+            checked += 1  # <10>
+            label = 'P' if prime else ' '
+            print(f'{n:16}  {label} {elapsed:9.6f}s')
+    return checked
 
 if __name__ == '__main__':
     main()

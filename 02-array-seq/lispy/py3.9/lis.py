@@ -80,7 +80,7 @@ def standard_env() -> Environment:
             '-': op.sub,
             '*': op.mul,
             '/': op.truediv,
-            '//': op.floordiv,
+            'quotient': op.floordiv,
             '>': op.gt,
             '<': op.lt,
             '>=': op.ge,

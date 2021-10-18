@@ -44,7 +44,7 @@ Part / Chapter #|Title|Directory|1<sup>st</sup> ed. Chapter&nbsp;#
 17|Iterators, Generators, and Classic Coroutines|[17-it-generator](17-it-generator)|14
 18|Context Managers and else Blocks|[18-with-match](18-with-match)|15
 19|Concurrency Models in Python|[19-concurrency](19-concurrency)|🆕
-20|Concurrency with Futures|[20-futures](20-futures)|17
+20|Concurrent Executors|[20-executors](20-executors)|17
 21|Asynchronous Programming|[21-async](21-async)|18
 **VI – Metaprogramming**|
 22|Dynamic Attributes and Properties|[22-dyn-attr-prop](22-dyn-attr-prop)|19

@@ -146,7 +146,7 @@ def test_factorial():
 
 gcd_src = """
 (define (mod m n)
-    (- m (* n (// m n))))
+    (- m (* n (quotient m n))))
 (define (gcd m n)
     (if (= n 0)
         m
