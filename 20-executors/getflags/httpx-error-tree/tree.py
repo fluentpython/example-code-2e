@@ -10,8 +10,8 @@ def tree(cls, level=0, last_sibling=True):
                   if sub is RuntimeError or sub.__module__ == 'httpx']
     if subclasses:
         last = subclasses[-1]
-    for sub in subclasses:
-        yield from tree(sub, level+1, sub is last)
+        for sub in subclasses:
+            yield from tree(sub, level+1, sub is last)
 
 
 def display(cls):
