@@ -1,4 +1,4 @@
-from pretty_tree import tree, render_lines
+from drawtree import tree, render_lines
 
 def test_1_level():
     result = list(render_lines(tree(BrokenPipeError)))
@@ -59,7 +59,7 @@ def test_2_levels_2_leaves():
     assert expected == result
 
 
-def test_3_levels_2_leaves():
+def test_3_levels_2_leaves_dedent():
     class A: pass
     class B(A): pass
     class C(B): pass
@@ -77,7 +77,7 @@ def test_3_levels_2_leaves():
     assert expected == result
 
 
-def test_4_levels_4_leaves():
+def test_4_levels_4_leaves_dedent():
     class A: pass
     class B1(A): pass
     class C1(B1): pass
