@@ -27,11 +27,13 @@ Doctest for `Environment`
 >>> inner_env = {'a': 2}
 >>> outer_env = {'a': 0, 'b': 1}
 >>> env = Environment(inner_env, outer_env)
->>> env['a'] = 111  # <1>
+>>> env['a']  # <1>
+2
+>>> env['a'] = 111  # <2>
 >>> env['c'] = 222
 >>> env
 Environment({'a': 111, 'c': 222}, {'a': 0, 'b': 1})
->>> env.change('b', 333)  # <2>
+>>> env.change('b', 333)  # <3>
 >>> env
 Environment({'a': 111, 'c': 222}, {'a': 0, 'b': 333})
 

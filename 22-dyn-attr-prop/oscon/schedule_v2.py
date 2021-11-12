@@ -29,8 +29,7 @@ class Record:
         self.__dict__.update(kwargs)
 
     def __repr__(self):
-        cls_name = self.__class__.__name__
-        return f'<{cls_name} serial={self.serial!r}>'
+        return f'<{self.__class__.__name__} serial={self.serial!r}>'
 
     @staticmethod  # <3>
     def fetch(key):
@@ -44,10 +43,9 @@ class Record:
 class Event(Record):  # <1>
 
     def __repr__(self):
-        if hasattr(self, 'name'):  # <2>
-            cls_name = self.__class__.__name__
-            return f'<{cls_name} {self.name!r}>'
-        else:
+        try:
+            return f'<{self.__class__.__name__} {self.name!r}>'  # <2>
+        except AttributeError:
             return super().__repr__()
 
     @property

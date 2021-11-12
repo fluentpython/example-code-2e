@@ -49,9 +49,8 @@ def record_factory(cls_name: str, field_names: FieldNames) -> type[tuple]:  # <2
             yield getattr(self, name)
 
     def __repr__(self):  # <6>
-        values = ', '.join(
-            '{}={!r}'.format(*i) for i in zip(self.__slots__, self)
-        )
+        values = ', '.join(f'{name}={value!r}'
+            for name, value in zip(self.__slots__, self))
         cls_name = self.__class__.__name__
         return f'{cls_name}({values})'
 

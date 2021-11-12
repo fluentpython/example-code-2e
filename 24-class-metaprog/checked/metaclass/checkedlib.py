@@ -78,7 +78,9 @@ class Field:
         self.storage_name = '_' + name  # <1>
         self.constructor = constructor
 
-    def __get__(self, instance, owner=None):  # <2>
+    def __get__(self, instance, owner=None):
+        if instance is None:  # <2>
+            return self
         return getattr(instance, self.storage_name)  # <3>
 
     def __set__(self, instance: Any, value: Any) -> None:

@@ -30,7 +30,7 @@ class NonBlank(Validated):
 
     def validate(self, name, value):
         value = value.strip()
-        if len(value) == 0:
+        if not value:  # <2>
             raise ValueError(f'{name} cannot be blank')
-        return value  # <2>
+        return value  # <3>
 # end::MODEL_V5_VALIDATED_SUB[]

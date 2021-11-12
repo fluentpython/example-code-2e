@@ -81,8 +81,6 @@ Tests of hashing:
 
     >>> v1 = Vector2d(3, 4)
     >>> v2 = Vector2d(3.1, 4.2)
-    >>> hash(v1), hash(v2)
-    (7, 384307168202284039)
     >>> len({v1, v2})
     2
 
@@ -131,7 +129,7 @@ class Vector2d:
 
 # tag::VECTOR_V3_HASH[]
     def __hash__(self):
-        return hash(self.x) ^ hash(self.y)
+        return hash((self.x, self.y))
 # end::VECTOR_V3_HASH[]
 
     def __abs__(self):

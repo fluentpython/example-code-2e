@@ -28,7 +28,7 @@ Here are a few tests. ``bunch_test.py`` has a few more.
     >>> Point(x=1, y=2, z=3)
     Traceback (most recent call last):
       ...
-    AttributeError: 'Point' object has no attribute 'z'
+    AttributeError: No slots left for: 'z'
     >>> p = Point(x=21)
     >>> p.y = 42
     >>> p
@@ -51,7 +51,8 @@ class MetaBunch(type):  # <1>
             for name, default in defaults.items():  # <5>
                 setattr(self, name, kwargs.pop(name, default))
             if kwargs:  # <6>
-                setattr(self, *kwargs.popitem())
+                extra = ', '.join(kwargs)
+                raise AttributeError(f'No slots left for: {extra!r}')
 
         def __repr__(self):  # <7>
             rep = ', '.join(f'{name}={value!r}'

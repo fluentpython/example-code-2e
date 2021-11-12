@@ -14,26 +14,28 @@ PROMPT = b'?> '
 
 async def finder(index: InvertedIndex,          # <2>
                  reader: asyncio.StreamReader,
-                 writer: asyncio.StreamWriter):
+                 writer: asyncio.StreamWriter) -> None:
     client = writer.get_extra_info('peername')  # <3>
     while True:  # <4>
         writer.write(PROMPT)  # can't await!  # <5>
         await writer.drain()  # must await!  # <6>
         data = await reader.readline()  # <7>
+        if not data:  # <8>
+            break
         try:
-            query = data.decode().strip()  # <8>
-        except UnicodeDecodeError:  # <9>
+            query = data.decode().strip()  # <9>
+        except UnicodeDecodeError:  # <10>
             query = '\x00'
-        print(f' From {client}: {query!r}')  # <10>
+        print(f' From {client}: {query!r}')  # <11>
         if query:
-            if ord(query[:1]) < 32:  # <11>
+            if ord(query[:1]) < 32:  # <12>
                 break
-            results = await search(query, index, writer)  # <12>
-            print(f'   To {client}: {results} results.')  # <13>
+            results = await search(query, index, writer)  # <13>
+            print(f'   To {client}: {results} results.')  # <14>
 
-    writer.close()  # <14>
-    await writer.wait_closed()  # <15>
-    print(f'Close {client}.')  # <16>
+    writer.close()  # <15>
+    await writer.wait_closed()  # <16>
+    print(f'Close {client}.')  # <17>
 # end::TCP_MOJIFINDER_TOP[]
 
 # tag::TCP_MOJIFINDER_SEARCH[]
@@ -52,7 +54,7 @@ async def search(query: str,  # <1>
 # end::TCP_MOJIFINDER_SEARCH[]
 
 # tag::TCP_MOJIFINDER_MAIN[]
-async def supervisor(index: InvertedIndex, host: str, port: int):
+async def supervisor(index: InvertedIndex, host: str, port: int) -> None:
     server = await asyncio.start_server(    # <1>
         functools.partial(finder, index),   # <2>
         host, port)                         # <3>

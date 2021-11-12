@@ -47,8 +47,11 @@ class FrozenJSON:
             self.__data[key] = value
 
     def __getattr__(self, name):
-        if hasattr(self.__data, name):
+        try:
             return getattr(self.__data, name)
-        else:
+        except AttributeError:
             return FrozenJSON(self.__data[name])  # <4>
+
+    def __dir__(self):
+        return self.__data.keys()
 # end::EXPLORE2[]

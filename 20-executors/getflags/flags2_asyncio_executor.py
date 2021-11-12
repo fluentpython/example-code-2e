@@ -22,23 +22,23 @@ DEFAULT_CONCUR_REQ = 5
 MAX_CONCUR_REQ = 1000
 
 
-async def get_flag(session: httpx.AsyncClient,  # <2>
+async def get_flag(client: httpx.AsyncClient,  # <2>
                    base_url: str,
                    cc: str) -> bytes:
     url = f'{base_url}/{cc}/{cc}.gif'.lower()
-    resp = await session.get(url, timeout=3.1, follow_redirects=True)   # <3>
+    resp = await client.get(url, timeout=3.1, follow_redirects=True)   # <3>
     resp.raise_for_status()
     return resp.content
 
 
-async def download_one(session: httpx.AsyncClient,
+async def download_one(client: httpx.AsyncClient,
                        cc: str,
                        base_url: str,
                        semaphore: asyncio.Semaphore,
                        verbose: bool) -> DownloadStatus:
     try:
         async with semaphore:
-            image = await get_flag(session, base_url, cc)
+            image = await get_flag(client, base_url, cc)
     except httpx.HTTPStatusError as exc:
         res = exc.response
         if res.status_code == HTTPStatus.NOT_FOUND:
@@ -64,8 +64,8 @@ async def supervisor(cc_list: list[str],
                      concur_req: int) -> Counter[DownloadStatus]:  # <1>
     counter: Counter[DownloadStatus] = Counter()
     semaphore = asyncio.Semaphore(concur_req)  # <2>
-    async with httpx.AsyncClient() as session:
-        to_do = [download_one(session, cc, base_url, semaphore, verbose)
+    async with httpx.AsyncClient() as client:
+        to_do = [download_one(client, cc, base_url, semaphore, verbose)
                  for cc in sorted(cc_list)]  # <3>
         to_do_iter = asyncio.as_completed(to_do)  # <4>
         if not verbose:

@@ -54,12 +54,15 @@ class FrozenJSON:
         except AttributeError:
             return FrozenJSON.build(self.__data[name])  # <4>
 
+    def __dir__(self):  # <5>
+        return self.__data.keys()
+
     @classmethod
-    def build(cls, obj):  # <5>
-        if isinstance(obj, abc.Mapping):  # <6>
+    def build(cls, obj):  # <6>
+        if isinstance(obj, abc.Mapping):  # <7>
             return cls(obj)
-        elif isinstance(obj, abc.MutableSequence):  # <7>
+        elif isinstance(obj, abc.MutableSequence):  # <8>
             return [cls.build(item) for item in obj]
-        else:  # <8>
+        else:  # <9>
             return obj
 # end::EXPLORE0[]

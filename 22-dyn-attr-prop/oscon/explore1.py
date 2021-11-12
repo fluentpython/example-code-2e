@@ -62,10 +62,13 @@ class FrozenJSON:
 # end::EXPLORE1[]
 
     def __getattr__(self, name):
-        if hasattr(self.__data, name):
+        try:
             return getattr(self.__data, name)
-        else:
+        except AttributeError:
             return FrozenJSON.build(self.__data[name])
+
+    def __dir__(self):  # <5>
+        return self.__data.keys()
 
     @classmethod
     def build(cls, obj):

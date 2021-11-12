@@ -23,8 +23,7 @@ class Record:
         self.__dict__.update(kwargs)  # <1>
 
     def __repr__(self):
-        cls_name = self.__class__.__name__
-        return f'<{cls_name} serial={self.serial!r}>'  # <2>
+        return f'<{self.__class__.__name__} serial={self.serial!r}>'  # <2>
 
 def load(path=JSON_PATH):
     records = {}  # <3>

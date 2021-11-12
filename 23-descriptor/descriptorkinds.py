@@ -5,21 +5,18 @@ Overriding descriptor (a.k.a. data descriptor or enforced descriptor):
 
     >>> obj = Managed()  # <1>
     >>> obj.over  # <2>
-    -> Overriding.__get__(<Overriding object>, <Managed object>,
-        <class Managed>)
+    -> Overriding.__get__(<Overriding object>, <Managed object>, <class Managed>)
     >>> Managed.over  # <3>
     -> Overriding.__get__(<Overriding object>, None, <class Managed>)
     >>> obj.over = 7  # <4>
     -> Overriding.__set__(<Overriding object>, <Managed object>, 7)
     >>> obj.over  # <5>
-    -> Overriding.__get__(<Overriding object>, <Managed object>,
-        <class Managed>)
+    -> Overriding.__get__(<Overriding object>, <Managed object>, <class Managed>)
     >>> obj.__dict__['over'] = 8  # <6>
     >>> vars(obj)  # <7>
     {'over': 8}
     >>> obj.over  # <8>
-    -> Overriding.__get__(<Overriding object>, <Managed object>,
-        <class Managed>)
+    -> Overriding.__get__(<Overriding object>, <Managed object>, <class Managed>)
 
 # end::DESCR_KINDS_DEMO1[]
 
@@ -50,8 +47,7 @@ Non-overriding descriptor (a.k.a. non-data descriptor or shadowable descriptor):
 
     >>> obj = Managed()
     >>> obj.non_over  # <1>
-    -> NonOverriding.__get__(<NonOverriding object>, <Managed object>,
-        <class Managed>)
+    -> NonOverriding.__get__(<NonOverriding object>, <Managed object>, <class Managed>)
     >>> obj.non_over = 7  # <2>
     >>> obj.non_over  # <3>
     7
@@ -59,8 +55,7 @@ Non-overriding descriptor (a.k.a. non-data descriptor or shadowable descriptor):
     -> NonOverriding.__get__(<NonOverriding object>, None, <class Managed>)
     >>> del obj.non_over  # <5>
     >>> obj.non_over  # <6>
-    -> NonOverriding.__get__(<NonOverriding object>, <Managed object>,
-        <class Managed>)
+    -> NonOverriding.__get__(<NonOverriding object>, <Managed object>, <class Managed>)
 
 # end::DESCR_KINDS_DEMO3[]
 
@@ -88,7 +83,7 @@ Methods are non-overriding descriptors:
     >>> Managed.spam()
     Traceback (most recent call last):
       ...
-    TypeError: spam() missing 1 required positional argument: 'self'
+    TypeError: Managed.spam() missing 1 required positional argument: 'self'
     >>> Managed.spam(obj)
     -> Managed.spam(<Managed object>)
     >>> Managed.spam.__get__(obj)  # doctest: +ELLIPSIS
@@ -156,15 +151,15 @@ def cls_name(obj_or_cls):
 def display(obj):
     cls = type(obj)
     if cls is type:
-        return '<class {}>'.format(obj.__name__)
+        return f'<class {obj.__name__}>'
     elif cls in [type(None), int]:
         return repr(obj)
     else:
-        return '<{} object>'.format(cls_name(obj))
+        return f'<{cls_name(obj)} object>'
 
 def print_args(name, *args):
     pseudo_args = ', '.join(display(x) for x in args)
-    print('-> {}.__{}__({})'.format(cls_name(args[0]), name, pseudo_args))
+    print(f'-> {cls_name(args[0])}.__{name}__({pseudo_args})')
 
 
 ### essential classes for this example ###
@@ -199,6 +194,6 @@ class Managed:  # <5>
     non_over = NonOverriding()
 
     def spam(self):  # <6>
-        print('-> Managed.spam({})'.format(display(self)))
+        print(f'-> Managed.spam({display(self)})')
 
 # end::DESCR_KINDS[]

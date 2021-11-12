@@ -32,8 +32,7 @@ class Record:
         self.__dict__.update(kwargs)
 
     def __repr__(self):
-        cls_name = self.__class__.__name__
-        return f'<{cls_name} serial={self.serial!r}>'
+        return f'<{self.__class__.__name__} serial={self.serial!r}>'
 
     @staticmethod
     def fetch(key):
@@ -52,11 +51,10 @@ class Event(Record):
 # end::SCHEDULE4_INIT[]
 
     def __repr__(self):
-        if hasattr(self, 'name'):
-            cls_name = self.__class__.__name__
-            return f'<{cls_name} {self.name!r}>'
-        else:
-            return super().__repr__()  # <4>
+        try:
+            return f'<{self.__class__.__name__} {self.name!r}>'
+        except AttributeError:
+            return super().__repr__()
 
     @property
     def venue(self):

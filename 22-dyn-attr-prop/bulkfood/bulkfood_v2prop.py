@@ -30,8 +30,8 @@ instance attributes, created in each ``LineItem`` instance::
     >>> nutmeg = LineItem('Moluccan nutmeg', 8, 13.95)
     >>> nutmeg.weight, nutmeg.price  # <1>
     (8, 13.95)
-    >>> sorted(vars(nutmeg).items())  # <2>
-    [('description', 'Moluccan nutmeg'), ('price', 13.95), ('weight', 8)]
+    >>> nutmeg.__dict__  # <2>
+    {'description': 'Moluccan nutmeg', 'weight': 8, 'price': 13.95}
 
 # end::LINEITEM_V2_PROP_DEMO[]
 

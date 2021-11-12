@@ -26,7 +26,7 @@ def test_init():
 def test_init_wrong_argument():
     with pytest.raises(AttributeError) as exc:
         p = Point(x=1.2, y=3.4, flavor='coffee')
-    assert "no attribute 'flavor'" in str(exc.value)
+    assert 'flavor' in str(exc.value)
 
 
 def test_slots():

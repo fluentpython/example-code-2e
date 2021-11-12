@@ -65,7 +65,7 @@ def parse_atom(token: str) -> Atom:
 class Environment(ChainMap[Symbol, Any]):
     "A ChainMap that allows changing an item in-place."
 
-    def change(self, key: Symbol, value: object) -> None:
+    def change(self, key: Symbol, value: Any) -> None:
         "Find where key is defined and change the value there."
         for map in self.maps:
             if key in map:

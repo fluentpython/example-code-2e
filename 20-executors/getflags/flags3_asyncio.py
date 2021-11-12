@@ -29,15 +29,29 @@ async def get_flag(client: httpx.AsyncClient,  # <1>
     resp.raise_for_status()
     return resp.content
 
+# tag::FLAGS3_ASYNCIO_GET_COUNTRY[]
+async def get_country(client: httpx.AsyncClient,
+                      base_url: str,
+                      cc: str) -> str:    # <1>
+    url = f'{base_url}/{cc}/metadata.json'.lower()
+    resp = await client.get(url, timeout=3.1, follow_redirects=True)
+    resp.raise_for_status()
+    metadata = resp.json()  # <2>
+    return metadata['country']  # <3>
+# end::FLAGS3_ASYNCIO_GET_COUNTRY[]
+
+# tag::FLAGS3_ASYNCIO_DOWNLOAD_ONE[]
 async def download_one(client: httpx.AsyncClient,
                        cc: str,
                        base_url: str,
                        semaphore: asyncio.Semaphore,
                        verbose: bool) -> DownloadStatus:
     try:
-        async with semaphore:  # <3>
+        async with semaphore:  # <1>
             image = await get_flag(client, base_url, cc)
-    except httpx.HTTPStatusError as exc:  # <4>
+        async with semaphore:  # <2>
+            country = await get_country(client, base_url, cc)
+    except httpx.HTTPStatusError as exc:
         res = exc.response
         if res.status_code == HTTPStatus.NOT_FOUND:
             status = DownloadStatus.NOT_FOUND
@@ -45,13 +59,14 @@ async def download_one(client: httpx.AsyncClient,
         else:
             raise
     else:
-        await asyncio.to_thread(save_flag, image, f'{cc}.gif')  # <5>
+        filename = country.replace(' ', '_')  # <3>
+        await asyncio.to_thread(save_flag, image, f'{filename}.gif')
         status = DownloadStatus.OK
         msg = 'OK'
     if verbose and msg:
         print(cc, msg)
     return status
-# end::FLAGS2_ASYNCIO_TOP[]
+# end::FLAGS3_ASYNCIO_DOWNLOAD_ONE[]
 
 # tag::FLAGS2_ASYNCIO_START[]
 async def supervisor(cc_list: list[str],

@@ -84,7 +84,7 @@ def standard_env() -> Environment:
             '-': op.sub,
             '*': op.mul,
             '/': op.truediv,
-            '//': op.floordiv,
+            'quotient': op.floordiv,
             '>': op.gt,
             '<': op.lt,
             '>=': op.ge,
@@ -149,7 +149,7 @@ def evaluate(exp: Expression, env: Environment) -> Any:
 # end::EVAL_MATCH_TOP[]
         case int(x) | float(x):
             return x
-        case Symbol(name):
+        case Symbol() as name:
             return env[name]
 # tag::EVAL_MATCH_MIDDLE[]
         case ['quote', x]:  # <1>
@@ -161,12 +161,12 @@ def evaluate(exp: Expression, env: Environment) -> Any:
                 return evaluate(alternative, env)
         case ['lambda', [*parms], *body] if body:  # <3>
             return Procedure(parms, body, env)
-        case ['define', Symbol(name), value_exp]:  # <4>
+        case ['define', Symbol() as name, value_exp]:  # <4>
             env[name] = evaluate(value_exp, env)
 # end::EVAL_MATCH_MIDDLE[]
-        case ['define', [Symbol(name), *parms], *body] if body:
+        case ['define', [Symbol() as name, *parms], *body] if body:
             env[name] = Procedure(parms, body, env)
-        case ['set!', Symbol(name), value_exp]:
+        case ['set!', Symbol() as name, value_exp]:
             env.change(name, evaluate(value_exp, env))
         case [func_exp, *args] if func_exp not in KEYWORDS:
             proc = evaluate(func_exp, env)
