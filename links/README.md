@@ -1,18 +1,18 @@
 # Short links for URLs in the book
 
-## The problem: link rot
+## Problem: link rot
 
 _Fluent Python, Second Edition_ has more than 1000 links to external resources.
 Inevitably, some of those links will rot as time passes.
-But I can't change the URLs in the print book!
+But I can't change the URLs in the print book...
 
-## The solution: indirection
+## Solution: indirection
 
 I replaced almost all URLs in the book with shortened versions that go through the `fpy.li` site which I control.
 The site has an `.htaccess` file with *temporary* redirects.
 
 When I find out a link is stale, I can thange the redirect in `.htaccess` to a new target,
-so the link in the book is back in service via the updated redirect.
+so the link in the book is back in service through the updated redirect.
 
 ## Help wanted
 
