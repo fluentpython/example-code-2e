@@ -25,6 +25,17 @@ RedirectTemp /norvigdp	http://norvig.com/design-patterns/
 RedirectTemp /nsphere	https://en.wikipedia.org/wiki/N-sphere
 RedirectTemp /oldcoro	https://www.fluentpython.com/extra/classic-coroutines/
 RedirectTemp /pandas	https://pandas.pydata.org/
+RedirectTemp /pycook3   https://www.oreilly.com/library/view/python-cookbook-3rd/9781449357337/
+RedirectTemp /pynut3    https://www.oreilly.com/library/view/python-in-a/9781491913833/
+RedirectTemp /pypydif	https://doc.pypy.org/en/latest/cpython_differences.html#subclasses-of-built-in-types
+RedirectTemp /shed4051	https://github.com/python/typeshed/issues/4051
+RedirectTemp /slatkin	https://effectivepython.com/
+RedirectTemp /specattr	https://docs.python.org/3/library/stdtypes.html#special-attributes
+RedirectTemp /typecoro  https://docs.python.org/3.10/library/typing.html#typing.Coroutine
+RedirectTemp /typing	https://docs.python.org/3/library/typing.html
+RedirectTemp /weakref	https://www.fluentpython.com/extra/weak-references/
+
+# Python Enhancement Proposals
 RedirectTemp /pep218	https://www.python.org/dev/peps/pep-0218/
 RedirectTemp /pep227	https://www.python.org/dev/peps/pep-0227/
 RedirectTemp /pep255	https://www.python.org/dev/peps/pep-0255/
@@ -100,10 +111,3 @@ RedirectTemp /pep3141	https://www.python.org/dev/peps/pep-3141/
 RedirectTemp /pep3148	https://www.python.org/dev/peps/pep-3148/
 RedirectTemp /pep3155	https://www.python.org/dev/peps/pep-3155/
 RedirectTemp /pep3333	https://www.python.org/dev/peps/pep-3333/
-RedirectTemp /pypydif	https://doc.pypy.org/en/latest/cpython_differences.html#subclasses-of-built-in-types
-RedirectTemp /shed4051	https://github.com/python/typeshed/issues/4051
-RedirectTemp /slatkin	https://effectivepython.com/
-RedirectTemp /specattr	https://docs.python.org/3/library/stdtypes.html#special-attributes
-RedirectTemp /typecoro  https://docs.python.org/3.10/library/typing.html#typing.Coroutine
-RedirectTemp /typing	https://docs.python.org/3/library/typing.html
-RedirectTemp /weakref	https://www.fluentpython.com/extra/weak-references/
