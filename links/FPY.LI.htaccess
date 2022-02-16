@@ -35,6 +35,9 @@ RedirectTemp /typecoro	https://docs.python.org/3.10/library/typing.html#typing.C
 RedirectTemp /typing	https://docs.python.org/3/library/typing.html
 RedirectTemp /weakref	https://www.fluentpython.com/extra/weak-references/
 
+# URLs added during QA of the Second Edition
+RedirectTemp /bdfl  	https://www.artima.com/weblogs/viewpost.jsp?thread=235725
+
 # Python Enhancement Proposals
 RedirectTemp /pep218	https://www.python.org/dev/peps/pep-0218/
 RedirectTemp /pep227	https://www.python.org/dev/peps/pep-0227/
