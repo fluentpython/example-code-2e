@@ -152,7 +152,7 @@ RedirectTemp /a-18 https://www.python.org/doc/essays/
 RedirectTemp /1-1 http://hugunin.net/story_of_jython.html
 RedirectTemp /1-2 https://www.oreilly.com/library/view/jython-essentials/9781449397364/
 RedirectTemp /1-3 https://docs.python.org/3/reference/lexical_analysis.html#reserved-classes-of-identifiers
-RedirectTemp /1-4 https://docs.python.org/2/library/string.html#format-string-syntax
+RedirectTemp /1-4 https://docs.python.org/3.10/library/string.html#format-string-syntax
 RedirectTemp /1-5 https://stackoverflow.com/questions/1436703/what-is-the-difference-between-str-and-repr
 RedirectTemp /1-6 https://docs.python.org/3/library/stdtypes.html#truth
 RedirectTemp /1-7 https://docs.python.org/3/tutorial/controlflow.html#unpacking-argument-lists
