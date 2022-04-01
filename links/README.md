@@ -12,7 +12,10 @@ I replaced almost all URLs in the book with shortened versions that go through t
 The site has an `.htaccess` file with *temporary* redirects.
 
 When I find out a link is stale, I can thange the redirect in `.htaccess` to a new target,
-so the link in the book is back in service through the updated redirect.
+which may be a link to copy in the Internet Archive's
+[Wayback Machine](https://archive.org/web/)
+o the link in the book is back in service through the updated redirect.
+
 
 ## Help wanted
 

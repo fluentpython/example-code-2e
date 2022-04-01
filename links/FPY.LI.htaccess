@@ -1,19 +1,20 @@
 ErrorDocument 404 /404.html
 
 # main resources
+RedirectTemp /book	https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/
 RedirectTemp /code	https://github.com/fluentpython/example-code-2e
 RedirectTemp /home	https://www.fluentpython.com/
 
 # URLs mentioned at least three times
 RedirectTemp /bisect	https://www.fluentpython.com/extra/ordered-sequences-with-bisect/
-RedirectTemp /cardxvi   https://www.python.org/dev/peps/pep-0484/#the-numeric-tower
+RedirectTemp /cardxvi	https://www.python.org/dev/peps/pep-0484/#the-numeric-tower
 RedirectTemp /collec	https://docs.python.org/3/library/collections.html
 RedirectTemp /dask  	https://dask.org/
 RedirectTemp /dtmodel	https://docs.python.org/3/reference/datamodel.html
 RedirectTemp /descr101	https://www.python.org/download/releases/2.2.3/descrintro/
 RedirectTemp /descrhow	https://docs.python.org/3/howto/descriptor.html
 RedirectTemp /doctest	https://docs.python.org/3/library/doctest.html
-RedirectTemp /effectpy  https://effectivepython.com/
+RedirectTemp /effectpy	https://effectivepython.com/
 RedirectTemp /fmtspec	https://docs.python.org/3/library/string.html#formatspec
 RedirectTemp /gunicorn	https://gunicorn.org/
 RedirectTemp /hashint	https://www.fluentpython.com/extra/internals-of-sets-and-dicts/
@@ -25,15 +26,17 @@ RedirectTemp /norvigdp	http://norvig.com/design-patterns/
 RedirectTemp /nsphere	https://en.wikipedia.org/wiki/N-sphere
 RedirectTemp /oldcoro	https://www.fluentpython.com/extra/classic-coroutines/
 RedirectTemp /pandas	https://pandas.pydata.org/
-RedirectTemp /pycook3   https://www.oreilly.com/library/view/python-cookbook-3rd/9781449357337/
-RedirectTemp /pynut3    https://www.oreilly.com/library/view/python-in-a/9781491913833/
+RedirectTemp /pycook3	https://www.oreilly.com/library/view/python-cookbook-3rd/9781449357337/
+RedirectTemp /pynut3	https://www.oreilly.com/library/view/python-in-a/9781491913833/
 RedirectTemp /pypydif	https://doc.pypy.org/en/latest/cpython_differences.html#subclasses-of-built-in-types
 RedirectTemp /shed4051	https://github.com/python/typeshed/issues/4051
-RedirectTemp /slatkin	https://effectivepython.com/
 RedirectTemp /specattr	https://docs.python.org/3/library/stdtypes.html#special-attributes
-RedirectTemp /typecoro  https://docs.python.org/3.10/library/typing.html#typing.Coroutine
+RedirectTemp /typecoro	https://docs.python.org/3.10/library/typing.html#typing.Coroutine
 RedirectTemp /typing	https://docs.python.org/3/library/typing.html
 RedirectTemp /weakref	https://www.fluentpython.com/extra/weak-references/
+
+# URL added during QA of the Second Edition
+RedirectTemp /bdfl  	https://www.artima.com/weblogs/viewpost.jsp?thread=235725
 
 # Python Enhancement Proposals
 RedirectTemp /pep218	https://www.python.org/dev/peps/pep-0218/
@@ -149,7 +152,7 @@ RedirectTemp /a-18 https://www.python.org/doc/essays/
 RedirectTemp /1-1 http://hugunin.net/story_of_jython.html
 RedirectTemp /1-2 https://www.oreilly.com/library/view/jython-essentials/9781449397364/
 RedirectTemp /1-3 https://docs.python.org/3/reference/lexical_analysis.html#reserved-classes-of-identifiers
-RedirectTemp /1-4 https://docs.python.org/2/library/string.html#format-string-syntax
+RedirectTemp /1-4 https://docs.python.org/3.10/library/string.html#format-string-syntax
 RedirectTemp /1-5 https://stackoverflow.com/questions/1436703/what-is-the-difference-between-str-and-repr
 RedirectTemp /1-6 https://docs.python.org/3/library/stdtypes.html#truth
 RedirectTemp /1-7 https://docs.python.org/3/tutorial/controlflow.html#unpacking-argument-lists
