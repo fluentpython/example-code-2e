@@ -1,4 +1,4 @@
-Sample code for Chapter 4 - "Text and bytes"
+Sample code for Chapter 4 - "Unicode Text Versus Bytes"
 
-From the book "Fluent Python" by Luciano Ramalho (O'Reilly, 2015)
-http://shop.oreilly.com/product/0636920032519.do
+From the book **Fluent Python, Second Edition** by Luciano Ramalho (O'Reilly, 2022).
+https://learning.oreilly.com/library/view/fluent-python-2nd/9781492056348/
