@@ -79,6 +79,8 @@ async def supervisor(cc_list: list[str],
                 error = exc  # <10>
             except KeyboardInterrupt:
                 break
+            else:
+                error = None
 
             if error:
                 status = DownloadStatus.ERROR  # <11>
