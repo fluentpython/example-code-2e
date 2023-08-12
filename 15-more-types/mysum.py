@@ -1,7 +1,6 @@
 import functools
 import operator
-from collections.abc import Iterable
-from typing import overload, Union, TypeVar
+from typing import overload, Union, TypeVar, Iterable
 
 T = TypeVar('T')
 S = TypeVar('S')  # <1>
