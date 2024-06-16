@@ -6,8 +6,8 @@ def columnize(
 ) -> Iterator[tuple[str, ...]]:  # <1>
     if num_columns == 0:
         num_columns = round(len(sequence) ** 0.5)
-    num_rows, reminder = divmod(len(sequence), num_columns)
-    num_rows += bool(reminder)
+    num_rows, remainder = divmod(len(sequence), num_columns)
+    num_rows += bool(remainder)
     return (tuple(sequence[i::num_rows]) for i in range(num_rows))  # <2>
 # end::COLUMNIZE[]
 
