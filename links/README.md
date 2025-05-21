@@ -23,6 +23,7 @@ Please report broken links as bugs in the [`FPY.LI.htaccess`](FPY.LI.htaccess) f
 Also, feel free to send pull requests with fixes to that file.
 When I accept a PR, I will redeploy it to `fpy.li/.htaccess`.
 
+
 ## Details
 
 Almost all URLs in the book are replaced with shortened versions like
@@ -36,5 +37,9 @@ Exceptions:
 
 - URLs with `oreilly` in them are unchanged;
 - `fluentpython.com` URL (with no path) is unchanged;
+
+The `custom.htacess` file contains the top redirects, which have custom names.
+`FPY.LI.htaccess` has the same content, plus numbered URLs generated
+from the links in each chapter in the book.
 
 The `FPY.LI.htaccess` is deployed at the root folder in `http://fpy.li`.
