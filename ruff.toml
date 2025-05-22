@@ -1,0 +1,4 @@
+line-length = 100
+[format]
+# Like Python's repr(), use single quotes for strings.
+quote-style = "single"
