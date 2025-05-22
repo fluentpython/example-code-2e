@@ -60,8 +60,9 @@ def gen_unused_short(redirects: dict) -> Iterator[str]:
             yield short
 
 
-def shorten(urls: list[str], redirects: dict, targets: dict) -> list[tuple[str, str]]:
+def shorten(urls: list[str]) -> list[tuple[str, str]]:
     """Return (short, long) pairs, appending directives to HTACCESS_SHORT as needed."""
+    redirects, targets = load_redirects()
     iter_short = gen_unused_short(redirects)
     pairs = []
     timestamp = strftime('%Y-%m-%d %H:%M:%S')
@@ -86,8 +87,7 @@ def shorten(urls: list[str], redirects: dict, targets: dict) -> list[tuple[str, 
 def main() -> None:
     """read URLS from filename arguments or stdin"""
     urls = [line.strip() for line in fileinput.input(encoding='utf-8')]
-    redirects, targets = load_redirects()
-    for short, long in shorten(urls, redirects, targets):
+    for short, long in shorten(urls):
         print(f'{BASE_DOMAIN}/{short}\t{long}')
 
 
