@@ -41,10 +41,9 @@ def shorten(n: int) -> str:
     Get Nth short URL made from SDIGITS, where 0 is the first.
     """
     iter_short = gen_short()
-    for i in range(n+1):
+    for _ in range(n+1):
         short = next(iter_short)
-        if i == n:
-            return short
+    return short
 
 
 def gen_free_short(redirects: dict) -> Iterator[str]:
