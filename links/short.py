@@ -36,16 +36,6 @@ def gen_short() -> Iterator[str]:
         length += 1
 
 
-def shorten(n: int) -> str:
-    """
-    Get Nth short URL made from SDIGITS, where 0 is the first.
-    """
-    iter_short = gen_short()
-    for _ in range(n+1):
-        short = next(iter_short)
-    return short
-
-
 def gen_free_short(redirects: dict) -> Iterator[str]:
     """
     Generate next available short URL.
@@ -55,17 +45,23 @@ def gen_free_short(redirects: dict) -> Iterator[str]:
             yield short
 
 
-def new_urls(urls: list[str], redirects: dict, targets: dict) -> None:
+def shorten(urls: list[str], redirects: dict, targets: dict) -> list[tuple[str,str]]:
+    """return (short, long) pairs, updating short.htaccess as needed""'
     iter_short = gen_free_short(redirects)
+    pairs = []
     with open('short.htaccess', 'a') as fp:
-        for url in urls:
-            assert 'fpy.li' not in url, f"{url} is a fpy.li URL"
-            if url in targets:
-                continue
-            short = next(iter_short)
-            redirects[short] = url
-            targets[url] = short
-            fp.write(f"RedirectTemp /{short} {url}\n")
+        for long in urls:
+            assert 'fpy.li' not in long, f"{long} is a fpy.li URL"
+            if long in targets:
+                short = targets[long]
+            else:
+                short = next(iter_short)
+                redirects[short] = url
+                targets[url] = short
+                fp.write(f"RedirectTemp /{short} {url}\n")
+            pairs.append((short, long))
+            
+    return pairs
 
 
 def main():
@@ -73,7 +69,8 @@ def main():
     urls = [f'https://example.com/{randrange(100000)}.html' for n in range(7)]
 
     redirects, targets = load_redirects()
-    new_urls(urls, redirects, targets)
+    for short, long in shorten(urls, redirects, targets):
+    		print(f'fpy.li/{short}\t{long}')
 
 
 if __name__ == '__main__':
