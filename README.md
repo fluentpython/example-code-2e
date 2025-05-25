@@ -22,14 +22,14 @@ Part / Chapter #|Title|Directory|1<sup>st</sup> ed. Chapter&nbsp;#
 5|Data Class Builders|[05-data-classes](05-data-classes)|🆕
 6|Object References, Mutability, and Recycling|[06-obj-ref](06-obj-ref)|8
 **II – Functions as Objects**|
-7|Funcions as First-Class Objects|[07-1class-func](07-1class-func)|5
+7|Functions as First-Class Objects|[07-1class-func](07-1class-func)|5
 8|Type Hints in Functions|[08-def-type-hints](08-def-type-hints)|🆕
 9|Decorators and Closures|[09-closure-deco](09-closure-deco)|7
 10|Design Patterns with First-Class Functions|[10-dp-1class-func](10-dp-1class-func)|6
 **III – Object-Oriented Idioms**|
 11|A Pythonic Object|[11-pythonic-obj](11-pythonic-obj)|9
 12|Special Methods for Sequences|[12-seq-hacking](12-seq-hacking)|10
-13|Interfaces, Protocols, and ABCs|[13-protocl-abc](13-protocol-abc)|11
+13|Interfaces, Protocols, and ABCs|[13-protocol-abc](13-protocol-abc)|11
 14|Inheritance: For Better or For Worse|[14-inheritance](14-inheritance)|12
 15|More About Type Hints|[15-more-types](15-more-types)|🆕
 16|Operator Overloading|[16-op-overloading](16-op-overloading)|13
