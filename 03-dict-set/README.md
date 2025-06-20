@@ -8,7 +8,7 @@ Sample code for Chapter 3 of _Fluent Python 2e_ by Luciano Ramalho (O'Reilly, 20
 
 Use Python's standard ``doctest`` module, for example:
 
-    $ python3 -m doctest bisect_demo.py -v
+    $ python3 -m doctest creator.py -v
 
 ### Jupyter Notebook
 
