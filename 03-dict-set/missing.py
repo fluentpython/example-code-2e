@@ -60,8 +60,7 @@ Subclass of ``abc.Mapping`` with support for ``__missing__``::
 
 """
 
-from collections import UserDict
-from collections import abc
+from collections import UserDict, abc
 
 
 def _upper(x):
@@ -73,12 +72,16 @@ def _upper(x):
 
 class DictSub(dict):
     def __missing__(self, key):
-        return self[_upper(key)]
+        if _upper(key) in self:
+            return self[_upper(key)]
+        raise KeyError(key)
 
 
 class UserDictSub(UserDict):
     def __missing__(self, key):
-        return self[_upper(key)]
+        if _upper(key) in self:
+            return self[_upper(key)]
+        raise KeyError(key)
 
 
 class SimpleMappingSub(abc.Mapping):
@@ -105,7 +108,9 @@ class MappingMissingSub(SimpleMappingSub):
         try:
             return self._data[key]
         except KeyError:
-            return self[_upper(key)]
+            if _upper(key) in self._data:
+                return self[_upper(key)]
+            raise KeyError(key)
 
 
 class DictLikeMappingSub(SimpleMappingSub):
@@ -113,7 +118,9 @@ class DictLikeMappingSub(SimpleMappingSub):
         try:
             return self._data[key]
         except KeyError:
-            return self[_upper(key)]
+            if _upper(key) in self:
+                return self[_upper(key)]
+            raise KeyError(key)
 
     def get(self, key, default=None):
         return self._data.get(key, default)
