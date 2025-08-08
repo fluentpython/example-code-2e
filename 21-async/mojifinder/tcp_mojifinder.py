@@ -43,10 +43,11 @@ async def search(query: str,  # <1>
                  index: InvertedIndex,
                  writer: asyncio.StreamWriter) -> int:
     chars = index.search(query)  # <2>
-    lines = (line.encode() + CRLF for line  # <3>
-                in format_results(chars))
-    writer.writelines(lines)  # <4>
-    await writer.drain()      # <5>
+    if chars:
+        lines = (line.encode() + CRLF for line  # <3>
+                    in format_results(chars))
+        writer.writelines(lines)  # <4>
+        await writer.drain()      # <5>
     status_line = f'{"─" * 66} {len(chars)} found'  # <6>
     writer.write(status_line.encode() + CRLF)
     await writer.drain()
