@@ -1,8 +1,8 @@
 # pseudocode for object construction
-def make(the_class, some_arg):
-    new_object = the_class.__new__(some_arg)
+def make(the_class, *args, **kwargs):
+    new_object = the_class.__new__(the_class, *args, **kwargs)
     if isinstance(new_object, the_class):
-        the_class.__init__(new_object, some_arg)
+        the_class.__init__(new_object, *args, **kwargs)
     return new_object
 
 # the following statements are roughly equivalent
