@@ -13,13 +13,18 @@ Subclass of ``dict``::
     >>> 'a' in d
     False
 
-Subclass of ``UserDict``::
+Subclass of ``UserDict``:
 
+Before Python 3.12, ``get`` calls ``__missing__`` through ``Mapping.get``.
+Since Python 3.12, ``UserDict.get`` checks membership first, like ``dict.get``::
+
+    >>> import sys
     >>> ud = UserDictSub(A = 'letter A')
     >>> ud['a']  # ✅
     'letter A'
-    >>> ud.get('a', '')  # ✅
-    'letter A'
+    >>> expected_get = '' if sys.version_info >= (3, 12) else 'letter A'
+    >>> ud.get('a', '') == expected_get
+    True
     >>> 'a' in ud
     False
 
